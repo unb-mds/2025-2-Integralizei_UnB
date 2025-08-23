@@ -40,4 +40,6 @@ markdown
 
 ## 🧠 Notas Adicionais  
 Alguma informação extra que vale a pena registrar?  
-*Exemplo:* Link para o protótipo no Figma, requisitos técnicos, decisões pendentes, etc.
+- [Nome](LINK_DO_SITE)  
+- [Nome](LINK_DO_SITE)  
+- [Nome](LINK_DO_SITE)
