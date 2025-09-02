@@ -60,7 +60,7 @@ Nessa história, cada coisa representa um elemento do uso da API:
 - **O Garçom** 🤵 **→ A API:** O intermediário que faz a comunicação. Ele recebe seu pedido de forma padronizada, leva-o para a cozinha e depois retorna com o resultado pronto. A API é a interface que conecta seu aplicativo ao servidor.
 - **A Cozinha** 🧑‍🍳 **→ O Servidor (Backend):** Onde a ação acontece. Representa o sistema complexo (servidor, banco de dados) que possui os dados e a lógica para processar as solicitações, funcionando de forma isolada do cliente.
 
-![images.jpeg](images.jpeg)
+![images.jpeg](https://github.com/unb-mds/2025-2-Squad-09/blob/28feb6bafdd6af715c50b48ebef4fff5debaa091/doc/Fotos/Basico%20de%20API%20fotos/images.jpeg)
 
 # Local API x Remote API
 
