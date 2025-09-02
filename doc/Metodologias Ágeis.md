@@ -6,7 +6,7 @@ Métodos ágeis são uma abordagem de desenvolvimento de projetos que se concent
 
 ## Porque não usar métodos antigos? (Waterfall)
 
-![image.png](image.png)
+![image.png](https://github.com/unb-mds/2025-2-Squad-09/blob/7e92c58260f62ed5ae1de61b11e2db54e2dafb4c/doc/Metodologias%20%C3%81geis%20Fotos/image.png)
 
 Modelo “Antigo” de desenvolvimento de software.
 
