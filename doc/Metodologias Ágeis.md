@@ -6,7 +6,7 @@ Métodos ágeis são uma abordagem de desenvolvimento de projetos que se concent
 
 ## Porque não usar métodos antigos? (Waterfall)
 
-![image.png](image.png)
+![image.png](https://github.com/unb-mds/2025-2-Squad-09/blob/75e5ba4fb8306b3f39216ec254220f1dfecd87bb/doc/Fotos/Metodologias%20%C3%81geis%20Fotos/image.png)
 
 Modelo “Antigo” de desenvolvimento de software.
 
@@ -23,7 +23,7 @@ O **Manifesto Ágil**, criado em 2001, é um documento que define quatro valores
 
 Esses valores orientam as equipes a serem mais flexíveis e adaptáveis, focando na entrega de valor contínua e na comunicação transparente com o cliente, em vez de seguir um plano rígido.
 
-![image.png](image%201.png)
+![image.png](https://github.com/unb-mds/2025-2-Squad-09/blob/75e5ba4fb8306b3f39216ec254220f1dfecd87bb/doc/Fotos/Metodologias%20%C3%81geis%20Fotos/image%201.png)
 
 Imagem descrevendo a diferença dos dois métodos
 
@@ -43,7 +43,7 @@ Os três papéis principais do Scrum são:
 - **Scrum Master**: O facilitador do processo. Ele remove impedimentos e garante que a equipe siga as práticas do Scrum.
 - **Time de Desenvolvimento**: A equipe multifuncional e auto-organizada que executa o trabalho e transforma as ideias em um produto funcional.
 
-![image.png](image%202.png)
+![image.png](https://github.com/unb-mds/2025-2-Squad-09/blob/75e5ba4fb8306b3f39216ec254220f1dfecd87bb/doc/Fotos/Metodologias%20%C3%81geis%20Fotos/image%202.png)
 
 ## Extreme Programming (XP)
 
@@ -58,7 +58,7 @@ As práticas chave do XP são:
 - **Metáfora do Sistema:** Uma história simples e compartilhada sobre como o sistema funciona.
 - **Planejamento de Liberação e Iteração:** O projeto é dividido em pequenas liberações e iterações curtas.
 
-![image.png](image%203.png)
+![image.png](https://github.com/unb-mds/2025-2-Squad-09/blob/75e5ba4fb8306b3f39216ec254220f1dfecd87bb/doc/Fotos/Metodologias%20%C3%81geis%20Fotos/image%203.png)
 
 ## Kanban
 
