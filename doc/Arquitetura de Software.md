@@ -1,165 +1,250 @@
 # Arquitetura de Software
 
-# 📚 Arquitetura de Software
+# Estudo de Flutter com foco na parte Web
 
 ---
 
-## 🔹 Introdução
+## 1) O que é um Framework?
 
-- As bases nas quais um software é erguido para que seja o mais robusto, escalável e sustentável.
-- A arquitetura estabelece as fundações nas quais os sistemas de alta qualidade são erguidos.
-
----
-
-## 🔹 Definição
-
-- É a organização fundamental de um sistema, definindo como o software será construído e como suas diferentes partes irão interagir.
-- Arquitetura **não é código**, mas sim as decisões e escolhas que nortearão e serão guias do projeto, definindo o esqueleto sobre o qual o projeto será implementado.
+Um framework é uma estrutura de software com componentes, padrões e ferramentas reutilizáveis que agilizam e facilitam o desenvolvimento de aplicações, fornecendo uma base sólida e diretrizes para a criação de software de forma eficiente e organizada.
 
 ---
 
-## 🔹 Propósito
+## 2) O que é o Flutter?
 
-- O propósito é não apenas organizar o código, mas definir a estrutura e o comportamento de um sistema garantindo que ele atenda:
-    - **Requisitos Funcionais**: o que deve ser feito pelo sistema.
-    - **Requisitos Não Funcionais (Atributos de Qualidade)**: como o sistema deve se comportar.
-
-> Atributos de Qualidade são propriedades mensuráveis ou testáveis que se concentram em como o software executa suas funções, em contraste com os requisitos funcionais, que definem o que ele faz.
-> 
-- A busca pelos atributos de qualidade define as decisões arquiteturais mais relevantes.
-- Uma arquitetura bem planejada serve como guia para o desenvolvimento e a evolução de software.
+- **Flutter** é um framework **multiplataforma** criado pelo Google para construir UIs **nativas e performáticas** para **Android, iOS, Web e Desktop** usando uma única linguagem: **Dart**.
+- Principais ideias:
+    - **Widgets**: tudo na interface é um widget (botões, textos, layouts).
+    - **Hot Reload**: salvou, a tela atualiza quase instantaneamente.
+    - **Motor próprio de renderização**: não depende de componentes nativos para desenhar a UI.
+    - **Dart**: linguagem moderna, tipada, com ótima performance (compila para nativo e para JavaScript).
 
 ---
 
-## 🔹 O Papel da Arquitetura no Ciclo de Vida do Desenvolvimento de Software
+## 3) Qual linguagem de programação o Flutter utiliza?
 
-- A arquitetura não é um artefato estático: seu papel é dinâmico e evolui ao longo do **SDLC (*Software Development Life Cycle*)**.
-- A integração **eficaz** da arquitetura ao longo das etapas do SLDC é vital para o sucesso do projeto, levando a:
-    - Redução de riscos
-    - Aumento da qualidade
-    - Decisões mais assertivas
-
-### 📌 Nas fases do SDLC:
-
-- **Fase Inicial**: a arquitetura é a espinha dorsal da inovação.
-- **Fase de Manutenção**: foco em excelência operacional e sustentabilidade.
-- **Gestão de Mudanças**: requisitos evoluem, tecnologias ficam obsoletas, e novas oportunidades surgem → decisões arquiteturais ajudam a reduzir custos e complexidade das mudanças.
+O Flutter usa a linguagem de programação de código aberto Dart, que também foi desenvolvida pelo Google. A linguagem Dart é otimizada para o desenvolvimento de interfaces de usuário e muitos dos pontos fortes dela são usados no Flutter.
 
 ---
 
-## 🔹 Os Pilares de uma Arquitetura Robusta
+## 4) Instalação no Windows ou Linux (foco em Web + VS Code)
 
-- A excelência de uma arquitetura é medida por sua capacidade de satisfazer atributos de qualidade.
-- O arquiteto deve equilibrar atributos que muitas vezes competem entre si (**trade-offs**).
-- Arquitetura é essencialmente sobre **alocação de recursos** e **gestão de restrições**.
+[https://docs.flutter.dev/get-started/install](https://docs.flutter.dev/get-started/install)
 
-### 🔍 Análise de Atributos de Qualidade
-
-- ⚡ **Escalabilidade**: capacidade de crescer verticalmente ou horizontalmente.
-- 🔧 **Manutenibilidade**: facilidade de modificar, corrigir e evoluir o sistema.
-- 🚀 **Desempenho**: tempo de resposta, latência e eficiência no uso de recursos.
-- 🔒 **Segurança**: confidencialidade, integridade e disponibilidade.
-- 🧪 **Testabilidade**: facilidade em isolar e validar partes do sistema.
-
----
-
-## 🔹 Paradigmas Fundamentais: Estilos Arquiteturais
-
-### 📌 Diferença entre **Estilo** e **Padrão**
-
-- **Estilo Arquitetural**: filosofia de design de alto nível, define a macroestrutura (ex: Cliente-Servidor, Microsserviços).
-- **Padrão Arquitetural**: solução reutilizável para um problema recorrente dentro de um estilo (ex: API Gateway em Microsserviços).
-
----
-
-## 🔹 Análise dos Estilos Arquiteturais
-
-### 🏛️ Monolítico
-
-- **Estrutura**: aplicação única e coesa.
-- ✅ **Vantagens**: simplicidade inicial, facilidade de desenvolvimento, boa performance em pequena escala.
-- ❌ **Desvantagens**: pouca escalabilidade, manutenção complexa, reimplantação completa a cada mudança.
-- 🔍 **Exemplo**: Stack Overflow.
-
----
-
-### 🧩 Microsserviços
-
-- **Estrutura**: coleção de serviços independentes, cada um com seu próprio código e banco de dados.
-- ✅ **Vantagens**: escalabilidade granular, maior resiliência, agilidade em equipes autônomas.
-- ❌ **Desvantagens**: maior complexidade operacional, latência de rede, consistência de dados difícil.
-- 🔍 **Exemplos**: Netflix, Amazon, Uber, Spotify.
-- ⚖️ **Lei de Conway**: a arquitetura reflete a estrutura da organização.
-
----
-
-### 📡 Orientado a Eventos (EDA - Event Driven Architecture)
-
-- **Estrutura**: comunicação assíncrona via eventos (produtores, consumidores e broker).
-- ✅ **Vantagens**: desacoplamento, alta escalabilidade e resiliência.
-- ❌ **Desvantagens**: complexidade de monitoramento e rastreamento de eventos.
-- 🔍 **Uso**: geralmente combinado com microsserviços para orquestração.
-
----
-
-### 💻 Cliente-Servidor
-
-- **Estrutura**: divisão entre cliente (UI) e servidor (lógica e dados).
-- ✅ **Vantagens**: centralização, manutenção facilitada, segurança.
-- ❌ **Desvantagens**: acoplamento médio, escalabilidade limitada ao servidor.
-- 🔍 **Uso**: base da maioria das aplicações web e móveis modernas.
-
----
-
-## 🔹 Padrões de Arquitetura
-
-### 🏗️ Arquitetura em Camadas
-
-- Camada de Apresentação (UI)
-- Camada de Negócios
-- Camada de Persistência
-- Camada de Banco de Dados
-
----
-
-### 🎭 Model-View-Controller (MVC)
-
-- **Model**: dados e lógica de negócios.
-- **View**: interface com o usuário.
-- **Controller**: intermediário, coordena Model ↔ View.
-
----
-
-### 🔀 Pipe-and-Filter
-
-- **Filters**: processam os dados.
-- **Pipes**: conectam os filtros.
-- ✅ **Vantagens**: modularidade, reusabilidade e composição flexível.
-
----
-
-## 🔹 Tomada de Decisão Arquitetural
-
-- Arquitetura é sobre **trade-offs**.
-- Exemplo:
-    - Microsserviços → Escalabilidade e agilidade, mas complexidade operacional.
-    - Monólito → Simplicidade inicial, mas baixa escalabilidade.
-    - NoSQL → flexibilidade, mas menor consistência transacional.
-
-> O papel do arquiteto é alinhar arquitetura com objetivos do negócio e restrições do projeto.
+> Lembrete: Nosso foco será trabalhar em aplicação Web, logo não será necessário instalar o Android Studio
 > 
 
----
+### 4.1. Flutter SDK no Windows
 
-## 🔹 📊 Tabela Comparativa de Estilos Arquiteturais
+1. Baixe o Flutter SDK e extraia, por exemplo, em `C:\\src\\flutter`.
+2. Adicione `C:\\src\\flutter\\bin` ao **PATH** do Windows, em *Variáveis do Ambiente*
+3. Abra o Prompt/PowerShell e valide: ```bash
+flutter --version
 
-| **Característica** | **Monolítico** | **Microsserviços** | **Orientado a Eventos (EDA)** | **Cliente-Servidor** |
-| --- | --- | --- | --- | --- |
-| **Estrutura** | Unidade única | Serviços independentes | Serviços reativos a eventos | Divisão cliente/servidor |
-| **Acoplamento** | Alto | Baixo | Muito Baixo (desacoplado) | Médio |
-| **Escalabilidade** | Baixa | Alta (granular) | Muito Alta | Média |
-| **Complexidade** | Baixa inicial | Alta (distribuído) | Alta (monitoramento difícil) | Baixa a Média |
-| **Agilidade** | Baixa | Alta | Alta | Média |
-| **Ideal para** | Projetos pequenos, MVPs | Grandes aplicações complexas | Sistemas reativos/integração | Aplicações Web e Mobile |
+### 4.2 Flutter SDK no Linux
 
 ---
+
+1. Baixar o Flutter SDK
+
+Baixe a versão mais recente do Flutter SDK no [site oficial](https://docs.flutter.dev/get-started/install/linux) ou use o comando `wget`:
+
+```bash
+cd ~/Downloads
+wget <https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.24.3-stable.tar.xz>
+
+```
+
+*(substitua a versão pelo link mais recente caso haja atualização).*
+
+---
+
+1. Extrair o SDK
+
+Extraia o arquivo baixado no diretório desejado:
+
+```bash
+sudo tar xf flutter_linux_3.24.3-stable.tar.xz -C /opt
+
+```
+
+Agora o Flutter está em `/opt/flutter`.
+
+---
+
+1. Adicionar o Flutter ao PATH
+
+Edite o arquivo de configuração do shell:
+
+```bash
+nano ~/.bashrc
+
+```
+
+Adicione a linha no final:
+
+```bash
+export PATH="$PATH:/opt/flutter/bin"
+
+```
+
+Salve e recarregue o terminal:
+
+```bash
+source ~/.bashrc
+
+```
+
+---
+
+1. Verificar a instalação
+
+Execute:
+
+```bash
+flutter doctor
+
+```
+
+Este comando verifica se o ambiente está configurado corretamente.
+
+---
+
+## 5) Ambiente VS Code
+
+- Tenha o Visual Studio Code instalado
+- Instale as extensões **Flutter** (Já acompanha o Dart)
+
+---
+
+### 5.1 Ativar suporte Web
+
+No terminal do VS Code:
+
+```
+Flutter config --enable-web
+Flutter devices
+
+```
+
+Você deve ver os navegadores listados como dispositivo Web.
+
+---
+
+## 6) Criando o primeiro projeto
+
+No terminal do VS Code, na pasta onde deseja salvar seus projetos:
+
+```
+flutter create meu_app_web
+cd meu_app_web
+
+```
+
+### 6.1 Rodar no navegador
+
+Utilizaremos o Chrome como exemplo
+
+```
+flutter run -d chrome # Abrirá o app padrão do chrome
+
+```
+
+---
+
+## 7) Estrutura de pastas
+
+---
+
+```
+meu_app_web/
+ ├─ android/
+ ├─ ios/
+ ├─ linux/
+ ├─ macos/
+ ├─ windows/
+ ├─ web/
+ ├─ lib/
+ │   └─ main.dart
+ ├─ test/
+ ├─ pubspec.yaml
+ └─ .gitignore
+
+```
+
+- **android/** e **ios/** → usados apenas se compilarmos para dispositivos móveis.
+- **linux/**, **macos/**, **windows/** → usados para gerar apps de desktop.
+- **web/** → contém configurações e arquivos necessários para rodar o app no navegador.
+- **lib/** → onde fica o **código Dart principal** do seu projeto.
+    - Dentro dela está o `main.dart`, que é o **ponto de entrada** do app Flutter.
+- **test/** → lugar para escrever **testes unitários**.
+- **pubspec.yaml** → arquivo de configuração do projeto, onde definimos dependências, assets (imagens, fontes etc.) e outras configs.
+- **.gitignore** → define o que não deve ser enviado para o **Git/GitHub**.
+
+---
+
+## 8) Algumas entradas de usuários úteis
+
+### 8.1 Switch
+
+```dart
+bool ligado = false;
+Switch(
+  value: ligado,
+  onChanged: (v) => setState(() => ligado = v),
+);
+
+```
+
+### 8.2 CheckBox
+
+```dart
+bool aceito = false;
+CheckboxListTile(
+  title: const Text('Aceito os termos'),
+  value: aceito,
+  onChanged: (v) => setState(() => aceito = v ?? false),
+);
+
+```
+
+### 8.3 Radio
+
+```dart
+String? cor;
+Column(
+  children: ['Azul', 'Vermelho', 'Verde'].map((c) {
+    return RadioListTile<String>(
+      title: Text(c),
+      value: c,
+      groupValue: cor,
+      onChanged: (v) => setState(() => cor = v),
+    );
+  }).toList(),
+);
+
+```
+
+### 8.4 Slider
+
+```dart
+double valor = 50;
+Slider(
+  min: 0, max: 100, divisions: 10,
+  value: valor,
+  label: '${valor.round()}',
+  onChanged: (v) => setState(() => valor = v),
+);
+
+```
+
+---
+
+## 9) Build de produção Web e publicação
+
+```
+Flutter build web
+
+```
+
+Esse comando gera a versão final de produção da aplicação Web, pronta para rodar no navegador
