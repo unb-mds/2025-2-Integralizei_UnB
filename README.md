@@ -42,4 +42,4 @@ Os dados extraídos precisam ser organizados em um banco de dados para que possa
 
 Para comparar os dados dos usuários utilizaremos o sistema oficial de “ranqueamento” da UNB:
 
-![image.png](image.png)
+![image.png](https://github.com/unb-mds/2025-2-Squad-09/blob/460ee869d35a064a00ce6381d3639f9493a3b7c1/doc/Fotos/Readme%20fotos/image.png)
