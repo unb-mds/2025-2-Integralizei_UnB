@@ -16,7 +16,7 @@ Em breve, vamos entender como utilizar isso na prática.
 
 É o lugar onde você guarda essas versões. Nada mais é do que um repositório onde seus projetos ficam salvos na nuvem, podendo ser públicos ou privados.
 
-![image.png](https://github.com/unb-mds/2025-2-Integralizei_UnB/tree/b0d60111b2bf3ccbfd849b876af236ada7eb6461/doc/Fotos/Git%20e%20GitHub)
+![image.png](https://github.com/unb-mds/2025-2-Integralizei_UnB/blob/07e302b5b347063f266b8588033db299a2ea5b54/doc/Fotos/Git%20e%20GitHub/image.png)
 
 # Como utilizar o Git?
 
