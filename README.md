@@ -17,7 +17,7 @@ Nós conhecemos de perto esse sentimento. Já sentimos o nervosismo de atualizar
 
 Com apenas o seu histórico, nossa plataforma analisará e prevêrá qual a sua chance aproximada de garantir a vaga com o professor que você tanto quer. Como? Utilizando uma base de dados com informações de alunos que já cursaram essa mesma disciplina. Assim, em vez de ansiedade, você terá o poder dos dados para planejar seu semestre com mais confiança e tranquilidade.
 
-## Como o backend funcionaria
+## Funcionamento do backend
 
 Para criar o **INTEGRALIZEI UNB**, nosso backend será construído com quatro conceitos fundamentais.
 
