@@ -67,7 +67,7 @@ Agora vamos ao exemplo prático. Este código fará o upload de um arquivo PDF, 
 ```python
 **from google import genai
 
-client = genai.Client(api_key="AIzaSyB-R6kHRGMaK_B_gVyFl21Lv-UEAnJv38E") #Sua chave
+client = genai.Client(api_key="SUA_CHAVE") #Sua chave
 
 arquivo_enviado = client.files.upload(file="Gustavo_Historico_2025.1.pdf") #Nome do PDF
 
