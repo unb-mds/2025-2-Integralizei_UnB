@@ -16,7 +16,6 @@ Em breve, vamos entender como utilizar isso na prática.
 
 É o lugar onde você guarda essas versões. Nada mais é do que um repositório onde seus projetos ficam salvos na nuvem, podendo ser públicos ou privados.
 
-![image.png](Git%20e%20GitHub%20257cb171cc0a80708be2eb2affc675d4/image.png)
 
 # Como utilizar o Git?
 
