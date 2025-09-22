@@ -1,0 +1,78 @@
+# hugo.toml - Versão Final e Corrigida
+baseURL = 'https://unb-mds.github.io/2025-2-Integralizei_UnB/'
+languageCode = 'pt-br'
+title = 'Integralizei UNB - Documentação'
+theme = 'hextra'
+
+[params]
+  # Configurações da Barra de Navegação
+  [params.navbar]
+    displayTitle = true
+    displayLogo = false
+    [params.navbar.link]
+      enable = true
+      url = "https://github.com/unb-mds/2025-2-Integralizei_UnB"
+      external = true
+  
+  [params.footer]
+    displayCopyright = true
+    displayPoweredBy = true
+
+  [params.editURL]
+    enable = true
+    base = "https://github.com/unb-mds/2025-2-Integralizei_UnB/tree/main/content"
+  
+ 
+  [params.page]
+    [params.page.toc]
+      enable = true
+  
+
+  [params.theme]
+    displayToggle = true
+    default = "dark"
+  
+  
+  [params.search]
+    enable = true
+
+
+[[menu.main]]
+  name = "Início"
+  url = "/"
+  weight = 10
+
+[[menu.main]]
+  name = "Levantamento de Requisitos"
+  url = "/levantamento-de-requisitos/"
+  weight = 20
+
+[[menu.main]]
+  name = "Planejamento"
+  url = "/planejamento/"
+  weight = 30
+
+[[menu.main]]
+  name = "Sprints"
+  url = "/sprints/"
+  weight = 40
+
+[[menu.main]]
+  name = "Protótipo"
+  url = "/prototipo/"
+  weight = 50
+
+[[menu.main]]
+  name = "Arquitetura"
+  url = "/arquitetura/"
+  weight = 60
+
+[[menu.main]]
+  name = "Story Map"
+  url = "/story-map/"
+  weight = 70
+
+[[menu.main]]
+  name = "Ata de Reuniões"
+  url = "/ata-de-reunioes/"
+  weight = 80

@@ -1,0 +1,116 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Integralizei UNB - Documentação – Levantamento-De-Requisitos</title>
+    <link>http://localhost:1313/2025-2-Integralizei_UnB/levantamento-de-requisitos/</link>
+    <description>Recent content in Levantamento-De-Requisitos on Integralizei UNB - Documentação</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>pt-br</language>
+    <lastBuildDate>Mon, 22 Sep 2025 10:45:35 -0300</lastBuildDate>
+    
+	  <atom:link href="http://localhost:1313/2025-2-Integralizei_UnB/levantamento-de-requisitos/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Levantamento de Requisitos</title>
+      <link>http://localhost:1313/2025-2-Integralizei_UnB/levantamento-de-requisitos/levantamento-de-requisitos/</link>
+      <pubDate>Mon, 22 Sep 2025 10:45:35 -0300</pubDate>
+      
+      <guid>http://localhost:1313/2025-2-Integralizei_UnB/levantamento-de-requisitos/levantamento-de-requisitos/</guid>
+      <description>
+        
+        
+        &lt;h2&gt;Funcionalidades (Requisitos Funcionais)&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;funcionalidades-requisitos-funcionais&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#funcionalidades-requisitos-funcionais&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Os requisitos funcionais descrevem o que o sistema deve fazer, ou seja, suas funcionalidades, serviços e comportamentos esperados.&lt;/p&gt;
+&lt;h3&gt;Lista&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;lista&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#lista&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Login com Conta no Google&lt;/li&gt;
+&lt;li&gt;Recebimento do histórico&lt;/li&gt;
+&lt;li&gt;Tutorial de como baixar seu histórico (abaixo do upload do histórico)&lt;/li&gt;
+&lt;li&gt;Cálculo da integralização/IRA retroativas (semestres anteriores)&lt;/li&gt;
+&lt;li&gt;Divisão das matérias por professor&lt;/li&gt;
+&lt;li&gt;Sistema de rankeamento&lt;/li&gt;
+&lt;li&gt;Calcular a média de integralização e IRA&lt;/li&gt;
+&lt;li&gt;Pesquisa de matérias&lt;/li&gt;
+&lt;li&gt;Recomendações: obrigatórias e optativas&lt;/li&gt;
+&lt;li&gt;Cálculo de integralização futura&lt;/li&gt;
+&lt;li&gt;Armazenamento de dados&lt;/li&gt;
+&lt;li&gt;Reciclagem de histórico&lt;/li&gt;
+&lt;li&gt;Favoritar matérias&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Não Funcionalidades&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;não-funcionalidades&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#n%c3%a3o-funcionalidades&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Montar grade e fluxo&lt;/li&gt;
+&lt;li&gt;ChatBot&lt;/li&gt;
+&lt;li&gt;Salvar dados sensíveis&lt;/li&gt;
+&lt;li&gt;Avaliação de professores&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Requisitos Não Funcionais&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;requisitos-não-funcionais&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#requisitos-n%c3%a3o-funcionais&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Os requisitos não funcionais descrevem como o sistema deve funcionar, incluindo restrições de desempenho, segurança, compatibilidade e usabilidade.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Navegador: Google Chrome&lt;/li&gt;
+&lt;li&gt;Segurança de dados e criptografia&lt;/li&gt;
+&lt;li&gt;Garantia de acurácia acima de 95% na extração de dados dos históricos em PDF&lt;/li&gt;
+&lt;li&gt;Interface intuitiva, com clareza e organização&lt;/li&gt;
+&lt;li&gt;Leitura dos dados no intervalo:&lt;br&gt;
+$A = {x \in \mathbb{Z} \mid 2 \leq x \leq 15}, \text{ em que } x \text{ é dado em segundos}$&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Requisitos</title>
+      <link>http://localhost:1313/2025-2-Integralizei_UnB/levantamento-de-requisitos/requisitos/</link>
+      <pubDate>Mon, 22 Sep 2025 10:45:35 -0300</pubDate>
+      
+      <guid>http://localhost:1313/2025-2-Integralizei_UnB/levantamento-de-requisitos/requisitos/</guid>
+      <description>
+        
+        
+        &lt;h2&gt;Funcionalidades (Requisitos Funcionais)&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;funcionalidades-requisitos-funcionais&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#funcionalidades-requisitos-funcionais&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Os requisitos funcionais descrevem o que o sistema deve fazer, ou seja, suas funcionalidades, serviços e comportamentos esperados.&lt;/p&gt;
+&lt;h3&gt;Lista&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;lista&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#lista&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Login com Conta no Google&lt;/li&gt;
+&lt;li&gt;Recebimento do histórico&lt;/li&gt;
+&lt;li&gt;Tutorial de como baixar seu histórico (abaixo do upload do histórico)&lt;/li&gt;
+&lt;li&gt;Cálculo da integralização/IRA retroativas (semestres anteriores)&lt;/li&gt;
+&lt;li&gt;Divisão das matérias por professor&lt;/li&gt;
+&lt;li&gt;Sistema de rankeamento&lt;/li&gt;
+&lt;li&gt;Calcular a média de integralização e IRA&lt;/li&gt;
+&lt;li&gt;Pesquisa de matérias&lt;/li&gt;
+&lt;li&gt;Recomendações: obrigatórias e optativas&lt;/li&gt;
+&lt;li&gt;Cálculo de integralização futura&lt;/li&gt;
+&lt;li&gt;Armazenamento de dados&lt;/li&gt;
+&lt;li&gt;Reciclagem de histórico&lt;/li&gt;
+&lt;li&gt;Favoritar matérias&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Não Funcionalidades&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;não-funcionalidades&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#n%c3%a3o-funcionalidades&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Montar grade e fluxo&lt;/li&gt;
+&lt;li&gt;ChatBot&lt;/li&gt;
+&lt;li&gt;Salvar dados sensíveis&lt;/li&gt;
+&lt;li&gt;Avaliação de professores&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Requisitos Não Funcionais&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;requisitos-não-funcionais&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#requisitos-n%c3%a3o-funcionais&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Os requisitos não funcionais descrevem como o sistema deve funcionar, incluindo restrições de desempenho, segurança, compatibilidade e usabilidade.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Navegador: Google Chrome&lt;/li&gt;
+&lt;li&gt;Segurança de dados e criptografia&lt;/li&gt;
+&lt;li&gt;Garantia de acurácia acima de 95% na extração de dados dos históricos em PDF&lt;/li&gt;
+&lt;li&gt;Interface intuitiva, com clareza e organização&lt;/li&gt;
+&lt;li&gt;Leitura dos dados no intervalo:&lt;br&gt;
+$A = {x \in \mathbb{Z} \mid 2 \leq x \leq 15}, \text{ em que } x \text{ é dado em segundos}$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

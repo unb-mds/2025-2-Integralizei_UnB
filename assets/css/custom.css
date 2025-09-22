@@ -1,0 +1,4 @@
+/* Adiciona espaço abaixo do título principal nas páginas */
+main h1 {
+  margin-bottom: 2rem;
+}

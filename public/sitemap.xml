@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>http://localhost:1313/2025-2-Integralizei_UnB/ata-de-reunioes/reuniao00/</loc>
+    <lastmod>2025-09-22T12:20:00-03:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/2025-2-Integralizei_UnB/sprints/</loc>
+    <lastmod>2025-09-22T13:35:00-03:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/2025-2-Integralizei_UnB/arquitetura/</loc>
+    <lastmod>2025-09-22T13:22:00-03:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/2025-2-Integralizei_UnB/ata-de-reunioes/</loc>
+    <lastmod>2025-09-22T13:16:00-03:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/2025-2-Integralizei_UnB/</loc>
+    <lastmod>2025-09-22T13:35:00-03:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/2025-2-Integralizei_UnB/prototipo/</loc>
+    <lastmod>2025-09-22T11:35:00-03:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/2025-2-Integralizei_UnB/levantamento-de-requisitos/</loc>
+    <lastmod>2025-09-22T10:45:35-03:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/2025-2-Integralizei_UnB/categories/</loc>
+  </url><url>
+    <loc>http://localhost:1313/2025-2-Integralizei_UnB/tags/</loc>
+  </url>
+</urlset>
