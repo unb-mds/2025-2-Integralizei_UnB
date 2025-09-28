@@ -49,7 +49,7 @@ Esta seção detalha a estrutura técnica, as tecnologias escolhidas e as decis�
 Pilares da Nossa ArquiteturaA construção do nosso sistema foi guiada por quatro princípios fundamentais para garantir um produto robusto, seguro e eficiente.">
   <meta itemprop="datePublished" content="2025-09-22T13:22:00-03:00">
   <meta itemprop="dateModified" content="2025-09-22T13:22:00-03:00">
-  <meta itemprop="wordCount" content="227">
+  <meta itemprop="wordCount" content="237">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Arquitetura do Sistema 🏗️">
   <meta name="twitter:description" content="Bem-vindo à documentação da arquitetura do projeto Integralizei UNB.
@@ -462,8 +462,11 @@ Pilares da Nossa ArquiteturaA construção do nosso sistema foi guiada por quat
 <h3>Diagrama da Arquitetura<span class="hx:absolute hx:-mt-20" id="diagrama-da-arquitetura"></span>
     <a href="#diagrama-da-arquitetura" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>A imagem abaixo ilustra o fluxo de dados e a interação entre os principais componentes do nosso sistema.</p>
 <p><img src="/2025-2-Integralizei_UnB/images/diagrama-arquitetura.png" alt="Diagrama da Arquitetura do Integralizei UNB"  loading="lazy" /></p>
-<!-- raw HTML omitted -->
-
+<ul>
+  {{ range .Pages }}
+    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+  {{ end }}
+</ul>
         </div>
         <div class="hx:mt-16"></div>
         <div class="hx:mb-8 hx:flex hx:items-center hx:border-t hx:pt-8 hx:border-gray-200 hx:dark:border-neutral-800 hx:contrast-more:border-neutral-400 hx:dark:contrast-more:border-neutral-400 hx:print:hidden"><a

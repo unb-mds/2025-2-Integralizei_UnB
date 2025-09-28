@@ -37,7 +37,7 @@ Estrutura Padrão de uma AtaPara manter a clareza e a consistência, todas as n
 Dados da Reunião: Informações essenciais como data, horário e participantes presentes.">
   <meta itemprop="datePublished" content="2025-09-22T13:16:00-03:00">
   <meta itemprop="dateModified" content="2025-09-22T13:16:00-03:00">
-  <meta itemprop="wordCount" content="186">
+  <meta itemprop="wordCount" content="196">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Atas de Reunião 📑">
   <meta name="twitter:description" content="Bem-vindo ao arquivo de Atas de Reunião do projeto Integralizei UNB.
@@ -461,8 +461,11 @@ Dados da Reunião: Informações essenciais como data, horário e participantes 
 <p><strong>Plataforma:</strong> Todas as reuniões são realizadas no nosso servidor do <strong>Discord</strong>. 🎤</p>
 </blockquote>
 <p>No indíce da página, você encontrará a lista de todas as atas de reunião, organizadas da mais recente para a mais antiga.</p>
-<!-- raw HTML omitted -->
-
+<ul>
+  {{ range .Pages }}
+    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+  {{ end }}
+</ul>
         </div>
         <div class="hx:mt-16"></div>
         

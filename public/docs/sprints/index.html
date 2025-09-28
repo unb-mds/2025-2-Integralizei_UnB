@@ -49,7 +49,7 @@ Esta seção é dedicada a documentar o ciclo de desenvolvimento iterativo e inc
 Nossa Metodologia de SprintsAdotamos um framework ágil para garantir entregas contínuas e de alta qualidade. Nossas sprints são estruturadas da seguinte forma:">
   <meta itemprop="datePublished" content="2025-09-22T13:35:00-03:00">
   <meta itemprop="dateModified" content="2025-09-22T13:35:00-03:00">
-  <meta itemprop="wordCount" content="183">
+  <meta itemprop="wordCount" content="216">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Sprints do Projeto 🏃‍♂️">
   <meta name="twitter:description" content="Bem-vindo ao registro de Sprints do projeto Integralizei UNB.
@@ -460,9 +460,19 @@ Nossa Metodologia de SprintsAdotamos um framework ágil para garantir entregas 
     <a href="#hist%c3%b3rico-de-sprints" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Abaixo está a lista de todas as sprints executadas no projeto, com links para seus respectivos planejamentos e resultados.</p>
 <hr>
 <h3>Artigos da Seção<span class="hx:absolute hx:-mt-20" id="artigos-da-seção"></span>
-    <a href="#artigos-da-se%c3%a7%c3%a3o" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-
+    <a href="#artigos-da-se%c3%a7%c3%a3o" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><ul>
+  {{ range .Pages }}
+    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+  {{ end }}
+</ul>
+---
+## DEBUG: Listando sub-páginas encontradas
+<ul>
+{{ range .Pages }}
+    <li>Página Encontrada: <a href="{{ .RelPermalink }}">{{ .Title }}</a> (Arquivo: {{ .File.Path }})</li>
+{{ end }}
+</ul>
+---
         </div>
         <div class="hx:mt-16"></div>
         <div class="hx:mb-8 hx:flex hx:items-center hx:border-t hx:pt-8 hx:border-gray-200 hx:dark:border-neutral-800 hx:contrast-more:border-neutral-400 hx:dark:contrast-more:border-neutral-400 hx:print:hidden"><a

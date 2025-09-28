@@ -1,4 +1,49 @@
-/* Adiciona espaço abaixo do título principal nas páginas */
+
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+:root {
+  --font-sans: 'Inter', sans-serif;
+
+  --primary-hue: 158deg !important;
+  --primary-saturation: 76% !important;
+  --primary-lightness: 45% !important;
+
+  --hextra-background-base: #f1f4f5 !important;
+  --hextra-text-base: #003a5f !important;
+
+  --hextra-background-dark-base: #003a5f !important;
+  --hextra-text-dark-base: #f1f4f5 !important;
+}
+
+
 main h1 {
   margin-bottom: 2rem;
+}
+
+/* Estilos para a seção "Sobre Nós" */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.team-member img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%; 
+  object-fit: cover;
+  margin-bottom: 1rem;
+}
+
+.team-member strong {
+  display: block;
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+}
+
+.team-member span {
+  color: var(--hextra-text-secondary);
 }
