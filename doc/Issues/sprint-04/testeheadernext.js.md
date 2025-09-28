@@ -18,6 +18,7 @@ O **Next.js** é um framework em cima do **React** que organiza o projeto em **p
 
 ---
  exemplo de header do site
+```javascript
 //src/components/Header.js
 
 import Link from 'next/link';
@@ -52,10 +53,10 @@ export default function Header() {
   );
 }
 
+```css
 /* src/components/Header.module.css */
 
 .header {
-  /* Mantido: distribui o espaço entre Logo e o Container Direito */
   display: flex;
   justify-content: space-between; 
   align-items: center; 
@@ -66,14 +67,12 @@ export default function Header() {
   border-image-slice: 1;
 }
 
-/* NOVO ESTILO: Container para alinhar Links e Botão */
 .rightSide {
   display: flex;
-  align-items: center; /* Alinha os links e o botão verticalmente */
-  gap: 30px; /* Espaçamento entre a lista de links e o botão */
+  align-items: center; 
+  gap: 30px;
 }
 
-/* Estilo do Logo/Título */
 .logo {
   font-size: 20px;
   font-weight: 700;
@@ -81,13 +80,11 @@ export default function Header() {
   text-decoration: none;
 }
 
-/* Alinhamento dos Links de Navegação (Agora dentro do rightSide) */
 .navLinks {
   display: flex;
-  gap: 25px; /* Espaçamento entre os links individuais */
+  gap: 25px;
 }
 
-/* Estilo dos Links Comuns (MANTIDO) */
 .link {
   color: #6b7280; 
   font-size: 16px;
@@ -100,7 +97,6 @@ export default function Header() {
   color: #000000; 
 }
 
-/* Estilo do Botão de Ação (MANTIDO) */
 .ctaButton {
   background-color: #000000; 
   color: white;
@@ -112,6 +108,9 @@ export default function Header() {
 }
 
 .ctaButton:hover {
+  background-color: #d6d6d6;
+}
+
   background-color: #d6d6d6;
 }
 
