@@ -43,3 +43,5 @@ Os dados extraídos precisam ser organizados em um banco de dados para que possa
 Para comparar os dados dos usuários utilizaremos o sistema oficial de “ranqueamento” da UNB:
 
 ![image.png](https://github.com/unb-mds/2025-2-Squad-09/blob/460ee869d35a064a00ce6381d3639f9493a3b7c1/doc/Fotos/Readme%20fotos/image.png)
+
+[Protótipo Figma](https://www.figma.com/proto/aZz3Z42XS3ukfA1dmO4CSy/Integralizei-UnB-Prototipo?page-id=2%3A5057&node-id=86-738&viewport=430%2C484%2C0.16&t=4WOKKrP3IuPDyc7T-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=20%3A2016&hide-ui=1)
