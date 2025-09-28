@@ -36,3 +36,9 @@ Para manter a clareza e a consistência, todas as nossas atas seguem uma estrutu
 > **Plataforma:** Todas as reuniões são realizadas no nosso servidor do **Discord**. 🎤
 
 No indíce da página, você encontrará a lista de todas as atas de reunião, organizadas da mais recente para a mais antiga.
+
+<ul>
+  {{ range .Pages }}
+    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+  {{ end }}
+</ul>

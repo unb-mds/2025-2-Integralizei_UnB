@@ -1,8 +1,8 @@
----
-title: "Sprint 03: Iniciação da implementação"
-date: 2025-09-22T10:30:00-03:00
-weight: 40 
----
++++
+title = "Sprint 03: Iniciação da implementação"
+date = 2025-09-22T10:30:00-03:00
+weight = 40 
++++
 
 ## Objetivo da Sprint
 

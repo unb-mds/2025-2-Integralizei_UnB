@@ -29,3 +29,8 @@ A imagem abaixo ilustra o fluxo de dados e a interação entre os principais com
 
 ![Diagrama da Arquitetura do Integralizei UNB](/images/diagrama-arquitetura.png)
 
+<ul>
+  {{ range .Pages }}
+    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+  {{ end }}
+</ul>

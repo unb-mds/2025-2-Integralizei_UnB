@@ -1,8 +1,8 @@
----
-title: "Sprint 02: Continuação das pesquisas"
-date: 2025-09-22T10:30:00-03:00
-weight: 30 
----
++++
+title = "Sprint 02: Continuação das pesquisas"
+date = 2025-09-22T10:30:00-03:00
+weight = 30 
++++
 
 ## Objetivo da Sprint
 

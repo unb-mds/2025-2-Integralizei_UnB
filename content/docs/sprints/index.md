@@ -1,9 +1,9 @@
 +++
 title = "Sprints do Projeto 🏃‍♂️"
 date = "2025-09-22T13:35:00-03:00"
-draft = false
 weight = 40
 toc = true
+draft = false
 +++
 
 Bem-vindo ao registro de Sprints do projeto **Integralizei UNB**.
@@ -26,8 +26,20 @@ Adotamos um framework ágil para garantir entregas contínuas e de alta qualidad
 
 Abaixo está a lista de todas as sprints executadas no projeto, com links para seus respectivos planejamentos e resultados.
 
+---
+### Artigos da Seção
+
 <ul>
   {{ range .Pages }}
     <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
   {{ end }}
 </ul>
+---
+## DEBUG: Listando sub-páginas encontradas
+
+<ul>
+{{ range .Pages }}
+    <li>Página Encontrada: <a href="{{ .RelPermalink }}">{{ .Title }}</a> (Arquivo: {{ .File.Path }})</li>
+{{ end }}
+</ul>
+---

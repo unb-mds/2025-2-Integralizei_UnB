@@ -1,5 +1,5 @@
 +++
-title = "Levantamento de Requisitos"
+title = "Requisitos"
 date = "2025-09-22T10:45:35-03:00"
 type = "page"
 +++
