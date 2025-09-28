@@ -53,7 +53,7 @@ export default function Header() {
   );
 }
 
-```css
+
 /* src/components/Header.module.css */
 
 .header {
