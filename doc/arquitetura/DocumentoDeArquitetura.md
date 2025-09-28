@@ -52,7 +52,7 @@ Mostra o sistema como uma "caixa-preta", suas interações com o usuário (Aluno
 ### Nível 2: Diagrama de Contêineres
 Apresenta os contêineres principais: SPA, Backend API e Banco de Dados.
 
-![Diagrama de Contêineres Nível 2](caminho/para/sua/imagem/diagrama-conteineres.png)
+![Diagrama de Contêineres Nível 2](https://github.com/unb-mds/2025-2-Integralizei_UnB/blob/f5715b4554a1efa46dd4e303a4812e12551f3f98/doc/Fotos/Diagramas/Diagrama2.png)
 
 ### Nível 3: Diagrama de Componentes
 Detalha os principais blocos internos do Backend API:
