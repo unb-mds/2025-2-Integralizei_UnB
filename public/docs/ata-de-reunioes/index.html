@@ -11,7 +11,7 @@
 <title>Atas de Reunião 📑 – Integralizei UNB - Documentação</title>
   <meta name="description" content="Bem-vindo ao arquivo de Atas de Reunião do projeto Integralizei UNB.
 Esta seção é o coração da nossa organização, servindo como um registro transparente de todas as decisões, debates e tarefas definidas em nossos encontros.
-Estrutura Padrão de uma AtaPara manter a clareza e a consistência, todas as nossas atas seguem uma estrutura bem definida:
+Estrutura Padrão de uma Ata Para manter a clareza e a consistência, todas as nossas atas seguem uma estrutura bem definida:
 Dados da Reunião: Informações essenciais como data, horário e participantes presentes." /><link rel="canonical" href="http://localhost:1313/2025-2-Integralizei_UnB/docs/ata-de-reunioes/" itemprop="url" />
 
 <meta property="og:title" content="Atas de Reunião 📑">
@@ -33,7 +33,7 @@ Dados da Reunião: Informações essenciais como data, horário e participantes 
   <meta itemprop="name" content="Atas de Reunião 📑">
   <meta itemprop="description" content="Bem-vindo ao arquivo de Atas de Reunião do projeto Integralizei UNB.
 Esta seção é o coração da nossa organização, servindo como um registro transparente de todas as decisões, debates e tarefas definidas em nossos encontros.
-Estrutura Padrão de uma AtaPara manter a clareza e a consistência, todas as nossas atas seguem uma estrutura bem definida:
+Estrutura Padrão de uma Ata Para manter a clareza e a consistência, todas as nossas atas seguem uma estrutura bem definida:
 Dados da Reunião: Informações essenciais como data, horário e participantes presentes.">
   <meta itemprop="datePublished" content="2025-09-22T13:16:00-03:00">
   <meta itemprop="dateModified" content="2025-09-22T13:16:00-03:00">
@@ -42,14 +42,41 @@ Dados da Reunião: Informações essenciais como data, horário e participantes 
   <meta name="twitter:title" content="Atas de Reunião 📑">
   <meta name="twitter:description" content="Bem-vindo ao arquivo de Atas de Reunião do projeto Integralizei UNB.
 Esta seção é o coração da nossa organização, servindo como um registro transparente de todas as decisões, debates e tarefas definidas em nossos encontros.
-Estrutura Padrão de uma AtaPara manter a clareza e a consistência, todas as nossas atas seguem uma estrutura bem definida:
+Estrutura Padrão de uma Ata Para manter a clareza e a consistência, todas as nossas atas seguem uma estrutura bem definida:
 Dados da Reunião: Informações essenciais como data, horário e participantes presentes.">
 <link href="/2025-2-Integralizei_UnB/css/compiled/main.css" rel="stylesheet" />
     <link href="/2025-2-Integralizei_UnB/css/variables.css" rel="stylesheet" />
     <link href="/2025-2-Integralizei_UnB/css/custom.css" rel="stylesheet" />
 
   
-<script src="/2025-2-Integralizei_UnB/js/main-head.js" integrity=""></script>
+
+
+  <script>
+    
+
+    function setTheme(theme) {
+      document.documentElement.classList.remove("light", "dark");
+
+      if (theme !== "light" && theme !== "dark") {
+       theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      }
+
+      document.documentElement.classList.add(theme);
+      document.documentElement.style.colorScheme = theme;
+    }
+
+    setTheme("color-theme" in localStorage ? localStorage.getItem("color-theme") : 'dark')
+
+  </script>
+
+  <script>
+    
+
+    if (localStorage.getItem('banner-closed')) {
+      document.documentElement.style.setProperty("--hextra-banner-height", "0px");
+      document.documentElement.classList.add("hextra-banner-hidden");
+    }
+  </script>
 
   
   

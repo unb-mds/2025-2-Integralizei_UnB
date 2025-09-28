@@ -2,9 +2,11 @@
 baseURL = 'https://unb-mds.github.io/2025-2-Integralizei_UnB/'
 languageCode = 'pt-br'
 title = 'Integralizei UNB - Documentação'
-theme = 'hextra'
 
-# hugo.toml - Seção [params] corrigida
+[module]
+[[module.imports]]
+  path = 'github.com/imfing/hextra'
+
 
 [params]
 

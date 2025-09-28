@@ -9,7 +9,7 @@
 <link rel="apple-touch-icon" href="/2025-2-Integralizei_UnB/apple-touch-icon.png" sizes="180x180" />
 <link fetchpriority="low" href="/2025-2-Integralizei_UnB/site.webmanifest" rel="manifest" />
 <title>Protótipo do Projeto – Integralizei UNB - Documentação</title>
-  <meta name="description" content="Protótipo de Baixa FidelidadeNossa equipe desenvolveu um protótipo interativo para demonstrar as funcionalidades e o fluxo de usuário.
+  <meta name="description" content="Protótipo de Baixa Fidelidade Nossa equipe desenvolveu um protótipo interativo para demonstrar as funcionalidades e o fluxo de usuário.
 Você pode acessá-lo no link abaixo:
 Acessar o Protótipo no Figma" /><link rel="canonical" href="http://localhost:1313/2025-2-Integralizei_UnB/docs/prototipo/" itemprop="url" />
 
@@ -30,7 +30,7 @@ Acessar o Protótipo no Figma" /><link rel="canonical" href="http://localhost:13
 
 
   <meta itemprop="name" content="Protótipo do Projeto">
-  <meta itemprop="description" content="Protótipo de Baixa FidelidadeNossa equipe desenvolveu um protótipo interativo para demonstrar as funcionalidades e o fluxo de usuário.
+  <meta itemprop="description" content="Protótipo de Baixa Fidelidade Nossa equipe desenvolveu um protótipo interativo para demonstrar as funcionalidades e o fluxo de usuário.
 Você pode acessá-lo no link abaixo:
 Acessar o Protótipo no Figma">
   <meta itemprop="datePublished" content="2025-09-22T11:35:00-03:00">
@@ -38,7 +38,7 @@ Acessar o Protótipo no Figma">
   <meta itemprop="wordCount" content="30">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Protótipo do Projeto">
-  <meta name="twitter:description" content="Protótipo de Baixa FidelidadeNossa equipe desenvolveu um protótipo interativo para demonstrar as funcionalidades e o fluxo de usuário.
+  <meta name="twitter:description" content="Protótipo de Baixa Fidelidade Nossa equipe desenvolveu um protótipo interativo para demonstrar as funcionalidades e o fluxo de usuário.
 Você pode acessá-lo no link abaixo:
 Acessar o Protótipo no Figma">
 <link href="/2025-2-Integralizei_UnB/css/compiled/main.css" rel="stylesheet" />
@@ -46,7 +46,34 @@ Acessar o Protótipo no Figma">
     <link href="/2025-2-Integralizei_UnB/css/custom.css" rel="stylesheet" />
 
   
-<script src="/2025-2-Integralizei_UnB/js/main-head.js" integrity=""></script>
+
+
+  <script>
+    
+
+    function setTheme(theme) {
+      document.documentElement.classList.remove("light", "dark");
+
+      if (theme !== "light" && theme !== "dark") {
+       theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      }
+
+      document.documentElement.classList.add(theme);
+      document.documentElement.style.colorScheme = theme;
+    }
+
+    setTheme("color-theme" in localStorage ? localStorage.getItem("color-theme") : 'dark')
+
+  </script>
+
+  <script>
+    
+
+    if (localStorage.getItem('banner-closed')) {
+      document.documentElement.style.setProperty("--hextra-banner-height", "0px");
+      document.documentElement.classList.add("hextra-banner-hidden");
+    }
+  </script>
 
   
   

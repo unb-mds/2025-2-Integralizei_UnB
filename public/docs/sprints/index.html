@@ -11,7 +11,7 @@
 <title>Sprints do Projeto 🏃‍♂️ – Integralizei UNB - Documentação</title>
   <meta name="description" content="Bem-vindo ao registro de Sprints do projeto Integralizei UNB.
 Esta seção é dedicada a documentar o ciclo de desenvolvimento iterativo e incremental do nosso projeto. Cada sprint representa um período focado de trabalho com o objetivo de entregar um incremento de valor ao produto final.
-Nossa Metodologia de SprintsAdotamos um framework ágil para garantir entregas contínuas e de alta qualidade. Nossas sprints são estruturadas da seguinte forma:" /><link rel="canonical" href="http://localhost:1313/2025-2-Integralizei_UnB/docs/sprints/" itemprop="url" />
+Nossa Metodologia de Sprints Adotamos um framework ágil para garantir entregas contínuas e de alta qualidade. Nossas sprints são estruturadas da seguinte forma:" /><link rel="canonical" href="http://localhost:1313/2025-2-Integralizei_UnB/docs/sprints/" itemprop="url" />
 
 <meta property="og:title" content="Sprints do Projeto 🏃‍♂️">
 <meta
@@ -46,7 +46,7 @@ Nossa Metodologia de Sprints
   <meta itemprop="name" content="Sprints do Projeto 🏃‍♂️">
   <meta itemprop="description" content="Bem-vindo ao registro de Sprints do projeto Integralizei UNB.
 Esta seção é dedicada a documentar o ciclo de desenvolvimento iterativo e incremental do nosso projeto. Cada sprint representa um período focado de trabalho com o objetivo de entregar um incremento de valor ao produto final.
-Nossa Metodologia de SprintsAdotamos um framework ágil para garantir entregas contínuas e de alta qualidade. Nossas sprints são estruturadas da seguinte forma:">
+Nossa Metodologia de Sprints Adotamos um framework ágil para garantir entregas contínuas e de alta qualidade. Nossas sprints são estruturadas da seguinte forma:">
   <meta itemprop="datePublished" content="2025-09-22T13:35:00-03:00">
   <meta itemprop="dateModified" content="2025-09-22T13:35:00-03:00">
   <meta itemprop="wordCount" content="216">
@@ -54,13 +54,40 @@ Nossa Metodologia de SprintsAdotamos um framework ágil para garantir entregas 
   <meta name="twitter:title" content="Sprints do Projeto 🏃‍♂️">
   <meta name="twitter:description" content="Bem-vindo ao registro de Sprints do projeto Integralizei UNB.
 Esta seção é dedicada a documentar o ciclo de desenvolvimento iterativo e incremental do nosso projeto. Cada sprint representa um período focado de trabalho com o objetivo de entregar um incremento de valor ao produto final.
-Nossa Metodologia de SprintsAdotamos um framework ágil para garantir entregas contínuas e de alta qualidade. Nossas sprints são estruturadas da seguinte forma:">
+Nossa Metodologia de Sprints Adotamos um framework ágil para garantir entregas contínuas e de alta qualidade. Nossas sprints são estruturadas da seguinte forma:">
 <link href="/2025-2-Integralizei_UnB/css/compiled/main.css" rel="stylesheet" />
     <link href="/2025-2-Integralizei_UnB/css/variables.css" rel="stylesheet" />
     <link href="/2025-2-Integralizei_UnB/css/custom.css" rel="stylesheet" />
 
   
-<script src="/2025-2-Integralizei_UnB/js/main-head.js" integrity=""></script>
+
+
+  <script>
+    
+
+    function setTheme(theme) {
+      document.documentElement.classList.remove("light", "dark");
+
+      if (theme !== "light" && theme !== "dark") {
+       theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      }
+
+      document.documentElement.classList.add(theme);
+      document.documentElement.style.colorScheme = theme;
+    }
+
+    setTheme("color-theme" in localStorage ? localStorage.getItem("color-theme") : 'dark')
+
+  </script>
+
+  <script>
+    
+
+    if (localStorage.getItem('banner-closed')) {
+      document.documentElement.style.setProperty("--hextra-banner-height", "0px");
+      document.documentElement.classList.add("hextra-banner-hidden");
+    }
+  </script>
 
   
   
