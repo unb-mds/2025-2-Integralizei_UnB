@@ -1,0 +1,151 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Integralizei UNB - Documentação – Docs</title>
+    <link>http://localhost:1313/2025-2-Integralizei_UnB/docs/</link>
+    <description>Recent content in Docs on Integralizei UNB - Documentação</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>pt-br</language>
+    <lastBuildDate>Mon, 22 Sep 2025 13:35:00 -0300</lastBuildDate>
+    
+	  <atom:link href="http://localhost:1313/2025-2-Integralizei_UnB/docs/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Reunião - 06/09/2025</title>
+      <link>http://localhost:1313/2025-2-Integralizei_UnB/docs/ata-de-reunioes/reuniao00/</link>
+      <pubDate>Mon, 22 Sep 2025 12:20:00 -0300</pubDate>
+      
+      <guid>http://localhost:1313/2025-2-Integralizei_UnB/docs/ata-de-reunioes/reuniao00/</guid>
+      <description>
+        
+        
+        &lt;h1&gt;📄 Ata da Reunião&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;Data:&lt;/strong&gt; 06/09/2025&lt;br&gt;
+&lt;strong&gt;Horário:&lt;/strong&gt; 10:30 - 11:30&lt;br&gt;
+&lt;strong&gt;Local:&lt;/strong&gt; Online&lt;/p&gt;
+&lt;h2&gt;👥 Participantes&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;-participantes&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#-participantes&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Ana Beatriz Souza&lt;/li&gt;
+&lt;li&gt;Ana Caroline Dantas&lt;/li&gt;
+&lt;li&gt;Enzo Menali Vettorato&lt;/li&gt;
+&lt;li&gt;Gustavo Gomes&lt;/li&gt;
+&lt;li&gt;Paulo Vitor Gomes&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2&gt;📌 Pauta da Reunião&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;-pauta-da-reunião&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#-pauta-da-reuni%c3%a3o&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Benchmark de requisitos de outros projetos&lt;/li&gt;
+&lt;li&gt;Elaboração inicial dos requisitos funcionais e não funcionais do projeto&lt;/li&gt;
+&lt;li&gt;Definição das próximas issues e milestones&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2&gt;💬 Deliberações e Discussões&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;-deliberações-e-discussões&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#-delibera%c3%a7%c3%b5es-e-discuss%c3%b5es&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Realizado um benchmark de requisitos de projetos anteriores e/ou similares, identificando boas práticas e pontos de melhoria.&lt;/li&gt;
+&lt;li&gt;Foram levantados e documentados os primeiros requisitos funcionais e não funcionais, servindo como base para o desenvolvimento inicial.&lt;/li&gt;
+&lt;li&gt;Estabelecimento das próximas issues e milestones que orientarão o cronograma do projeto.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2&gt;✅ Encaminhamentos&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;-encaminhamentos&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#-encaminhamentos&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Consolidar os requisitos documentados na ferramenta de gestão do projeto&lt;/li&gt;
+&lt;li&gt;Detalhar e atribuir responsáveis às issues definidas&lt;/li&gt;
+&lt;li&gt;Atualizar o cronograma do projeto com as milestones acordadas&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2&gt;📅 Próxima Reunião&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;-próxima-reunião&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#-pr%c3%b3xima-reuni%c3%a3o&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Data prevista:&lt;/strong&gt; 10/09/2025&lt;br&gt;
+&lt;strong&gt;Pauta inicial:&lt;/strong&gt; acompanhamento da execução das issues e validação dos requisitos&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2&gt;🔚 Encerramento&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;-encerramento&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#-encerramento&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Nada mais havendo a tratar, a reunião foi encerrada.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Sprints do Projeto 🏃‍♂️</title>
+      <link>http://localhost:1313/2025-2-Integralizei_UnB/docs/sprints/</link>
+      <pubDate>Mon, 22 Sep 2025 13:35:00 -0300</pubDate>
+      
+      <guid>http://localhost:1313/2025-2-Integralizei_UnB/docs/sprints/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Bem-vindo ao registro de Sprints do projeto &lt;strong&gt;Integralizei UNB&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Esta seção é dedicada a documentar o ciclo de desenvolvimento iterativo e incremental do nosso projeto. Cada sprint representa um período focado de trabalho com o objetivo de entregar um incremento de valor ao produto final.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3&gt;Nossa Metodologia de Sprints&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;nossa-metodologia-de-sprints&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#nossa-metodologia-de-sprints&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Adotamos um framework ágil para garantir entregas contínuas e de alta qualidade. Nossas sprints são estruturadas da seguinte forma:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Duração:&lt;/strong&gt; Cada sprint tem a duração de uma semana, começando na segunda-feira e terminando no domingo.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Planejamento (Planning):&lt;/strong&gt; No início de cada sprint, a equipe se reúne para definir as metas e selecionar as tarefas do backlog que serão desenvolvidas.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Execução:&lt;/strong&gt; Durante a semana, a equipe trabalha nas tarefas definidas.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Revisão (Review):&lt;/strong&gt; Ao final da sprint, apresentamos o que foi concluído para validar o incremento de software.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Retrospectiva:&lt;/strong&gt; Após a revisão, a equipe discute o que correu bem, o que pode ser melhorado e define ações para o próximo ciclo.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Histórico de Sprints&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;histórico-de-sprints&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#hist%c3%b3rico-de-sprints&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Abaixo está a lista de todas as sprints executadas no projeto, com links para seus respectivos planejamentos e resultados.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3&gt;Artigos da Seção&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;artigos-da-seção&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#artigos-da-se%c3%a7%c3%a3o&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
+  {{ range .Pages }}
+    &lt;li&gt;&lt;a href=&#34;{{ .RelPermalink }}&#34;&gt;{{ .Title }}&lt;/a&gt;&lt;/li&gt;
+  {{ end }}
+&lt;/ul&gt;
+---
+## DEBUG: Listando sub-páginas encontradas
+&lt;ul&gt;
+{{ range .Pages }}
+    &lt;li&gt;Página Encontrada: &lt;a href=&#34;{{ .RelPermalink }}&#34;&gt;{{ .Title }}&lt;/a&gt; (Arquivo: {{ .File.Path }})&lt;/li&gt;
+{{ end }}
+&lt;/ul&gt;
+---
+      </description>
+    </item>
+    
+    <item>
+      <title>Arquitetura do Sistema 🏗️</title>
+      <link>http://localhost:1313/2025-2-Integralizei_UnB/docs/arquitetura/</link>
+      <pubDate>Mon, 22 Sep 2025 13:22:00 -0300</pubDate>
+      
+      <guid>http://localhost:1313/2025-2-Integralizei_UnB/docs/arquitetura/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Bem-vindo à documentação da arquitetura do projeto &lt;strong&gt;Integralizei UNB&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Esta seção detalha a estrutura técnica, as tecnologias escolhidas e as decisões de design que formam a espinha dorsal da nossa aplicação. O objetivo é fornecer uma visão clara de como os componentes do sistema se conectam e operam.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3&gt;Pilares da Nossa Arquitetura&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;pilares-da-nossa-arquitetura&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#pilares-da-nossa-arquitetura&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;A construção do nosso sistema foi guiada por quatro princípios fundamentais para garantir um produto robusto, seguro e eficiente.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Modularidade:&lt;/strong&gt; Cada componente do backend (coleta, extração, armazenamento e análise) foi projetado para operar de forma independente. Isso facilita a manutenção, o teste e futuras atualizações sem impactar o resto do sistema.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Escalabilidade:&lt;/strong&gt; A arquitetura foi pensada para suportar um número crescente de usuários e um volume cada vez maior de dados de históricos, garantindo que a performance não seja degradada com o tempo.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Segurança e Privacidade:&lt;/strong&gt; A proteção dos dados do usuário é nossa maior prioridade. Implementamos uma política de descarte imediato de dados sensíveis e utilizamos as melhores práticas para o armazenamento seguro das informações relevantes.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Acurácia:&lt;/strong&gt; A escolha de usar um agente de IA para a extração de dados foi uma decisão estratégica para garantir a máxima precisão na leitura dos diferentes formatos de históricos, que é o núcleo da nossa funcionalidade.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;Diagrama da Arquitetura&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;diagrama-da-arquitetura&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#diagrama-da-arquitetura&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;A imagem abaixo ilustra o fluxo de dados e a interação entre os principais componentes do nosso sistema.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/2025-2-Integralizei_UnB/images/diagrama-arquitetura.png&#34; alt=&#34;Diagrama da Arquitetura do Integralizei UNB&#34;  loading=&#34;lazy&#34; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+  {{ range .Pages }}
+    &lt;li&gt;&lt;a href=&#34;{{ .RelPermalink }}&#34;&gt;{{ .Title }}&lt;/a&gt;&lt;/li&gt;
+  {{ end }}
+&lt;/ul&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

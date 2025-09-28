@@ -1,0 +1,102 @@
+# hugo.toml - Versão com a sintaxe corrigida
+baseURL = 'https://unb-mds.github.io/2025-2-Integralizei_UnB/'
+languageCode = 'pt-br'
+title = 'Integralizei UNB - Documentação'
+theme = 'hextra'
+
+# hugo.toml - Seção [params] corrigida
+
+[params]
+
+  [params.sidebar]
+    display = "tree"
+    autoClose = false
+
+  [params.navbar]
+    displayTitle = true
+    displayLogo = false
+
+  [params.footer]
+    displayCopyright = true
+    displayPoweredBy = true
+
+  [params.editURL]
+    enable = true
+    base = "https://github.com/unb-mds/2025-2-Integralizei_UnB/tree/main/content"
+
+  [params.page]
+    [params.page.toc]
+      enable = true
+
+  [params.theme]
+    displayToggle = true
+    default = "dark"
+
+  [params.search]
+    enable = true
+
+
+# --- Seção de Menu Principal ATUALIZADA ---
+[[menu.main]]
+  name = "Início"
+  url = "/"
+  weight = 10
+
+[[menu.main]]
+  name = "Levantamento de Requisitos"
+  url = "/docs/levantamento-de-requisitos/"
+  weight = 20
+
+[[menu.main]]
+  name = "Planejamento"
+  url = "/docs/planejamento/"
+  weight = 30
+
+[[menu.main]]
+  name = "Sprints"
+  url = "/docs/sprints/"
+  weight = 40
+
+[[menu.main]]
+  name = "Protótipo"
+  url = "/docs/prototipo/"
+  weight = 50
+
+[[menu.main]]
+  name = "Arquitetura"
+  url = "/docs/arquitetura/"
+  weight = 60
+
+[[menu.main]]
+  name = "Story Map"
+  url = "/docs/story-map/"
+  weight = 70
+
+[[menu.main]]
+  name = "Ata de Reuniões"
+  url = "/docs/ata-de-reunioes/"
+  weight = 80
+
+[[menu.main]]
+  name = "Theme Toggle"
+  weight = 90
+  [menu.main.params]
+    type = "theme-toggle"
+
+[[menu.main]]
+  name = "Search"
+  weight = 100
+  [menu.main.params]
+    type = "search"
+
+[[menu.main]]
+  name = "GitHub"
+  weight = 110
+  url = "https://github.com/unb-mds/2025-2-Integralizei_UnB"
+  [menu.main.params]
+    icon = "github"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
