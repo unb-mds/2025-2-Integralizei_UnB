@@ -62,7 +62,7 @@ Detalha os principais blocos internos do Backend API:
 * **Ranking & Analysis Service:** calcula integralização, IRA, verifica viabilidade de disciplinas e optativas.  
 * **History Repository:** consulta dados históricos do banco para análise comparativa.  
 
-![Diagrama de Componentes Nível 3](caminho/para/sua/imagem/diagrama-componentes.png)
+![Diagrama de Componentes Nível 3](https://github.com/unb-mds/2025-2-Integralizei_UnB/blob/cca0a92cb81c3b074f2774e294b4547920b222cb/doc/Fotos/Diagramas/Diagrama3.png)
 
 ---
 
