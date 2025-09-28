@@ -18,7 +18,7 @@ O **Next.js** é um framework em cima do **React** que organiza o projeto em **p
 
 ---
  exemplo de header do site
-// src/components/Header.js
+//src/components/Header.js
 
 import Link from 'next/link';
 import styles from './Header.module.css';
@@ -114,3 +114,4 @@ export default function Header() {
 .ctaButton:hover {
   background-color: #d6d6d6;
 }
+
