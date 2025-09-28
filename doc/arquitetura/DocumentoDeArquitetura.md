@@ -47,7 +47,7 @@ Para atingir esses objetivos, adotamos:
 ### Nível 1: Diagrama de Contexto
 Mostra o sistema como uma "caixa-preta", suas interações com o usuário (Aluno) e sistemas externos.
 
-![Diagrama de Contexto Nível 1](caminho/para/sua/imagem/diagrama-contexto.png)
+![Diagrama de Contexto Nível 1](https://github.com/unb-mds/2025-2-Integralizei_UnB/blob/292800e9dd7cd3b7097944546f4675c81f4699f7/doc/Fotos/Diagramas/Diagrama1.png)
 
 ### Nível 2: Diagrama de Contêineres
 Apresenta os contêineres principais: SPA, Backend API e Banco de Dados.
