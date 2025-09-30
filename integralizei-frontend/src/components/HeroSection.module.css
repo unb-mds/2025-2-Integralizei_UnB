@@ -1,0 +1,59 @@
+/* components/HeroSection.module.css */
+
+.hero {
+  /* Usa Flexbox para criar duas colunas */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4rem; /* Espaçamento entre as duas colunas */
+  padding: 4rem 2.5rem;
+  max-width: 1200px;
+  margin: 0 auto; /* Centraliza a seção na página */
+}
+
+/* Lado Esquerdo: Conteúdo (Texto e Botão) */
+.contentContainer {
+  flex: 1; /* Permite que ocupe a metade do espaço */
+  max-width: 50%;
+  color: #333;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  color: #1a1a1a;
+}
+
+.text {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+/* Lado Direito: Placeholder para Imagem */
+.imagePlaceholder {
+  flex: 1; /* Ocupa a outra metade do espaço */
+  min-height: 400px; /* Altura para simular o espaço da imagem */
+  background-color: #f7f7f7; /* Cor clara para simular a área */
+  border-radius: 8px;
+  /* Remove a linha abaixo quando adicionar a imagem real */
+  border: 1px dashed #ccc; 
+}
+
+/* Estilo do Botão "Saiba mais" */
+.button {
+  display: inline-block;
+  padding: 0.8rem 2.5rem;
+  background-color: black;
+  color: white;
+  border-radius: 4px;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+}
+
+.button:hover {
+  background-color: #333;
+}
