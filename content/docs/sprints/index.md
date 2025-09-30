@@ -7,10 +7,12 @@ draft = false
 +++
 
 Bem-vindo ao registro de Sprints do projeto **Integralizei UNB**.
+
 Esta seção é dedicada a documentar o ciclo de desenvolvimento iterativo e incremental do nosso projeto.
 
 ---
 ### Nossa Metodologia de Sprints
+
 Adotamos um framework ágil para garantir entregas contínuas e de alta qualidade.
 - **Duração:** Cada sprint tem a duração de uma semana.
 - **Planejamento (Planning):** No início de cada sprint, a equipe define as metas.
@@ -19,6 +21,7 @@ Adotamos um framework ágil para garantir entregas contínuas e de alta qualidad
 - **Retrospectiva:** A equipe discute o que pode ser melhorado.
 
 ### Histórico de Sprints
+
 Abaixo está a lista de todas as sprints executadas no projeto.
 
 <ul>
