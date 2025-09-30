@@ -24,8 +24,4 @@ Adotamos um framework ágil para garantir entregas contínuas e de alta qualidad
 
 Abaixo está a lista de todas as sprints executadas no projeto.
 
-<ul>
-  {{ range .Pages }}
-    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
-  {{ end }}
-</ul>
+{{<list-children>}}
