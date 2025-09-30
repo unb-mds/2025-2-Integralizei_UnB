@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integralizei UNB - Upload de Histórico</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Integralizei UNB</h1>
+        <p>Envie seu histórico acadêmico em PDF:</p>
+        <small>Seus dados serão processados com segurança e não serão armazenados permanentemente.</small>
+
+        <form id="upload-form" action="/upload" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".pdf" required>
+            <button type="submit">Enviar Arquivo</button>
+        </form>
+
+        {% if message %}
+        <div id="confirmation">
+            <p>{{ message }}</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+.env.local
+
+uploads/
+data.json
+*.db
+instance/*.db
+
+node_modules/
+.next/
+dist/
