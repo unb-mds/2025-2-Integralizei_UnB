@@ -1,0 +1,84 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Integralizei UNB - Documentação – Arquiteturas</title>
+    <link>http://localhost:1313/2025-2-Integralizei_UnB/arquitetura/</link>
+    <description>Recent content in Arquiteturas on Integralizei UNB - Documentação</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>pt-br</language>
+    <lastBuildDate>Mon, 22 Sep 2025 12:20:00 -0300</lastBuildDate>
+    
+	  <atom:link href="http://localhost:1313/2025-2-Integralizei_UnB/arquitetura/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Coleta de Dados</title>
+      <link>http://localhost:1313/2025-2-Integralizei_UnB/arquitetura/coleta-de-dados/</link>
+      <pubDate>Mon, 22 Sep 2025 12:20:00 -0300</pubDate>
+      
+      <guid>http://localhost:1313/2025-2-Integralizei_UnB/arquitetura/coleta-de-dados/</guid>
+      <description>
+        
+        
+        &lt;h3&gt;1 - Coleta de dados&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;1---coleta-de-dados&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#1---coleta-de-dados&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;O sucesso da nossa análise depende da qualidade e quantidade de dados. Nossa estratégia de coleta será dividida em duas fases:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Fase 1 (Pré-lançamento):&lt;/strong&gt; Iniciaremos com uma base de dados menor, coletada através de envios voluntários. Isso nos permitirá treinar nossos modelos e garantir que a plataforma já seja útil desde o primeiro dia.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Fase 2 (Site ativo):&lt;/strong&gt; Com o site no ar, os próprios usuários poderão fazer o upload de seus históricos. Este processo será simples, rápido e seguro.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;O tratamento dos dados é de extrema importância, dados sensíveis como nome, CPF e matrícula são &lt;strong&gt;imediatamente descartados&lt;/strong&gt; e nunca armazenados.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Extração de Dados</title>
+      <link>http://localhost:1313/2025-2-Integralizei_UnB/arquitetura/extracao-com-ia/</link>
+      <pubDate>Mon, 22 Sep 2025 12:20:00 -0300</pubDate>
+      
+      <guid>http://localhost:1313/2025-2-Integralizei_UnB/arquitetura/extracao-com-ia/</guid>
+      <description>
+        
+        
+        &lt;h3&gt;2 - Extração de dados&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;2---extração-de-dados&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#2---extra%c3%a7%c3%a3o-de-dados&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;A fase de extração de informações é a mais crítica, já que os históricos em PDF possuem estruturas inconsistentes que dificultam a leitura por um software comum. Para resolver esse problema, utilizaremos um agente de Inteligência Artificial. Ele será capaz de analisar o PDF e facilmente nos devolver os dados que precisamos no formato necessário.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Lógica de Análise</title>
+      <link>http://localhost:1313/2025-2-Integralizei_UnB/arquitetura/logica-de-analise/</link>
+      <pubDate>Mon, 22 Sep 2025 12:20:00 -0300</pubDate>
+      
+      <guid>http://localhost:1313/2025-2-Integralizei_UnB/arquitetura/logica-de-analise/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Para comparar os dados dos usuários utilizaremos o sistema oficial de “ranqueamento” da UNB:
+&lt;img src=&#34;C:%5cIntegralizei_UNB_Novo%5cstatic%5cimages.png&#34; alt=&#34;Fórmula de Ranqueamento da UNB&#34;  loading=&#34;lazy&#34; /&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Armazenamento de Dados</title>
+      <link>http://localhost:1313/2025-2-Integralizei_UnB/arquitetura/armazenamento/</link>
+      <pubDate>Mon, 22 Sep 2025 12:20:00 -0300</pubDate>
+      
+      <guid>http://localhost:1313/2025-2-Integralizei_UnB/arquitetura/armazenamento/</guid>
+      <description>
+        
+        
+        &lt;h3&gt;3 - Armazenamento de dados&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;3---armazenamento-de-dados&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#3---armazenamento-de-dados&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Os dados extraídos precisam ser organizados em um banco de dados para que possam ser consultados de forma eficiente. Um banco de dados relacional (SQL), ainda estamos vendo quais bancos usaremos.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

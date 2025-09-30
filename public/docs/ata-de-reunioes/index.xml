@@ -1,0 +1,71 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Integralizei UNB - Documentação – Atas de Reunião 📑</title>
+    <link>http://localhost:1313/2025-2-Integralizei_UnB/docs/ata-de-reunioes/</link>
+    <description>Recent content in Atas de Reunião 📑 on Integralizei UNB - Documentação</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>pt-br</language>
+    <lastBuildDate>Mon, 22 Sep 2025 13:16:00 -0300</lastBuildDate>
+    
+	  <atom:link href="http://localhost:1313/2025-2-Integralizei_UnB/docs/ata-de-reunioes/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Reunião - 06/09/2025</title>
+      <link>http://localhost:1313/2025-2-Integralizei_UnB/docs/ata-de-reunioes/reuniao00/</link>
+      <pubDate>Mon, 22 Sep 2025 12:20:00 -0300</pubDate>
+      
+      <guid>http://localhost:1313/2025-2-Integralizei_UnB/docs/ata-de-reunioes/reuniao00/</guid>
+      <description>
+        
+        
+        &lt;h1&gt;📄 Ata da Reunião&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;Data:&lt;/strong&gt; 06/09/2025&lt;br&gt;
+&lt;strong&gt;Horário:&lt;/strong&gt; 10:30 - 11:30&lt;br&gt;
+&lt;strong&gt;Local:&lt;/strong&gt; Online&lt;/p&gt;
+&lt;h2&gt;👥 Participantes&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;-participantes&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#-participantes&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Ana Beatriz Souza&lt;/li&gt;
+&lt;li&gt;Ana Caroline Dantas&lt;/li&gt;
+&lt;li&gt;Enzo Menali Vettorato&lt;/li&gt;
+&lt;li&gt;Gustavo Gomes&lt;/li&gt;
+&lt;li&gt;Paulo Vitor Gomes&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2&gt;📌 Pauta da Reunião&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;-pauta-da-reunião&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#-pauta-da-reuni%c3%a3o&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Benchmark de requisitos de outros projetos&lt;/li&gt;
+&lt;li&gt;Elaboração inicial dos requisitos funcionais e não funcionais do projeto&lt;/li&gt;
+&lt;li&gt;Definição das próximas issues e milestones&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2&gt;💬 Deliberações e Discussões&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;-deliberações-e-discussões&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#-delibera%c3%a7%c3%b5es-e-discuss%c3%b5es&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Realizado um benchmark de requisitos de projetos anteriores e/ou similares, identificando boas práticas e pontos de melhoria.&lt;/li&gt;
+&lt;li&gt;Foram levantados e documentados os primeiros requisitos funcionais e não funcionais, servindo como base para o desenvolvimento inicial.&lt;/li&gt;
+&lt;li&gt;Estabelecimento das próximas issues e milestones que orientarão o cronograma do projeto.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2&gt;✅ Encaminhamentos&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;-encaminhamentos&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#-encaminhamentos&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Consolidar os requisitos documentados na ferramenta de gestão do projeto&lt;/li&gt;
+&lt;li&gt;Detalhar e atribuir responsáveis às issues definidas&lt;/li&gt;
+&lt;li&gt;Atualizar o cronograma do projeto com as milestones acordadas&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2&gt;📅 Próxima Reunião&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;-próxima-reunião&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#-pr%c3%b3xima-reuni%c3%a3o&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Data prevista:&lt;/strong&gt; 10/09/2025&lt;br&gt;
+&lt;strong&gt;Pauta inicial:&lt;/strong&gt; acompanhamento da execução das issues e validação dos requisitos&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2&gt;🔚 Encerramento&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;-encerramento&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#-encerramento&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Nada mais havendo a tratar, a reunião foi encerrada.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>
