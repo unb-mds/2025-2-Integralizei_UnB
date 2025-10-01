@@ -19,10 +19,10 @@ Adotamos um framework ágil para garantir entregas contínuas e de alta qualidad
 - **Retrospectiva:** A equipe discute o que pode ser melhorado.
 
 ### Histórico de Sprints
-Abaixo está a lista de todas as sprints executadas no projeto.
+Abaixo está a lista de todas as sprints executadas no projeto, com links para seus respectivos planejamentos e resultados.
 
-<ul>
-  {{ range .Pages }}
-    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
-  {{ end }}
-</ul>
+- **[Sprint 00: Iniciação e Pesquisa](/docs/sprints/sprint-00/)**
+- **[Sprint 01: Estruturação e Definição do Projeto](/docs/sprints/sprint-01/)**
+- **[Sprint 02: Aprofundamento Técnico e Benchmarking](/docs/sprints/sprint-02/)**
+- **[Sprint 03: Primeiras Implementações e Arquitetura](/docs/sprints/sprint-03/)**
+- **[Sprint 04: Refinamento para a Release 1](/docs/sprints/sprint-04/)**

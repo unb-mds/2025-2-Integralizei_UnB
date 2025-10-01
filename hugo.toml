@@ -45,7 +45,7 @@ title = 'Integralizei UNB - Documentação'
   weight = 10
 
 [[menu.main]]
-  name = "Levantamento de Requisitos"
+  name = "Requisitos"
   url = "/docs/levantamento-de-requisitos/"
   weight = 20
 

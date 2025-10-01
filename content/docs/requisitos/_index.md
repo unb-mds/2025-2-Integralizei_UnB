@@ -1,39 +1,45 @@
 +++
-title = "Requisitos"
+title = "Requisitos do Projeto"
 date = "2025-09-22T10:45:35-03:00"
 type = "page"
 +++
 
-## Funcionalidades (Requisitos Funcionais)
-Os requisitos funcionais descrevem o que o sistema deve fazer, ou seja, suas funcionalidades, serviços e comportamentos esperados.
+## Funcionais ✅
+*O que o sistema deve fazer.*
 
-### Lista
-- Login com Conta no Google
-- Recebimento do histórico
-- Tutorial de como baixar seu histórico (abaixo do upload do histórico)
-- Cálculo da integralização/IRA retroativas (semestres anteriores)
-- Divisão das matérias por professor
-- Sistema de rankeamento
-- Calcular a média de integralização e IRA
-- Pesquisa de matérias
-- Recomendações: obrigatórias e optativas
-- Cálculo de integralização futura
-- Armazenamento de dados
-- Reciclagem de histórico
-- Favoritar matérias
+- [x] Login com Conta no Google
+- [x] Recebimento do histórico
+- [x] Tutorial de como baixar seu histórico (abaixo do upload do histórico)
+- [x] Cálculo da integralização/IRA retroativas (semestres anteriores)
+- [x] Divisão das matérias por professor
+- [x] Sistema de rankeamento
+- [x] Calcular a média de integralização e IRA
+- [x] Pesquisa de matérias
+- [x] Recomendações: obrigatórias e optativas
+- [x] Cálculo de integralização futura
+- [x] Armazenamento de dados
+- [x] Reciclagem de histórico
+- [x] Favoritar matérias
 
-## Não Funcionalidades
+---
+
+## Fora de Escopo ❌
+*O que o sistema deliberadamente **não** fará.*
+
 - Montar grade e fluxo
 - ChatBot
 - Salvar dados sensíveis
 - Avaliação de professores
 
-## Requisitos Não Funcionais
-Os requisitos não funcionais descrevem como o sistema deve funcionar, incluindo restrições de desempenho, segurança, compatibilidade e usabilidade.
+---
 
-- Navegador: Google Chrome
-- Segurança de dados e criptografia
-- Garantia de acurácia acima de 95% na extração de dados dos históricos em PDF
-- Interface intuitiva, com clareza e organização
-- Leitura dos dados no intervalo:  
-  $A = \{x \in \mathbb{Z} \mid 2 \leq x \leq 15\}, \text{ em que } x \text{ é dado em segundos}$
+## Não Funcionais ⚙️
+*Os critérios de qualidade e restrições do sistema.*
+
+| Categoria | Requisito | Critério de Aceite |
+| :--- | :--- | :--- |
+| **Compatibilidade** | Navegador | O sistema deve ser totalmente funcional na versão mais recente do Google Chrome. |
+| **Segurança** | Proteção de Dados | Todos os dados de análise devem ser processados de forma anônima e segura, com criptografia em trânsito. |
+| **Performance** | Extração de Dados | Acurácia na extração de dados do PDF deve ser **superior a 95%**. |
+| **Performance** | Tempo de Resposta | O tempo entre o upload e a exibição dos resultados deve estar no intervalo:<br>**A = {x ∈ ℤ | 2 ≤ x ≤ 15}**, em segundos. |
+| **Usabilidade** | Interface | A interface deve ser intuitiva, com clareza visual e organização lógica das informações. |
