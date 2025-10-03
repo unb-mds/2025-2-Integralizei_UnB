@@ -1,0 +1,33 @@
++++
+title = "Reunião - 18/09/2025"
+date = "2025-09-22T12:20:00-03:00"
+weight = 30
++++
+
+# 📄 Ata da Reunião
+
+**Data:** 18/09/2025  
+**Horário:** 20:00 - 20:20  
+**Local:** Online  
+
+## 👥 Participantes
+- Ana Beatriz Souza  
+- Ana Caroline Dantas
+- Caroline Becker
+- Enzo Menali Vettorato  
+- Gustavo Gomes  
+- Paulo Vitor Gomes  
+
+---
+
+## 📌 Pauta da Reunião
+- Definição das issues da semana 
+- Reorganização da documentação no github
+- Reforço das praticas do scrum
+
+
+---
+
+## 📅 Próxima Reunião
+**Data prevista:** 21/09/2025  
+**Pauta inicial:** Decisão de issues

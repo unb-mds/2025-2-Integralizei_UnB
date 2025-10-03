@@ -71,7 +71,8 @@ Ela serve como um ponto de partida para entender a visão do produto, a jornada 
     </div>
   </a>
 
-  <a class="card-custom" href="#">
+ <div class="card-container">
+  <a class="card-custom" href="{{< relref "/docs/arquitetura/adr001" >}}">
     <div class="icon">💡</div>
     <div class="text-content">
       <div class="title">Decisões de Arquitetura (ADRs)</div>

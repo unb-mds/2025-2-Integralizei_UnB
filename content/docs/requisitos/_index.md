@@ -1,5 +1,5 @@
 +++
-title = "Requisitos do Projeto"
+title = "Requisitos"
 date = "2025-09-22T10:45:35-03:00"
 type = "page"
 +++
@@ -41,5 +41,5 @@ type = "page"
 | **Compatibilidade** | Navegador | O sistema deve ser totalmente funcional na versão mais recente do Google Chrome. |
 | **Segurança** | Proteção de Dados | Todos os dados de análise devem ser processados de forma anônima e segura, com criptografia em trânsito. |
 | **Performance** | Extração de Dados | Acurácia na extração de dados do PDF deve ser **superior a 95%**. |
-| **Performance** | Tempo de Resposta | O tempo entre o upload e a exibição dos resultados deve estar no intervalo:<br>**A = {x ∈ ℤ | 2 ≤ x ≤ 15}**, em segundos. |
+| **Performance** | Tempo de Resposta | O tempo entre o upload e a exibição dos resultados deve estar no intervalo:<br>>**A = {x ∈ ℤ | 2 ≤ x ≤ 15}**, em segundos.
 | **Usabilidade** | Interface | A interface deve ser intuitiva, com clareza visual e organização lógica das informações. |
