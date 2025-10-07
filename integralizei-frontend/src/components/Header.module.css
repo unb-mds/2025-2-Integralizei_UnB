@@ -1,0 +1,41 @@
+/* components/Header.module.css */
+
+.header {
+  /* Usa Flexbox para alinhamento e espaçamento */
+  display: flex;
+  justify-content: space-between; /* Empurra o logo para esquerda e o botão para direita */
+  align-items: center;
+  padding: 0.8rem 2.5rem; 
+  background-color: white; 
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08); 
+  font-family: sans-serif;
+}
+
+/* Estilo do Logo/Título */
+.logoLink {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #030404; /* Verde UnB */
+  text-decoration: none;
+}
+
+/* Estilo do Botão */
+.button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #000000;
+  color: white;
+  border-radius: 4px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.button:hover {
+  background-color: #007947;
+}
+
+/* Opcional: Estilo da Navegação (apenas para organização, não faz muito visualmente neste caso) */
+.nav {
+  /* Pode ser usado para agrupar elementos futuros, se necessário */
+}
