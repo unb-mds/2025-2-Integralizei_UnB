@@ -1,0 +1,81 @@
+/* ===== Estilos da barra de pesquisa ===== */
+.searchContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.searchInput {
+  padding: 12px 16px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  width: 300px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.searchInput:focus {
+  border-color: #006633; /* cor da UnB */
+}
+
+/* Botão da barra de pesquisa */
+.searchButton {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #006633 0%, #003366 100%);
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.searchButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Ícone dentro do botão */
+.searchButton svg {
+  width: 22px;
+  height: 22px;
+  fill: white;
+}
+
+/* ===== Estilos gerais da página ===== */
+.pageContainer {
+  padding: 40px;
+  background-color: #f0f0f0;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+.error {
+  color: red;
+  margin-top: 10px;
+}
+
+.results {
+  margin-top: 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.turmaCard {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  margin-top: 10px;
+}
