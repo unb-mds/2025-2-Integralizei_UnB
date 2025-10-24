@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import styles from "./paginaturmas.module.css";
-
 
 export default function Page() {
   const [search, setSearch] = useState("");
@@ -44,86 +42,89 @@ export default function Page() {
   }
 
   return (
-    <div>
-  {/* Barra de Pesquisa */}
-  <div className={styles.searchContainer}>
-    <input
-      type="text"
-      className={styles.searchInput}
-      placeholder="Código ou nome da disciplina"
-      value={search}
-      onChange={(e) => setSearch(e.target.value)}
-    />
+    <div style={{ padding: "20px" }}>
+      <h1>Busca de Disciplinas</h1>
 
-    <input
-      type="number"
-      className={styles.searchInput}
-      placeholder="Ano"
-      value={year}
-      onChange={(e) => setYear(parseInt(e.target.value))}
-      style={{ width: "80px" }}
-    />
+      <div>
+        <input
+          type="text"
+          placeholder="Código ou nome da disciplina"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          style={{ marginRight: "10px" }}
+        />
+        <input
+          type="number"
+          placeholder="Ano"
+          value={year}
+          onChange={(e) => setYear(parseInt(e.target.value))}
+          style={{ marginRight: "10px", width: "80px" }}
+        />
+        <input
+          type="number"
+          placeholder="Período"
+          value={period}
+          onChange={(e) => setPeriod(parseInt(e.target.value))}
+          style={{ marginRight: "10px", width: "80px" }}
+        />
+        <button onClick={handleSearch}>Buscar</button>
+      </div>
 
-    <input
-      type="number"
-      className={styles.searchInput}
-      placeholder="Período"
-      value={period}
-      onChange={(e) => setPeriod(parseInt(e.target.value))}
-      style={{ width: "80px" }}
-    />
+      {error && <p style={{ color: "red" }}>{error}</p>}
 
-    <button className={styles.searchButton} onClick={handleSearch}>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 
-          6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79
-          l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 
-          5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
-      </svg>
-    </button>
-  </div>
+      <div style={{ marginTop: "20px" }}>
+        {disciplinas.length === 0 ? (
+          <p>Nenhuma disciplina encontrada.</p>
+        ) : (
+          disciplinas.map((disciplina) => (
+            <div key={disciplina.id} style={{ marginBottom: "20px" }}>
+              <h2>{disciplina.name}</h2>
+              <p>
+                <strong>Código:</strong> {disciplina.code}
+              </p>
+              <p>
+                <strong>Departamento:</strong>{" "}
+                {disciplina.department?.code}
+              </p>
 
-  {/* Mensagem de erro */}
-  {error && <p style={{ color: "red" }}>{error}</p>}
-
-  {/* Resultados */}
-  <div style={{ marginTop: "20px" }}>
-    {disciplinas.length === 0 ? (
-      <p>Nenhuma disciplina encontrada.</p>
-    ) : (
-      disciplinas.map((disciplina) => (
-        <div key={disciplina.id} style={{ marginBottom: "20px" }}>
-          <h2>{disciplina.name}</h2>
-          <p><strong>Código:</strong> {disciplina.code}</p>
-          <p><strong>Departamento:</strong> {disciplina.department?.code}</p>
-
-          {disciplina.classes && disciplina.classes.length > 0 ? (
-            <div style={{ marginLeft: "20px" }}>
-              <h3>Turmas:</h3>
-              {disciplina.classes.map((turma: any, index: number) => (
-                <div
-                  key={index}
-                  style={{
-                    border: "1px solid #ccc",
-                    padding: "10px",
-                    marginBottom: "10px",
-                  }}
-                >
-                  <p><strong>Turma:</strong> {turma._class}</p>
-                  <p><strong>Professores:</strong> {turma.teachers.join(", ")}</p>
-                  <p><strong>Sala:</strong> {turma.classroom}</p>
-                  <p><strong>Horário:</strong> {turma.schedule}</p>
-                  <p><strong>Dias:</strong> {turma.days.join(", ")}</p>
+              {disciplina.classes && disciplina.classes.length > 0 ? (
+                <div style={{ marginLeft: "20px" }}>
+                  <h3>Turmas:</h3>
+                  {disciplina.classes.map((turma: any, index: number) => (
+                    <div
+                      key={index}
+                      style={{
+                        border: "1px solid #ccc",
+                        padding: "10px",
+                        marginBottom: "10px",
+                      }}
+                    >
+                      <p>
+                        <strong>Turma:</strong> {turma._class}
+                      </p>
+                      <p>
+                        <strong>Professores:</strong>{" "}
+                        {turma.teachers.join(", ")}
+                      </p>
+                      <p>
+                        <strong>Sala:</strong> {turma.classroom}
+                      </p>
+                      <p>
+                        <strong>Horário:</strong> {turma.schedule}
+                      </p>
+                      <p>
+                        <strong>Dias:</strong> {turma.days.join(", ")}
+                      </p>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              ) : (
+                <p>Nenhuma turma encontrada para esta disciplina.</p>
+              )}
             </div>
-          ) : (
-            <p>Nenhuma turma encontrada para esta disciplina.</p>
-          )}
-        </div>
-      ))
-    )}
-  </div>
-</div>
+          ))
+        )}
+      </div>
+    </div>
   );
 }
