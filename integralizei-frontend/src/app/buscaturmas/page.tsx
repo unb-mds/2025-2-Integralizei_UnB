@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+import styles from "./pesquisa.module.css";
+
 export default function Page() {
   const [search, setSearch] = useState("");
   const [year, setYear] = useState(new Date().getFullYear());
@@ -10,12 +12,12 @@ export default function Page() {
   const [error, setError] = useState("");
 
   async function handleSearch() {
+    
     try {
       setError("");
       const response = await fetch(
-  `/api/courses/?search=${search}&year=${year}&period=${period}`
+        `/api/courses/?search=${search}&year=${year}&period=${period}`
       );
-
 
       if (!response.ok) {
         throw new Error(`Erro na API: ${response.statusText}`);
@@ -23,7 +25,6 @@ export default function Page() {
 
       const data = await response.json();
 
-      // Transformar classes em JSON se necessário
       data.forEach((d: any) => {
         try {
           if (typeof d.classes === "string") {
@@ -43,6 +44,29 @@ export default function Page() {
 
   return (
     <div style={{ padding: "20px" }}>
+      
+      {/* <nav> para os botoes*/}
+      <nav
+        style={{
+          display: "flex",
+          justifyContent: "flex-end", // alinha à direita
+          gap: "10px", 
+          marginBottom: "20px", 
+        }}
+      >
+        
+        <button className={`${styles.botao} ${styles["cor_da_UnB"]}`}>
+          DADOS
+        </button>
+        <button className={`${styles.botao} ${styles["cor_da_UnB"]}`}>
+          CALCULADORA
+        </button>
+        <button className={`${styles.botao} ${styles["cor_da_UnB"]}`}>
+          PESQUISA
+        </button>
+      </nav>
+      
+
       <h1>Busca de Disciplinas</h1>
 
       <div>
@@ -72,8 +96,10 @@ export default function Page() {
 
       {error && <p style={{ color: "red" }}>{error}</p>}
 
+      {/* resultados */}
       <div style={{ marginTop: "20px" }}>
         {disciplinas.length === 0 ? (
+          
           <p>Nenhuma disciplina encontrada.</p>
         ) : (
           disciplinas.map((disciplina) => (
@@ -83,8 +109,7 @@ export default function Page() {
                 <strong>Código:</strong> {disciplina.code}
               </p>
               <p>
-                <strong>Departamento:</strong>{" "}
-                {disciplina.department?.code}
+                <strong>Departamento:</strong> {disciplina.department?.code}
               </p>
 
               {disciplina.classes && disciplina.classes.length > 0 ? (
