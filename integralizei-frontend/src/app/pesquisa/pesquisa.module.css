@@ -21,8 +21,12 @@
   font-family: 'Inter', sans-serif; 
   font-size: 3rem; 
   font-weight: 800; 
-  color: #212121; 
   margin: 0;
+  background: linear-gradient(90deg, #006633 0%, #003366 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  background-repeat: no-repeat;
 }
 
 
