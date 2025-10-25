@@ -168,5 +168,6 @@
 /* Remove as setinhas padrão do input number no Firefox */
 .numberInput[type=number] {
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 
