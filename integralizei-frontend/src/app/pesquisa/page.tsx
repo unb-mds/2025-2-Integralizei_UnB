@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Navbar2 from "../../components/Navbar2/Navbar2";
-
+import styles from "./pesquisa.module.css";
 
 
 export default function Page() {
@@ -47,9 +47,16 @@ export default function Page() {
     
     <>
       <Navbar2 />
-      <div style={{ padding: "20px" }}>
-        <h1>Busca de Disciplinas</h1>
-
+        
+      <div className={styles.pageContainer}>
+        
+        <section className={styles.headerSection}>
+          <h1 className={styles.title}>Pesquisa</h1>
+          <p className={styles.subtitle}>
+            Simule sua integralização e veja como ela estara no proximo semestre
+          </p>
+        </section>
+        
         <div>
           
           <input
