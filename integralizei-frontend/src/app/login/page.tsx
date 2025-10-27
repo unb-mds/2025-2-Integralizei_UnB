@@ -30,7 +30,7 @@ export default function LoginPage() {
   };
 
   const handleGoogleLogin = () => {
-    // Aqui você pode integrar o login com Google futuramente (ex: Firebase Auth)
+    // Integrar o login com Google futuramente
     console.log("Login com Google clicado");
     setMensagem("Tentando login com Google...");
   };
@@ -68,13 +68,16 @@ export default function LoginPage() {
 
         <div className={styles.separator}>ou</div>
 
+        <div className={styles.googleContainer}>
         <button onClick={handleGoogleLogin} className={styles.googleButton}>
-          <img
+            <img
             src="https://www.svgrepo.com/show/355037/google.svg"
             alt="Google logo"
-          />
-          Entrar com Google
+            />
+            Entrar com Google
         </button>
+        </div>
+
 
         {mensagem && <p className={styles.mensagem}>{mensagem}</p>}
 

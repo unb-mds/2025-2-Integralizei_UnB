@@ -123,3 +123,8 @@
 .linkCadastro a:hover {
   text-decoration: underline;
 }
+
+.googleContainer {
+  display: flex;
+  justify-content: center;
+}
