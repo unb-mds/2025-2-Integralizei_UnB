@@ -1,4 +1,5 @@
-name: Testes JavaScript 
+
+name: Testes JavaScript (Frontend e Backend)
 
 on:
   pull_request:
@@ -8,6 +9,11 @@ jobs:
   test-frontend:
     name: Testes (Frontend)
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./integralizei-frontend/teste.js
+
     steps:
       - name: Checkout repository and submodules
         uses: actions/checkout@v3
@@ -19,15 +25,20 @@ jobs:
           node-version: 18
       - name: Install dependencies (Frontend)
         run: npm install
-        working-directory: ./integralizei-frontend
       - name: Run tests (Frontend)
         run: npm test
-        working-directory: ./integralizei-frontend
+  
 
 
   test-backend:
     name: Testes (Backend)
     runs-on: ubuntu-latest
+
+ 
+    defaults:
+      run:
+        working-directory: ./integralizei-backend/testes_js
+
     steps:
       - name: Checkout repository and submodules
         uses: actions/checkout@v3
@@ -39,12 +50,11 @@ jobs:
           node-version: 18
       - name: Install dependencies (Backend)
         run: npm install
-        working-directory: ./integralizei-backend 
       - name: Run tests (Backend)
         run: npm test
-        working-directory: ./integralizei-backend
+     
 
-  
+ 
   lint-javascript:
     name: JavaScript Linter
     runs-on: ubuntu-latest
@@ -59,14 +69,16 @@ jobs:
         with:
           node-version: 18
 
+
       - name: Install & Lint (Frontend)
         run: |
           npm install
           npm run lint 
-        working-directory: ./integralizei-frontend
+        working-directory: ./integralizei-frontend/teste.js 
 
+ 
       - name: Install & Lint (Backend)
         run: |
           npm install
           npm run lint 
-        working-directory: ./integralizei-backend
+        working-directory: ./integralizei-backend/testes_js 
