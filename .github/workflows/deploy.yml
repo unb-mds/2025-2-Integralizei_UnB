@@ -21,7 +21,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          submodules: 'recursive' # MUITO IMPORTANTE: Puxa o tema junto!
+          submodules: 'recursive' 
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
