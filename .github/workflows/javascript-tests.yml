@@ -69,7 +69,6 @@ jobs:
         working-directory: ./integralizei-frontend 
 
       - name: Install & Lint (Backend)
-        # --- CORREÇÃO DO ESLINT v9 ---
         env:
           ESLINT_USE_FLAT_CONFIG: "false" 
         run: |
