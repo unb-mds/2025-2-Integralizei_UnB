@@ -1,0 +1,7 @@
+# Dependências do App
+Flask
+
+# Dependências de Teste e Linting
+pytest
+black
+flake8
