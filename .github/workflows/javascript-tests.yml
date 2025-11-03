@@ -31,15 +31,23 @@ jobs:
     defaults:
       run:
 
-        working-directory: ./integralizei-backend/testes_js
+        working-directory: ./integralizei-backend
     steps:
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - name: Use Node.js 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
       - name: Install dependencies (Backend)
         run: npm install
       - name: Run tests (Backend)
         run: npm test
 
   lint-javascript:
-    name: JavaScript Linter
+    name: 🎨 JavaScript Linter
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository and submodules
@@ -52,13 +60,19 @@ jobs:
           node-version: 18
       
       - name: Install & Lint (Frontend)
+    
+        env:
+          ESLINT_USE_FLAT_CONFIG: "false" 
         run: |
           npm install
           npm run lint 
-        working-directory: ./integralizei-frontend
+        working-directory: ./integralizei-frontend 
 
       - name: Install & Lint (Backend)
+        # --- CORREÇÃO DO ESLINT v9 ---
+        env:
+          ESLINT_USE_FLAT_CONFIG: "false" 
         run: |
           npm install
           npm run lint 
-        working-directory: ./integralizei-backend/testes_js
+        working-directory: ./integralizei-backend
