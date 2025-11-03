@@ -26,6 +26,7 @@
     "eslint-config-next": "15.5.4",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react": "^7.37.5",
+    "jest": "^30.2.0",
     "prettier": "^3.6.2",
     "tailwindcss": "^4",
     "typescript": "^5"
