@@ -1,4 +1,3 @@
-
 import re
 import sys
 import unicodedata
@@ -28,27 +27,33 @@ except Exception:
                 parts.append(txt)
         return "\n".join(parts)
 
+
 # ========================== Configurações e Constantes ==========================
 # Menções/situações que contam como "aprovado" (entram na integralização)
 # (Separa menções de status para permitir contar CUMP)
 APR_MENTION_CODES = {"SS", "MS", "MM", "APROVADO", "EQV"}
-APR_STATUS_CODES  = {"APR", "CUMP", "EQV"}  # <- inclui CUMP
+APR_STATUS_CODES = {"APR", "CUMP", "EQV"}  # <- inclui CUMP
 
 # Fallback por curso (se o PDF não trouxer o total "Exigido")
 COURSE_DEFAULTS = {
     "ENGENHARIA DE SOFTWARE/FCTE - BACHARELADO - DIURNO": 3480,
 }
-DEFAULT_TOTAL_EXIGIDO = 3480  # usado se não achar no PDF e não houver match no COURSE_DEFAULTS
+DEFAULT_TOTAL_EXIGIDO = (
+    3480  # usado se não achar no PDF e não houver match no COURSE_DEFAULTS
+)
 
 # Para cortar "sobras" depois de capturar um campo
 CUT_AFTER = r"(?i)\bMatr[ií]cula\b|CPF\b|Curso\b|IRA\b|MP\b|Per[ií]odo\b"
+
 
 # ================================ Helpers gerais ================================
 def _norm(s: str) -> str:
     return re.sub(r"[ \t]+", " ", s or "").strip()
 
+
 def _cut(s: str) -> str:
     return re.split(CUT_AFTER, s)[0].strip(" -–—:;|")
+
 
 def _to_int(x: Optional[str]) -> Optional[int]:
     if not x:
@@ -58,6 +63,7 @@ def _to_int(x: Optional[str]) -> Optional[int]:
     except Exception:
         return None
 
+
 def _to_float(x: Optional[str]) -> Optional[float]:
     if not x:
         return None
@@ -65,6 +71,7 @@ def _to_float(x: Optional[str]) -> Optional[float]:
         return float(x.replace(",", "."))
     except Exception:
         return None
+
 
 def _normalize_breaks(s: str) -> str:
     # remove hífen no fim de linha: "ALGORIT-\nMOS" -> "ALGORITMOS"
@@ -76,11 +83,13 @@ def _normalize_breaks(s: str) -> str:
     s = re.sub(r"\s*\n\s*", "\n", s)
     return s.strip()
 
+
 def _clean_name(nome: Optional[str]) -> Optional[str]:
     if nome is None:
         return None
     nome = re.sub(r"\s{2,}", " ", nome).strip(" -–—:;|")
     return nome or None
+
 
 # ================================ Regex reutilizáveis ================================
 # Código mais permissivo (FGA0161, CIC0004, LET0331, FGA0146A etc.)
@@ -97,19 +106,19 @@ LINE3_RX = re.compile(
         (?P<freq>\d{1,3},\d|--)\s+            # 96,0  ou --
         (?P<mencao>[A-Z\-]{1,3})(?P<sufixo>[\*\#e-])?\s*$   # MS, SS, MM, - (com * # e)
     """,
-    re.X
+    re.X,
 )
 # Linha 2 (professor): "... (90h)"  → captura CH caso a linha 3 não traga
 PROF_CH_RX = re.compile(r"\((?P<ch>\d{1,3})h\)")
 
 # Créditos/carga-horária em formatos variados (se necessário em fallbacks)
 CRED_TOKEN_RX = re.compile(
-    r"(?:(?P<cr1>\b\d{1,2})\s*cr\b)|"                # "4 cr"
-    r"(?:(?:\bcr\b[: ]*)(?P<cr2>\d{1,2}))|"           # "cr: 4" / "cr 4"
-    r"(?:(?:cr[eé]ditos?\b[: ]*)(?P<cr3>\d{1,2}))|"   # "créditos: 4"
-    r"(?:(?:\bCH\b[: ]*)(?P<ch1>\d{2,3}))|"           # "CH 60"
-    r"(?:(?P<ch2>\d{2,3})\s*h\b)",                    # "60h"
-    re.I
+    r"(?:(?P<cr1>\b\d{1,2})\s*cr\b)|"  # "4 cr"
+    r"(?:(?:\bcr\b[: ]*)(?P<cr2>\d{1,2}))|"  # "cr: 4" / "cr 4"
+    r"(?:(?:cr[eé]ditos?\b[: ]*)(?P<cr3>\d{1,2}))|"  # "créditos: 4"
+    r"(?:(?:\bCH\b[: ]*)(?P<ch1>\d{2,3}))|"  # "CH 60"
+    r"(?:(?P<ch2>\d{2,3})\s*h\b)",  # "60h"
+    re.I,
 )
 
 # ======== Suporte ao layout "linha direta" do SIGAA ========
@@ -121,7 +130,7 @@ DIRECT_RX = re.compile(
 # Linha de professor/cabeçalho (evitar confundir com nome)
 PROF_LINE_RX = re.compile(
     r"\b(Dr\.|Dra\.|Prof\.|Profa\.|Professor|([(\[]\s*\d{1,3}\s*h\s*[)\]])|Curr[ií]culo|Componente Curricular)\b",
-    re.I
+    re.I,
 )
 
 # Padrões de menção e status dentro da linha direta
@@ -134,17 +143,18 @@ ADMIN_NAME_BLACKLIST = re.compile(
     r"(ENADE|NADE|Secretaria|Letivo|Atividade|Dispensa|Aproveitamento|Certificado|"
     r"Est[aá]gio|Complementar|Extens[aã]o|Monitoria|Semin[aá]ri|Workshop|Palestra|Oficina|"
     r"Dr\.|Profa?\.|Prof\.|Professor|DEG - Decanato|SIGLA SIGNIFICADO|Componentes Curriculares|Legenda)",
-    re.I
+    re.I,
 )
 EXCLUDE_ENADE_RX = re.compile(r"\bE?NADE\b", re.I)
+
 
 def _looks_admin(code: Optional[str], nome: Optional[str]) -> bool:
     c = code or ""
     n = nome or ""
-    return (
-        (c and (ADMIN_CODE_BLACKLIST.search(c) or EXCLUDE_ENADE_RX.search(c))) or
-        (n and (ADMIN_NAME_BLACKLIST.search(n) or EXCLUDE_ENADE_RX.search(n)))
+    return (c and (ADMIN_CODE_BLACKLIST.search(c) or EXCLUDE_ENADE_RX.search(c))) or (
+        n and (ADMIN_NAME_BLACKLIST.search(n) or EXCLUDE_ENADE_RX.search(n))
     )
+
 
 # ================================ Campos básicos ================================
 def pegar_nome(texto: str) -> Optional[str]:
@@ -158,13 +168,16 @@ def pegar_nome(texto: str) -> Optional[str]:
             return _cut(m.group(1))
     return None
 
+
 def pegar_matricula(texto: str) -> Optional[str]:
     m = re.search(r"(?i)\bMatr[ií]cula\s*:\s*([0-9.\-]+)", texto)
     return m.group(1).replace(".", "").replace("-", "").strip() if m else None
 
+
 def pegar_curso(texto: str) -> Optional[str]:
     m = re.search(r"(?im)^\s*Curso\s*:\s*(.+)$", texto)
     return _cut(m.group(1)) if m else None
+
 
 def pegar_ira_mp(texto: str) -> Tuple[Optional[float], Optional[float]]:
     ira = mp = None
@@ -176,11 +189,12 @@ def pegar_ira_mp(texto: str) -> Tuple[Optional[float], Optional[float]]:
         mp = float(m.group(1).replace(",", "."))
     return ira, mp
 
+
 # ================================ Materias ================================
 def extrair_materias(texto: str) -> List[Dict]:
     """
     Parser alinhado ao layout do SIGAA/UnB:
-    - (a) 3 linhas: 
+    - (a) 3 linhas:
         L1: "2024.1 NOME DA DISCIPLINA"
         L2: "Dr(a). ... (90h)"  [opcional; CH fallback]
         L3: "09 APRFGA0161 60 96,0 MS*"  [turma, status+codigo, CH, freq, menção]
@@ -196,7 +210,7 @@ def extrair_materias(texto: str) -> List[Dict]:
         "periodo": None,
         "nome": None,
         "codigo": None,
-        "status": None,    # APR/MATR/CUMP...
+        "status": None,  # APR/MATR/CUMP...
         "creditos": None,  # CH
         "nota": None,
         "situacao": None,  # menção SS/MS/MM/-
@@ -205,26 +219,41 @@ def extrair_materias(texto: str) -> List[Dict]:
     def flush():
         # salva se tiver pelo menos codigo (nome pode faltar em PDFs "apertados")
         if cur["codigo"] and not _looks_admin(cur["codigo"], cur.get("nome")):
-            materias.append({
-                "periodo": cur["periodo"],
-                "codigo": cur["codigo"],
-                "nome": _clean_name(cur.get("nome")),
-                "creditos": int(cur["creditos"]) if cur["creditos"] else None,
-                "situacao": (cur["situacao"] or "-"),
-                "nota": float(str(cur["nota"]).replace(",", ".")) if cur["nota"] else None,
-                "status": cur["status"],  # mantemos no payload (útil se quiser salvar depois)
-            })
+            materias.append(
+                {
+                    "periodo": cur["periodo"],
+                    "codigo": cur["codigo"],
+                    "nome": _clean_name(cur.get("nome")),
+                    "creditos": int(cur["creditos"]) if cur["creditos"] else None,
+                    "situacao": (cur["situacao"] or "-"),
+                    "nota": (
+                        float(str(cur["nota"]).replace(",", "."))
+                        if cur["nota"]
+                        else None
+                    ),
+                    "status": cur[
+                        "status"
+                    ],  # mantemos no payload (útil se quiser salvar depois)
+                }
+            )
 
     def guess_name_from_prev(idx: int) -> Optional[str]:
         """Se a linha anterior parece ser o nome (não professor/cabeçalho), retorna-a."""
         if idx - 1 >= 0:
             prev = linhas[idx - 1]
-            if not PROF_LINE_RX.search(prev) and not TERM_INLINE_RX.match(prev) and not DIRECT_RX.match(prev) and not ADMIN_NAME_BLACKLIST.search(prev):
+            if (
+                not PROF_LINE_RX.search(prev)
+                and not TERM_INLINE_RX.match(prev)
+                and not DIRECT_RX.match(prev)
+                and not ADMIN_NAME_BLACKLIST.search(prev)
+            ):
                 if not re.match(r"^\d{4}[./-][12]\b", prev):
                     return prev
         return None
 
-    def split_resto_direct(resto: str) -> Tuple[Optional[str], Optional[str], Optional[str], Optional[str]]:
+    def split_resto_direct(
+        resto: str,
+    ) -> Tuple[Optional[str], Optional[str], Optional[str], Optional[str]]:
         """
         Do 'resto' na linha direta, tenta achar:
           - nome: trecho antes da primeira CH (número de 2–3 dígitos)
@@ -233,8 +262,16 @@ def extrair_materias(texto: str) -> List[Dict]:
           - status (APR|MATR|CUMP|...)
         """
         # menção e status (normalmente ao final)
-        mencao = (MENCAO_RX.search(resto).group(1).upper()) if MENCAO_RX.search(resto) else None
-        status = (STATUS_RX.search(resto).group(1).upper()) if STATUS_RX.search(resto) else None
+        mencao = (
+            (MENCAO_RX.search(resto).group(1).upper())
+            if MENCAO_RX.search(resto)
+            else None
+        )
+        status = (
+            (STATUS_RX.search(resto).group(1).upper())
+            if STATUS_RX.search(resto)
+            else None
+        )
 
         # CH = primeiro inteiro 2-3 dígitos plausível
         ch = None
@@ -247,7 +284,12 @@ def extrair_materias(texto: str) -> List[Dict]:
         if ch:
             before = resto.split(ch, 1)[0].strip(" -–—:;|")
             # limpa tokens óbvios
-            before = re.sub(r"\b(Turma|Freq|Frequ[eê]ncia|Menc[aã]o|Situa[cç][aã]o)\b.*$", "", before, flags=re.I).strip()
+            before = re.sub(
+                r"\b(Turma|Freq|Frequ[eê]ncia|Menc[aã]o|Situa[cç][aã]o)\b.*$",
+                "",
+                before,
+                flags=re.I,
+            ).strip()
             if before:
                 nome = before
 
@@ -289,7 +331,15 @@ def extrair_materias(texto: str) -> List[Dict]:
             }
             flush()
             # reseta estado
-            cur = {"periodo": None, "nome": None, "codigo": None, "status": None, "creditos": None, "nota": None, "situacao": None}
+            cur = {
+                "periodo": None,
+                "nome": None,
+                "codigo": None,
+                "status": None,
+                "creditos": None,
+                "nota": None,
+                "situacao": None,
+            }
             i += 1
             continue
 
@@ -312,13 +362,13 @@ def extrair_materias(texto: str) -> List[Dict]:
 
             # L2: professor (tenta CH "(90h)")
             if i + 1 < len(linhas):
-                mprof = PROF_CH_RX.search(linhas[i+1])
+                mprof = PROF_CH_RX.search(linhas[i + 1])
                 if mprof and not cur["creditos"]:
                     cur["creditos"] = mprof.group("ch")
 
             # L3: colunas
             if i + 2 < len(linhas):
-                m3 = LINE3_RX.match(linhas[i+2])
+                m3 = LINE3_RX.match(linhas[i + 2])
                 if m3:
                     status = m3.group("status")
                     codigo = m3.group("codigo")
@@ -328,8 +378,15 @@ def extrair_materias(texto: str) -> List[Dict]:
 
                     # ENADE/NADE/códigos administrativos → ignorar disciplina
                     if _looks_admin(codigo, cur["nome"]):
-                        cur = {"periodo": None, "nome": None, "codigo": None,
-                               "status": None, "creditos": None, "nota": None, "situacao": None}
+                        cur = {
+                            "periodo": None,
+                            "nome": None,
+                            "codigo": None,
+                            "status": None,
+                            "creditos": None,
+                            "nota": None,
+                            "situacao": None,
+                        }
                         i += 3
                         continue
 
@@ -340,8 +397,15 @@ def extrair_materias(texto: str) -> List[Dict]:
                     cur["nota"] = None
 
                     flush()
-                    cur = {"periodo": None, "nome": None, "codigo": None,
-                           "status": None, "creditos": None, "nota": None, "situacao": None}
+                    cur = {
+                        "periodo": None,
+                        "nome": None,
+                        "codigo": None,
+                        "status": None,
+                        "creditos": None,
+                        "nota": None,
+                        "situacao": None,
+                    }
                     i += 3
                     continue
 
@@ -361,8 +425,15 @@ def extrair_materias(texto: str) -> List[Dict]:
                 cur["situacao"] = mencao
                 cur["nota"] = None
                 flush()
-            cur = {"periodo": None, "nome": None, "codigo": None,
-                   "status": None, "creditos": None, "nota": None, "situacao": None}
+            cur = {
+                "periodo": None,
+                "nome": None,
+                "codigo": None,
+                "status": None,
+                "creditos": None,
+                "nota": None,
+                "situacao": None,
+            }
             i += 1
             continue
 
@@ -394,19 +465,26 @@ def extrair_materias(texto: str) -> List[Dict]:
             uniq.append(d)
     return uniq
 
+
 # ================================ Painel de Carga Horária ================================
 def pegar_totais_painel(texto: str) -> Tuple[Optional[int], Optional[int]]:
     """
     Busca números logo após 'Exigido' e 'Integralizado' (no bloco de Carga Horária).
     Como o texto às vezes vem "grudado", pegamos todos e ficamos com o MAIOR (normalmente o total).
     """
-    exigidos = [_to_int(x) for x in re.findall(r"(?i)Exigido[^0-9]{0,15}(\d{2,5})\s*h", texto)]
-    integra  = [_to_int(x) for x in re.findall(r"(?i)Integralizado[^0-9]{0,15}(\d{1,5})\s*h", texto)]
+    exigidos = [
+        _to_int(x) for x in re.findall(r"(?i)Exigido[^0-9]{0,15}(\d{2,5})\s*h", texto)
+    ]
+    integra = [
+        _to_int(x)
+        for x in re.findall(r"(?i)Integralizado[^0-9]{0,15}(\d{1,5})\s*h", texto)
+    ]
     exigidos = [x for x in exigidos if x is not None]
-    integra  = [x for x in integra  if x is not None]
+    integra = [x for x in integra if x is not None]
     total_exigido = max(exigidos) if exigidos else None
     total_integralizado = max(integra) if integra else None
     return total_exigido, total_integralizado
+
 
 def total_exigido_por_curso(curso: Optional[str]) -> Optional[int]:
     if not curso:
@@ -416,8 +494,11 @@ def total_exigido_por_curso(curso: Optional[str]) -> Optional[int]:
             return val
     return None
 
+
 # ================================ Integralização ================================
-def calcular_integralizacao(texto: str, curso: Optional[str], materias: List[Dict]) -> Tuple[Optional[float], Optional[int], Optional[int]]:
+def calcular_integralizacao(
+    texto: str, curso: Optional[str], materias: List[Dict]
+) -> Tuple[Optional[float], Optional[int], Optional[int]]:
     """
     1) Tenta usar o painel: (ch_integralizada / ch_exigida) * 100
     2) Se faltar algo, soma CH das aprovadas e usa ch_exigida do painel, do COURSE_DEFAULTS, ou do DEFAULT_TOTAL_EXIGIDO.
@@ -432,9 +513,11 @@ def calcular_integralizacao(texto: str, curso: Optional[str], materias: List[Dic
     # Fallback: soma CH de aprovadas
     ch_aprov = 0
     for m in materias:
-        ch     = m.get("creditos") or 0
-        mencao = (m.get("situacao") or "").upper()  # aqui 'situacao' é a MENÇÃO (SS/MS/MM/…)
-        status = (m.get("status") or "").upper()    # 'status' é APR/MATR/CUMP/…
+        ch = m.get("creditos") or 0
+        mencao = (
+            m.get("situacao") or ""
+        ).upper()  # aqui 'situacao' é a MENÇÃO (SS/MS/MM/…)
+        status = (m.get("status") or "").upper()  # 'status' é APR/MATR/CUMP/…
         if ch and (mencao in APR_MENTION_CODES or status in APR_STATUS_CODES):
             ch_aprov += int(ch)
 
@@ -444,6 +527,7 @@ def calcular_integralizacao(texto: str, curso: Optional[str], materias: List[Dic
 
     perc = round(100.0 * ch_aprov / ch_exigida, 2) if ch_exigida else None
     return perc, ch_aprov, ch_exigida
+
 
 # ================================ Pipeline principal ================================
 def parse_basico(pdf_path: str) -> Dict:
@@ -456,19 +540,22 @@ def parse_basico(pdf_path: str) -> Dict:
     ira, mp = pegar_ira_mp(raw)
 
     materias = extrair_materias(raw)
-    integralizacao, ch_integralizada, ch_exigida = calcular_integralizacao(raw, curso, materias)
+    integralizacao, ch_integralizada, ch_exigida = calcular_integralizacao(
+        raw, curso, materias
+    )
 
     return {
         "aluno": {"nome": nome, "matricula": matricula, "curso": curso},
         "indices": {"ira": ira, "mp": mp},
         "curriculo": {
-            "integralizacao": integralizacao,   # número (ex.: 62.07)
+            "integralizacao": integralizacao,  # número (ex.: 62.07)
             "ch_integralizada": ch_integralizada,
             "ch_exigida": ch_exigida,
-            "materias": materias
+            "materias": materias,
         },
-        "raw_text": raw
+        "raw_text": raw,
     }
+
 
 # ================================ Execução via CLI ================================
 if __name__ == "__main__":
@@ -484,12 +571,20 @@ if __name__ == "__main__":
     indices = data["indices"]
     curr = data["curriculo"]
 
-    print(f"Aluno: {aluno.get('nome') or '-'} | Matrícula: {aluno.get('matricula') or '-'}")
+    print(
+        f"Aluno: {aluno.get('nome') or '-'} | Matrícula: {aluno.get('matricula') or '-'}"
+    )
     print(f"Curso: {aluno.get('curso') or '-'}")
-    print(f"IRA: {indices.get('ira') if indices.get('ira') is not None else '-'} | MP: {indices.get('mp') if indices.get('mp') is not None else '-'}")
-    print(f"Integralização: {curr.get('integralizacao') if curr.get('integralizacao') is not None else '-'}% "
-          f"(Integralizada={curr.get('ch_integralizada')}, Exigida={curr.get('ch_exigida')})")
+    print(
+        f"IRA: {indices.get('ira') if indices.get('ira') is not None else '-'} | MP: {indices.get('mp') if indices.get('mp') is not None else '-'}"
+    )
+    print(
+        f"Integralização: {curr.get('integralizacao') if curr.get('integralizacao') is not None else '-'}% "
+        f"(Integralizada={curr.get('ch_integralizada')}, Exigida={curr.get('ch_exigida')})"
+    )
     print("\nDisciplinas:")
     for m in curr["materias"]:
-        print(f" - [{m.get('periodo') or '-'}] {m['codigo']} | {m.get('nome') or '-'} | CH={m.get('creditos') or '-'} | "
-              f"Menção={m.get('situacao') or '-'} | Nota={m.get('nota') if m.get('nota') is not None else '-'} | Status={m.get('status') or '-'}")
+        print(
+            f" - [{m.get('periodo') or '-'}] {m['codigo']} | {m.get('nome') or '-'} | CH={m.get('creditos') or '-'} | "
+            f"Menção={m.get('situacao') or '-'} | Nota={m.get('nota') if m.get('nota') is not None else '-'} | Status={m.get('status') or '-'}"
+        )

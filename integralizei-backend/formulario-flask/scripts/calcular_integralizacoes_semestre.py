@@ -38,7 +38,8 @@ def periodo_key(p: str) -> Tuple[int, int]:
 def periodo_anterior(p: str) -> Optional[str]:
     """Retorna o período imediatamente anterior (ex.: 2024/1 -> 2023/2)."""
     try:
-        ano = int(p[:4]); sem = int(p[5:6])
+        ano = int(p[:4])
+        sem = int(p[5:6])
         if sem == 1:
             return f"{ano-1}/2"
         return f"{ano}/1"
@@ -49,7 +50,9 @@ def periodo_anterior(p: str) -> Optional[str]:
 # ---------------------------
 # Cálculo de integralização por semestre
 # ---------------------------
-def calcular_integralizacao_semestre_para_aluno(cur: sqlite3.Cursor, aluno_id: int, ch_exigida: int):
+def calcular_integralizacao_semestre_para_aluno(
+    cur: sqlite3.Cursor, aluno_id: int, ch_exigida: int
+):
     """
     Lê disciplinas do aluno, acumula CH aprovada e grava em integralizacoes_semestre
     um registro por período, com ch_acumulada e %.
@@ -65,10 +68,14 @@ def calcular_integralizacao_semestre_para_aluno(cur: sqlite3.Cursor, aluno_id: i
     ).fetchall()
 
     # Agrupar por período
-    por_periodo: Dict[str, List[Tuple[Optional[int], Optional[str], Optional[str]]]] = {}
+    por_periodo: Dict[str, List[Tuple[Optional[int], Optional[str], Optional[str]]]] = (
+        {}
+    )
     for periodo, ch, mencao, status in rows:
         p = norm_periodo(periodo) or "-"
-        por_periodo.setdefault(p, []).append((ch, (mencao or "").upper(), (status or "").upper()))
+        por_periodo.setdefault(p, []).append(
+            (ch, (mencao or "").upper(), (status or "").upper())
+        )
 
     total_ch = 0
     inserts = []
@@ -93,7 +100,9 @@ def calcular_integralizacao_semestre_para_aluno(cur: sqlite3.Cursor, aluno_id: i
 
 def calcular_integralizacoes_semestre(conn: sqlite3.Connection):
     cur = conn.cursor()
-    alunos = cur.execute("SELECT id, COALESCE(ch_exigida, ?) FROM alunos", (DEFAULT_CH_EXIGIDA,)).fetchall()
+    alunos = cur.execute(
+        "SELECT id, COALESCE(ch_exigida, ?) FROM alunos", (DEFAULT_CH_EXIGIDA,)
+    ).fetchall()
     for aluno_id, ch_exigida in alunos:
         calcular_integralizacao_semestre_para_aluno(cur, aluno_id, int(ch_exigida))
     conn.commit()
@@ -102,7 +111,9 @@ def calcular_integralizacoes_semestre(conn: sqlite3.Connection):
 # ---------------------------
 # Estatísticas por disciplina (usando t0 = integralização no INÍCIO do semestre)
 # ---------------------------
-def integralizacao_t0_do_aluno_no_periodo(cur: sqlite3.Cursor, aluno_id: int, periodo: str) -> float:
+def integralizacao_t0_do_aluno_no_periodo(
+    cur: sqlite3.Cursor, aluno_id: int, periodo: str
+) -> float:
     """
     t0 = integralização no período anterior (se existir), senão 0.0
     Ex.: para disciplina em 2024/2, usamos integralização registrada em 2024/1.
