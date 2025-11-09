@@ -1,6 +1,4 @@
-import re
 from typing import Optional
-
 
 def _try_pdfplumber(path: str) -> Optional[str]:
     try:
