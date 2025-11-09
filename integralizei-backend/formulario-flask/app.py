@@ -1,32 +1,37 @@
 import sys, os
-
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
-import os, sqlite3, json
-from flask import Flask, render_template, request, redirect, url_for
+
+import sqlite3, json, traceback
+from flask import Flask, request, jsonify, render_template
+from flask_cors import CORS
 from parsers.unb_historico import parse_basico
 from scripts.calcular_integralizacoes_semestre import recalcular_tudo
 
-
+# ==========================
+# Configuração inicial
+# ==========================
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 UPLOAD_FOLDER = os.path.join(BASE_DIR, "uploads")
 DB_PATH = os.path.join(BASE_DIR, "instance", "integralizei.db")
 
 app = Flask(__name__)
+CORS(app)  # permite que o Next.js acesse o Flask
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(os.path.join(BASE_DIR, "instance"), exist_ok=True)
 
 
+# ==========================
+# Banco de dados
+# ==========================
 def get_db():
     conn = sqlite3.connect(DB_PATH)
     conn.execute("PRAGMA journal_mode=WAL;")
     conn.execute("PRAGMA foreign_keys=ON;")
 
-    # ------------------------
-    # 1. Tabela de alunos
-    # ------------------------
-    conn.execute(
-        """
+    # Criação das tabelas
+    conn.execute("""
         CREATE TABLE IF NOT EXISTS alunos (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             matricula TEXT UNIQUE,
@@ -38,14 +43,9 @@ def get_db():
             criado_em TEXT DEFAULT (datetime('now')),
             atualizado_em TEXT DEFAULT (datetime('now'))
         )
-    """
-    )
+    """)
 
-    # ------------------------
-    # 2. Disciplinas cursadas
-    # ------------------------
-    conn.execute(
-        """
+    conn.execute("""
         CREATE TABLE IF NOT EXISTS disciplinas_cursadas (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             aluno_id INTEGER,
@@ -58,14 +58,9 @@ def get_db():
             criado_em TEXT DEFAULT (datetime('now')),
             FOREIGN KEY (aluno_id) REFERENCES alunos(id)
         )
-    """
-    )
+    """)
 
-    # ------------------------
-    # 3. Integralização semestre a semestre
-    # ------------------------
-    conn.execute(
-        """
+    conn.execute("""
         CREATE TABLE IF NOT EXISTS integralizacoes_semestre (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             aluno_id INTEGER NOT NULL,
@@ -74,51 +69,15 @@ def get_db():
             integralizacao REAL,
             FOREIGN KEY (aluno_id) REFERENCES alunos(id)
         )
-    """
-    )
+    """)
 
-    # ------------------------
-    # 4. Estatísticas agregadas por disciplina
-    # ------------------------
-    conn.execute(
-        """
-        CREATE TABLE IF NOT EXISTS estatisticas_disciplinas (
-            codigo TEXT PRIMARY KEY,
-            nome TEXT,
-            media_integralizacao REAL,
-            mediana_integralizacao REAL,
-            desvio_padrao REAL,
-            total_alunos INTEGER
-        )
-    """
-    )
-
-    # ------------------------
-    # 5. Log de importações (opcional)
-    # ------------------------
-    conn.execute(
-        """
-        CREATE TABLE IF NOT EXISTS importacoes (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            matricula TEXT,
-            arquivo TEXT,
-            payload_json TEXT,
-            criado_em TEXT DEFAULT (datetime('now'))
-        )
-    """
-    )
-
-    # Índices de performance
-    conn.execute(
-        "CREATE INDEX IF NOT EXISTS idx_disc_aluno ON disciplinas_cursadas(aluno_id)"
-    )
-    conn.execute(
-        "CREATE INDEX IF NOT EXISTS idx_int_aluno ON integralizacoes_semestre(aluno_id)"
-    )
     conn.commit()
     return conn
 
 
+# ==========================
+# Inserção/atualização de dados
+# ==========================
 def upsert(conn, dados, arquivo):
     aluno_data = dados.get("aluno", {})
     indices = dados.get("indices", {})
@@ -131,11 +90,8 @@ def upsert(conn, dados, arquivo):
     ira = indices.get("ira")
     mp = indices.get("mp")
 
-    # ------------------------
-    # 1. Upsert do aluno
-    # ------------------------
-    conn.execute(
-        """
+    # Inserção ou atualização do aluno
+    conn.execute("""
         INSERT INTO alunos (matricula, nome, curso, ira, mp)
         VALUES (?, ?, ?, ?, ?)
         ON CONFLICT(matricula) DO UPDATE SET
@@ -144,93 +100,79 @@ def upsert(conn, dados, arquivo):
             ira=excluded.ira,
             mp=excluded.mp,
             atualizado_em=datetime('now')
-    """,
-        (matricula, nome, curso, ira, mp),
-    )
+    """, (matricula, nome, curso, ira, mp))
 
-    # Recupera o aluno_id
-    aluno_id = conn.execute(
-        "SELECT id FROM alunos WHERE matricula = ?", (matricula,)
-    ).fetchone()[0]
+    aluno_id = conn.execute("SELECT id FROM alunos WHERE matricula = ?", (matricula,)).fetchone()[0]
 
-    # ------------------------
-    # 2. Limpa disciplinas antigas e insere novas
-    # ------------------------
+    # Substitui disciplinas antigas por novas
     conn.execute("DELETE FROM disciplinas_cursadas WHERE aluno_id = ?", (aluno_id,))
     for m in materias:
-        conn.execute(
-            """
+        conn.execute("""
             INSERT INTO disciplinas_cursadas (aluno_id, periodo, codigo, nome, creditos, mencao, status)
             VALUES (?, ?, ?, ?, ?, ?, ?)
-        """,
-            (
-                aluno_id,
-                m.get("periodo"),
-                m.get("codigo"),
-                m.get("nome"),
-                m.get("creditos") or m.get("ch"),
-                m.get("situacao") or m.get("mencao"),
-                m.get("status"),
-            ),
-        )
-
-    # ------------------------
-    # 3. Log da importação
-    # ------------------------
-    conn.execute(
-        """
-        INSERT INTO importacoes (matricula, arquivo, payload_json)
-        VALUES (?, ?, ?)
-    """,
-        (matricula, os.path.basename(arquivo), json.dumps(dados, ensure_ascii=False)),
-    )
+        """, (
+            aluno_id,
+            m.get("periodo"),
+            m.get("codigo"),
+            m.get("nome"),
+            m.get("creditos") or m.get("ch"),
+            m.get("situacao") or m.get("mencao"),
+            m.get("status"),
+        ))
 
     conn.commit()
 
 
-@app.route("/", methods=["GET", "POST"])
-def index():
-    if request.method == "POST":
-        f = request.files.get("file")
-        if not f or not f.filename.lower().endswith(".pdf"):
-            return render_template(
-                "index.html", status="erro", msg="Envie um PDF em formato .pdf"
-            )
+# ==========================
+# Rota API principal (para o front)
+# ==========================
+@app.route("/upload", methods=["POST"])
+def upload_pdf():
+    """Recebe o PDF, processa e devolve os dados em JSON."""
+    f = request.files.get("file")
+    if not f or not f.filename.lower().endswith(".pdf"):
+        return jsonify({"error": "Envie um arquivo PDF válido."}), 400
 
-        from werkzeug.utils import secure_filename
-        from datetime import datetime
+    from werkzeug.utils import secure_filename
+    from datetime import datetime
 
-        fname = secure_filename(f.filename)
-        base, ext = os.path.splitext(fname)
-        unique = f"{base}_{datetime.now().strftime('%Y%m%d_%H%M%S')}{ext}"
-        save_path = os.path.join(app.config["UPLOAD_FOLDER"], unique)
-        f.save(save_path)
-        with open(save_path, "rb") as fh:
-            if fh.read(5) != b"%PDF-":
-                os.remove(save_path)
-                return render_template(
-                    "index.html", status="erro", msg="Arquivo não é um PDF válido."
-                )
+    fname = secure_filename(f.filename)
+    base, ext = os.path.splitext(fname)
+    unique = f"{base}_{datetime.now().strftime('%Y%m%d_%H%M%S')}{ext}"
+    save_path = os.path.join(app.config["UPLOAD_FOLDER"], unique)
+    f.save(save_path)
 
-        try:
-            dados = parse_basico(save_path)
-            conn = get_db()
-            try:
-                upsert(conn, dados, save_path)
-                conn.commit()
-            finally:
-                conn.close()
-            from scripts.calcular_integralizacoes_semestre import recalcular_tudo
+    try:
+        # Extrai os dados do histórico
+        dados = parse_basico(save_path)
+        if not dados:
+            raise ValueError("Erro: parse_basico retornou vazio.")
 
-            recalcular_tudo(DB_PATH)
+        # Salva no banco
+        conn = get_db()
+        upsert(conn, dados, save_path)
+        conn.close()
 
-            return render_template(
-                "index.html",
-                status="ok",
-                arquivo=os.path.basename(save_path),
-                nome=dados["aluno"].get("nome") or "",
-                matricula=dados["aluno"].get("matricula") or "",
-            )
-        except Exception as e:
-            return render_template("index.html", status="erro", msg=str(e))
-    return render_template("index.html")
+        # Atualiza integralização e retorna dados completos
+        recalcular_tudo(DB_PATH)
+        return jsonify(dados), 200
+
+    except Exception as e:
+        print("ERRO AO PROCESSAR PDF:", traceback.format_exc())
+        return jsonify({"error": str(e)}), 500
+
+
+# ==========================
+# Rota local opcional (teste HTML)
+# ==========================
+@app.route("/", methods=["GET"])
+def home():
+    """Página simples para teste local."""
+    return render_template("index.html", status="ok")
+
+
+# ==========================
+# Início do servidor
+# ==========================
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0", port=8000)
