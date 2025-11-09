@@ -1,6 +1,7 @@
 import re
 import sys
 from typing import Dict, Optional, List, Tuple
+
 # ============== Tentativa de import do extrator do seu projeto ==============
 try:
     # Se você já tem text_extract.extract_any no seu projeto, ótimo:
