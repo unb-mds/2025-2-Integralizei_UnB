@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap');
+
+.favorite-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 25px; 
+  cursor: pointer;
+  
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.favorite-btn svg {
+  width: 20px;
+  height: 20px;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.favorite-btn {
+  background-color: #A8A8A8;
+  color: #FFFFFF;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.favorite-btn svg {
+  stroke: #FFFFFF;
+  fill: none;
+}
+
+.favorite-btn:hover {
+    background-color: #999999;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.favorite-btn.favorited {
+  background: linear-gradient(45deg, #FFC371, #FF5F6D);
+  color: #FFFFFF;
+  box-shadow: 0 5px 15px rgba(255, 95, 109, 0.4);
+}
+
+.favorite-btn.favorited svg {
+  stroke: #FFFFFF;
+  fill: #FFFFFF;
+  transform: scale(1.2) rotate(360deg);
+}
+
+.favorite-btn.favorited:hover {
+    box-shadow: 0 8px 20px rgba(255, 95, 109, 0.5);
+}
+
+.fav-icon-btn {
+    padding: 8px;
+    border-radius: 50%; 
+    gap: 0; 
+    
+    background-color: rgba(0, 0, 0, 0.05); 
+    box-shadow: none;
+}
+
+.fav-icon-btn svg {
+    width: 18px; 
+    height: 18px;
+    stroke: #333333;
+    fill: none;
+}
+
+.fav-icon-btn:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    box-shadow: none;
+}
+
+.fav-icon-btn.favorited {
+    background: linear-gradient(45deg, #FFC371, #FF5F6D);
+    box-shadow: 0 4px 10px rgba(255, 95, 109, 0.3);
+}
+
+.fav-icon-btn.favorited svg {
+    stroke: #FFFFFF; 
+    fill: #FFFFFF; 
+    transform: scale(1.1);
+}
+
+.fav-icon-btn.favorited:hover {
+    box-shadow: 0 6px 15px rgba(255, 95, 109, 0.4);
+}

@@ -1,0 +1,82 @@
+/* CSS para recriar o layout de 'image_e0d1db.png'.
+    Usamos 'Inter' como fonte principal para combinar com 'favoritar.css'.
+*/
+
+body {
+    font-family: 'Inter', sans-serif;
+    /* Fundo claro (o "branco" que você pediu) para a página */
+    background-color: #f0f0f0; 
+    color: #FFFFFF;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.recomendacao-container {
+    /* O gradiente que você pediu */
+    background: linear-gradient(180deg, #006633 0%, #003366 100%);
+    border-radius: 20px;
+    padding: 24px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.recomendacao-container h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 8px;
+    color: #FFFFFF;
+}
+
+.recomendacao-container .subtitulo {
+    font-size: 16px;
+    font-weight: 400;
+    color: #B0D9CB; 
+    margin-top: 0;
+    margin-bottom: 24px;
+}
+
+.lista-materias {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.materia-item {
+    background-color: #BACDDB; 
+    color: #1A202C;
+    border-radius: 12px;
+    padding: 16px;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.materia-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.materia-info {
+    flex: 1;
+}
+
+.materia-codigo {
+    font-size: 16px;
+    font-weight: 600;
+    color: #003366; 
+}
+
+.materia-nome {
+    font-size: 14px;
+    font-weight: 400;
+    color: #333333;
+}
