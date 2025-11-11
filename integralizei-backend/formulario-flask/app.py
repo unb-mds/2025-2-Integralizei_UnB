@@ -1,4 +1,5 @@
 import sys, os
+
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
 import sqlite3, json, traceback
@@ -31,7 +32,8 @@ def get_db():
     conn.execute("PRAGMA foreign_keys=ON;")
 
     # Criação das tabelas
-    conn.execute("""
+    conn.execute(
+        """
         CREATE TABLE IF NOT EXISTS alunos (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             matricula TEXT UNIQUE,
@@ -43,9 +45,11 @@ def get_db():
             criado_em TEXT DEFAULT (datetime('now')),
             atualizado_em TEXT DEFAULT (datetime('now'))
         )
-    """)
+    """
+    )
 
-    conn.execute("""
+    conn.execute(
+        """
         CREATE TABLE IF NOT EXISTS disciplinas_cursadas (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             aluno_id INTEGER,
@@ -58,9 +62,11 @@ def get_db():
             criado_em TEXT DEFAULT (datetime('now')),
             FOREIGN KEY (aluno_id) REFERENCES alunos(id)
         )
-    """)
+    """
+    )
 
-    conn.execute("""
+    conn.execute(
+        """
         CREATE TABLE IF NOT EXISTS integralizacoes_semestre (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             aluno_id INTEGER NOT NULL,
@@ -69,9 +75,11 @@ def get_db():
             integralizacao REAL,
             FOREIGN KEY (aluno_id) REFERENCES alunos(id)
         )
-    """)
+    """
+    )
 
-    conn.execute("""
+    conn.execute(
+        """
         CREATE TABLE IF NOT EXISTS estatisticas_disciplinas (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             aluno_id INTEGER NOT NULL,
@@ -83,8 +91,8 @@ def get_db():
             media_integralizacao REAL,
             FOREIGN KEY (aluno_id) REFERENCES alunos(id)
         )
-    """)
-
+    """
+    )
 
     conn.commit()
     return conn
@@ -106,7 +114,8 @@ def upsert(conn, dados, arquivo):
     mp = indices.get("mp")
 
     # Inserção ou atualização do aluno
-    conn.execute("""
+    conn.execute(
+        """
         INSERT INTO alunos (matricula, nome, curso, ira, mp)
         VALUES (?, ?, ?, ?, ?)
         ON CONFLICT(matricula) DO UPDATE SET
@@ -115,25 +124,32 @@ def upsert(conn, dados, arquivo):
             ira=excluded.ira,
             mp=excluded.mp,
             atualizado_em=datetime('now')
-    """, (matricula, nome, curso, ira, mp))
+    """,
+        (matricula, nome, curso, ira, mp),
+    )
 
-    aluno_id = conn.execute("SELECT id FROM alunos WHERE matricula = ?", (matricula,)).fetchone()[0]
+    aluno_id = conn.execute(
+        "SELECT id FROM alunos WHERE matricula = ?", (matricula,)
+    ).fetchone()[0]
 
     # Substitui disciplinas antigas por novas
     conn.execute("DELETE FROM disciplinas_cursadas WHERE aluno_id = ?", (aluno_id,))
     for m in materias:
-        conn.execute("""
+        conn.execute(
+            """
             INSERT INTO disciplinas_cursadas (aluno_id, periodo, codigo, nome, creditos, mencao, status)
             VALUES (?, ?, ?, ?, ?, ?, ?)
-        """, (
-            aluno_id,
-            m.get("periodo"),
-            m.get("codigo"),
-            m.get("nome"),
-            m.get("creditos") or m.get("ch"),
-            m.get("situacao") or m.get("mencao"),
-            m.get("status"),
-        ))
+        """,
+            (
+                aluno_id,
+                m.get("periodo"),
+                m.get("codigo"),
+                m.get("nome"),
+                m.get("creditos") or m.get("ch"),
+                m.get("situacao") or m.get("mencao"),
+                m.get("status"),
+            ),
+        )
 
     conn.commit()
 
