@@ -71,6 +71,21 @@ def get_db():
         )
     """)
 
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS estatisticas_disciplinas (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            aluno_id INTEGER NOT NULL,
+            codigo TEXT,
+            nome TEXT,
+            mencao TEXT,
+            creditos INTEGER,
+            periodo TEXT,
+            media_integralizacao REAL,
+            FOREIGN KEY (aluno_id) REFERENCES alunos(id)
+        )
+    """)
+
+
     conn.commit()
     return conn
 

@@ -170,14 +170,16 @@ def calcular_estatisticas_disciplinas(conn: sqlite3.Connection, min_n: int = 3):
         inserts.append((codigo, nome, m, med, dp, n))
 
     if inserts:
+        inserts_with_id = [(aluno_id, *row) for row in inserts]
         cur.executemany(
-            """
-            INSERT INTO estatisticas_disciplinas
-              (codigo, nome, media_integralizacao, mediana_integralizacao, desvio_padrao, total_alunos)
-            VALUES (?, ?, ?, ?, ?, ?)
-            """,
-            inserts,
-        )
+        """
+        INSERT INTO estatisticas_disciplinas
+        (aluno_id, codigo, nome, media_integralizacao, mediana_integralizacao, desvio_padrao, total_alunos)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+        """,
+        inserts_with_id,
+    )
+
     conn.commit()
 
 
