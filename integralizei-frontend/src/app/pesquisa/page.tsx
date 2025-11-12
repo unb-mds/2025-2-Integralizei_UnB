@@ -122,31 +122,31 @@ export default function Page() {
                   <div style={{ marginLeft: "20px" }}>
                     <h3>Turmas:</h3>
                     {disciplina.classes.map((turma: any, index: number) => (
-                      <div
-                        key={index}
-                        style={{
-                          border: "1px solid #ccc",
-                          padding: "10px",
-                          marginBottom: "10px",
-                        }}
-                      >
-                        <p>
-                          <strong>Turma:</strong> {turma._class}
-                        </p>
-                        <p>
-                          <strong>Professores:</strong>{" "}
-                          {turma.teachers.join(", ")}
-                        </p>
-                        <p>
-                          <strong>Sala:</strong> {turma.classroom}
-                        </p>
-                        <p>
-                          <strong>Horário:</strong> {turma.schedule}
-                        </p>
-                        <p>
-                          <strong>Dias:</strong> {turma.days.join(", ")}
-                        </p>
+                      <div key={index} className={styles.materiaCard}>
+                        <div className={styles.materiaInfo}>
+                          <p className={styles.titulo}>
+                            {disciplina.code} - {disciplina.name}
+                          </p>
+                          <p className={styles.subtitulo}>
+                            {turma.teachers.join(", ")}
+                          </p>
+                        </div>
+
+                        <div className={styles.materiaActions}>
+                          <div className={`${styles.botaoSeta} ${styles.baixo}`}></div>
+
+                          <button
+                            className={`${styles.favoriteBtn} ${turma.favorited ? styles.favorited : ""}`}
+                            onClick={() => {}}
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                            </svg>
+                            <span>Favoritar</span>
+                          </button>
+                        </div>
                       </div>
+
                     ))}
                   </div>
                 ) : (
