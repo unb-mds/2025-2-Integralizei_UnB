@@ -1,13 +1,18 @@
 "use client";
 import { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar2/Navbar2";
+
 export default function DadosPage() {
-  const [dados, setDados] = useState(null);
+  const [dados, setDados] = useState<any>(null);
 
   useEffect(() => {
     const dadosSalvos = localStorage.getItem("dadosAluno");
     if (dadosSalvos) {
-      setDados(JSON.parse(dadosSalvos));
+      try {
+        setDados(JSON.parse(dadosSalvos));
+      } catch (error) {
+        console.error("Erro ao carregar dados do aluno:", error);
+      }
     }
   }, []);
 
@@ -25,7 +30,14 @@ export default function DadosPage() {
     );
   }
 
-  const { aluno, indices, curriculo } = dados;
+  // ===============================
+  // 🔹 Ajuste aqui
+  // ===============================
+  const aluno = dados?.aluno || {};
+  const nomeAluno = aluno.nome || aluno.nome_completo || "Aluno";
+  const matriculaAluno = aluno.matricula || aluno.id || "";
+
+  const { indices, curriculo } = dados;
   const totalMaterias = curriculo?.materias?.length || 0;
 
   return (
@@ -35,11 +47,18 @@ export default function DadosPage() {
         {/* Título */}
         <div className="text-center mb-12">
           <h1 className="text-4xl font-extrabold text-green-800">Meus Dados</h1>
+          {/* 🔹 Exibição do aluno */}
+          <p className="mt-2 text-xl font-medium text-gray-700">
+            {nomeAluno}
+            {matriculaAluno ? ` — Matrícula ${matriculaAluno}` : ""}
+          </p>
+
           <p className="mt-3 text-lg text-gray-600 max-w-2xl mx-auto">
             Veja como seus dados estão atualmente, com uma precisão maior do que o SIGAA,
             permitindo que você planeje seus próximos passos com mais clareza.
           </p>
         </div>
+
 
         {/* Cards principais */}
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-12">

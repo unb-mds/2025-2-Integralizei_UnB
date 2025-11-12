@@ -1,6 +1,8 @@
+
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import styles from "./login.module.css";
 
 export default function LoginPage() {
@@ -30,7 +32,7 @@ export default function LoginPage() {
   };
 
   const handleGoogleLogin = () => {
-    // Integrar o login com Google futuramente
+    // Integração com o Google futuramente
     console.log("Login com Google clicado");
     setMensagem("Tentando login com Google...");
   };
@@ -68,16 +70,18 @@ export default function LoginPage() {
 
         <div className={styles.separator}>ou</div>
 
+        {/* Login com Google */}
         <div className={styles.googleContainer}>
-        <button onClick={handleGoogleLogin} className={styles.googleButton}>
-            <img
-            src="https://www.svgrepo.com/show/355037/google.svg"
-            alt="Google logo"
+          <button onClick={handleGoogleLogin} className={styles.googleButton}>
+            <Image
+              src="https://www.svgrepo.com/show/355037/google.svg"
+              alt="Google logo"
+              width={24}
+              height={24}
             />
             Entrar com Google
-        </button>
+          </button>
         </div>
-
 
         {mensagem && <p className={styles.mensagem}>{mensagem}</p>}
 
