@@ -110,17 +110,10 @@ export default function Page() {
           ) : (
             disciplinas.map((disciplina) => (
               <div key={disciplina.id} style={{ marginBottom: "20px" }}>
-                <h2>{disciplina.name}</h2>
-                <p>
-                  <strong>Código:</strong> {disciplina.code}
-                </p>
-                <p>
-                  <strong>Departamento:</strong> {disciplina.department?.code}
-                </p>
-
+                
                 {disciplina.classes && disciplina.classes.length > 0 ? (
                   <div style={{ marginLeft: "20px" }}>
-                    <h3>Turmas:</h3>
+                    
                     {disciplina.classes.map((turma: any, index: number) => (
                       <div key={index} className={styles.materiaCard}>
                         <div className={styles.materiaInfo}>
@@ -130,6 +123,8 @@ export default function Page() {
                           <p className={styles.subtitulo}>
                             {turma.teachers.join(", ")}
                           </p>
+                          <p className={styles.subtitulo}>Turma: {turma._class}</p>
+
                         </div>
 
                         <div className={styles.materiaActions}>
