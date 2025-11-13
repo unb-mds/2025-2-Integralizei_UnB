@@ -1,21 +1,67 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar2/Navbar2";
 
-export default function DadosPage() {
-  const [dados, setDados] = useState<any>(null);
+// ---------------------------------------
+// Tipos usados nesta página
+// ---------------------------------------
+interface Materia {
+  codigo?: string;
+  nome?: string;
+  situacao?: string;
+  periodo?: string;
+  creditos?: number;
+}
 
+interface Curriculo {
+  materias?: Materia[];
+  integralizacao?: number;
+  ch_integralizada?: number;
+  ch_exigida?: number;
+}
+
+interface Indices {
+  ira?: number;
+  mp?: number;
+}
+
+interface Aluno {
+  nome?: string;
+  nome_completo?: string;
+  matricula?: string | number;
+  id?: string | number;
+}
+
+interface DadosAluno {
+  aluno?: Aluno;
+  indices?: Indices;
+  curriculo?: Curriculo;
+}
+
+// ---------------------------------------
+// Página principal
+// ---------------------------------------
+export default function DadosPage() {
+  const [dados, setDados] = useState<DadosAluno | null>(null);
+  // Carrega dados do localStorage
   useEffect(() => {
   const dadosSalvos = localStorage.getItem("dadosAluno");
-  if (dadosSalvos) {
-    setDados(JSON.parse(dadosSalvos));
-  }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // microtask — recomendado pelo React
+  Promise.resolve().then(() => {
+    if (dadosSalvos) {
+      try {
+        setDados(JSON.parse(dadosSalvos) as DadosAluno);
+      } catch {
+        setDados(null);
+      }
+    }
+  });
 }, []);
 
 
-
+  // Caso não tenha dados ainda
   if (!dados) {
     return (
       <>
@@ -30,15 +76,14 @@ export default function DadosPage() {
     );
   }
 
-  // ===============================
-  // 🔹 Ajuste aqui
-  // ===============================
-  const aluno = dados?.aluno || {};
+  // Ajustes e extração
+  const aluno = dados.aluno || {};
   const nomeAluno = aluno.nome || aluno.nome_completo || "Aluno";
   const matriculaAluno = aluno.matricula || aluno.id || "";
 
-  const { indices, curriculo } = dados;
-  const totalMaterias = curriculo?.materias?.length || 0;
+  const indices = dados.indices || {};
+  const curriculo = dados.curriculo || {};
+  const totalMaterias = curriculo.materias?.length || 0;
 
   return (
     <>
@@ -47,7 +92,7 @@ export default function DadosPage() {
         {/* Título */}
         <div className="text-center mb-12">
           <h1 className="text-4xl font-extrabold text-green-800">Meus Dados</h1>
-          {/* 🔹 Exibição do aluno */}
+
           <p className="mt-2 text-xl font-medium text-gray-700">
             {nomeAluno}
             {matriculaAluno ? ` — Matrícula ${matriculaAluno}` : ""}
@@ -59,7 +104,6 @@ export default function DadosPage() {
           </p>
         </div>
 
-
         {/* Cards principais */}
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-12">
           {/* IRA Atual */}
@@ -67,7 +111,7 @@ export default function DadosPage() {
             <h2 className="text-2xl font-semibold mb-3">IRA Atual</h2>
             <p className="text-4xl font-bold">
               {indices?.ira !== null && indices?.ira !== undefined
-                ? indices.ira.toFixed(3)
+                ? Number(indices.ira).toFixed(3)
                 : "—"}
             </p>
             <p className="text-sm text-gray-200 mt-2">Média → 4.321</p>
@@ -77,25 +121,27 @@ export default function DadosPage() {
           <div className="bg-gradient-to-b from-green-700 to-blue-800 text-white p-6 rounded-2xl shadow-lg">
             <h2 className="text-2xl font-semibold mb-3">Integralização</h2>
             <p className="text-4xl font-bold">
-              {curriculo?.integralizacao != null
+              {curriculo.integralizacao != null
                 ? `${curriculo.integralizacao.toFixed(2)}%`
                 : "—"}
             </p>
+
             <div className="w-full bg-gray-300 rounded-full h-3 mt-4">
               <div
                 className="bg-green-500 h-3 rounded-full"
                 style={{
                   width: `${
-                    curriculo?.integralizacao != null
+                    curriculo.integralizacao != null
                       ? curriculo.integralizacao
                       : 0
                   }%`,
                 }}
               ></div>
             </div>
-            <p className="text-sm text-gray-200 mt-2">
+
+            <p className="text-sm text-gray-200 mt.2">
               Carga horária integralizada →{" "}
-              {curriculo?.ch_integralizada || 0}h / {curriculo?.ch_exigida || 3480}h
+              {curriculo.ch_integralizada || 0}h / {curriculo.ch_exigida || 3480}h
             </p>
           </div>
 
@@ -125,9 +171,10 @@ export default function DadosPage() {
                   <th className="py-3 px-4 border">Créditos</th>
                 </tr>
               </thead>
+
               <tbody>
-                {curriculo?.materias?.length > 0 ? (
-                  curriculo.materias.map((m, i) => (
+                {curriculo.materias && curriculo.materias.length > 0 ? (
+                  curriculo.materias.map((m: Materia, i: number) => (
                     <tr
                       key={i}
                       className={`${
@@ -138,12 +185,12 @@ export default function DadosPage() {
                       <td className="py-2 px-4 border">{m.nome || "—"}</td>
                       <td className="py-2 px-4 border text-center">{m.situacao || "—"}</td>
                       <td className="py-2 px-4 border text-center">{m.periodo || "—"}</td>
-                      <td className="py-2 px-4 border text-center">{m.creditos || "—"}</td>
+                      <td className="py-2 px-4 border text-center">{m.creditos ?? "—"}</td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="5" className="text-center py-4 text-gray-500">
+                    <td colSpan={5} className="text-center py-4 text-gray-500">
                       Nenhuma disciplina encontrada.
                     </td>
                   </tr>
