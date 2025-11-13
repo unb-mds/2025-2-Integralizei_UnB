@@ -6,15 +6,15 @@ export default function DadosPage() {
   const [dados, setDados] = useState<any>(null);
 
   useEffect(() => {
-    const dadosSalvos = localStorage.getItem("dadosAluno");
-    if (dadosSalvos) {
-      try {
-        setDados(JSON.parse(dadosSalvos));
-      } catch (error) {
-        console.error("Erro ao carregar dados do aluno:", error);
-      }
-    }
-  }, []);
+  const dadosSalvos = localStorage.getItem("dadosAluno");
+  if (dadosSalvos) {
+    setDados(JSON.parse(dadosSalvos));
+  }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, []);
+
+
 
   if (!dados) {
     return (
