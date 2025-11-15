@@ -1,6 +1,6 @@
 import re
 import sys
-from typing import Dict, Optional, List, Tuple
+from typing import Dict, List, Optional, Tuple
 
 # ============== Tentativa de import do extrator do seu projeto ==============
 try:

@@ -1,0 +1,94 @@
+
+"use client";
+
+import { useState } from "react";
+import Image from "next/image";
+import styles from "./login.module.css";
+
+export default function LoginPage() {
+  const [formData, setFormData] = useState({
+    email: "",
+    senha: "",
+  });
+
+  const [mensagem, setMensagem] = useState("");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (formData.email === "" || formData.senha === "") {
+      setMensagem("Preencha todos os campos!");
+      return;
+    }
+
+    console.log("Login realizado com:", formData);
+    setMensagem("Login efetuado com sucesso!");
+    setFormData({ email: "", senha: "" });
+  };
+
+  const handleGoogleLogin = () => {
+    // Integração com o Google futuramente
+    console.log("Login com Google clicado");
+    setMensagem("Tentando login com Google...");
+  };
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.card}>
+        <h1 className={styles.title}>Entre na sua conta</h1>
+
+        <form onSubmit={handleSubmit} className={styles.form}>
+          <input
+            type="email"
+            name="email"
+            placeholder="E-mail"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            className={styles.input}
+          />
+
+          <input
+            type="password"
+            name="senha"
+            placeholder="Senha"
+            value={formData.senha}
+            onChange={handleChange}
+            required
+            className={styles.input}
+          />
+
+          <button type="submit" className={styles.button}>
+            Entrar
+          </button>
+        </form>
+
+        <div className={styles.separator}>ou</div>
+
+        {/* Login com Google */}
+        <div className={styles.googleContainer}>
+          <button onClick={handleGoogleLogin} className={styles.googleButton}>
+            <Image
+              src="https://www.svgrepo.com/show/355037/google.svg"
+              alt="Google logo"
+              width={24}
+              height={24}
+            />
+            Entrar com Google
+          </button>
+        </div>
+
+        {mensagem && <p className={styles.mensagem}>{mensagem}</p>}
+
+        <p className={styles.linkCadastro}>
+          Não tem uma conta? <a href="/cadastro">Cadastre-se</a>
+        </p>
+      </div>
+    </div>
+  );
+}

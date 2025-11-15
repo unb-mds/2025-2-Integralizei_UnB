@@ -3,7 +3,7 @@
 import os
 import sqlite3
 from statistics import mean, median, pstdev
-from typing import Dict, List, Tuple, Optional
+from typing import Dict, List, Optional, Tuple
 
 # ---------------------------
 # Configs
@@ -41,7 +41,7 @@ def periodo_anterior(p: str) -> Optional[str]:
         ano = int(p[:4])
         sem = int(p[5:6])
         if sem == 1:
-            return f"{ano-1}/2"
+            return f"{ano - 1}/2"
         return f"{ano}/1"
     except Exception:
         return None
@@ -170,14 +170,16 @@ def calcular_estatisticas_disciplinas(conn: sqlite3.Connection, min_n: int = 3):
         inserts.append((codigo, nome, m, med, dp, n))
 
     if inserts:
+        inserts_with_id = [(aluno_id, *row) for row in inserts]
         cur.executemany(
             """
-            INSERT INTO estatisticas_disciplinas
-              (codigo, nome, media_integralizacao, mediana_integralizacao, desvio_padrao, total_alunos)
-            VALUES (?, ?, ?, ?, ?, ?)
-            """,
-            inserts,
+        INSERT INTO estatisticas_disciplinas
+        (aluno_id, codigo, nome, media_integralizacao, mediana_integralizacao, desvio_padrao, total_alunos)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+        """,
+            inserts_with_id,
         )
+
     conn.commit()
 
 
