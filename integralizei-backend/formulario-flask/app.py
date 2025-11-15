@@ -1,12 +1,19 @@
-import sys, os
+import os
+import sqlite3
+import sys
+import traceback
+from datetime import datetime
 
-sys.path.append(os.path.abspath(os.path.dirname(__file__)))
-
-import sqlite3, json, traceback
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, jsonify, render_template, request
 from flask_cors import CORS
+
+# Importações internas
 from parsers.unb_historico import parse_basico
 from scripts.calcular_integralizacoes_semestre import recalcular_tudo
+from werkzeug.utils import secure_filename
+
+# Ajuste de path
+sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
 # ==========================
 # Configuração inicial
@@ -15,22 +22,24 @@ BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 UPLOAD_FOLDER = os.path.join(BASE_DIR, "uploads")
 DB_PATH = os.path.join(BASE_DIR, "instance", "integralizei.db")
 
-app = Flask(__name__)
-CORS(app)  # permite que o Next.js acesse o Flask
-app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
-
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(os.path.join(BASE_DIR, "instance"), exist_ok=True)
+
+app = Flask(__name__)
+CORS(app)
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 
 # ==========================
 # Banco de dados
 # ==========================
 def get_db():
-    conn = sqlite3.connect(DB_PATH)
+    """Abre conexão com SQLite configurada."""
+    conn = sqlite3.connect(DB_PATH, timeout=10, check_same_thread=False)
     conn.execute("PRAGMA journal_mode=WAL;")
-    conn.execute("PRAGMA busy_timeout = 5000;")
-    conn.execute("PRAGMA foreign_keys=ON;")
+    conn.execute("PRAGMA busy_timeout = 8000;")
+    conn.execute("PRAGMA synchronous = NORMAL;")
+    conn.execute("PRAGMA foreign_keys = ON;")
 
     # Criação das tabelas
     conn.execute(
@@ -120,11 +129,11 @@ def upsert(conn, dados, arquivo):
         INSERT INTO alunos (matricula, nome, curso, ira, mp)
         VALUES (?, ?, ?, ?, ?)
         ON CONFLICT(matricula) DO UPDATE SET
-            nome=excluded.nome,
-            curso=excluded.curso,
-            ira=excluded.ira,
-            mp=excluded.mp,
-            atualizado_em=datetime('now')
+            nome = excluded.nome,
+            curso = excluded.curso,
+            ira = excluded.ira,
+            mp = excluded.mp,
+            atualizado_em = datetime('now')
     """,
         (matricula, nome, curso, ira, mp),
     )
@@ -133,12 +142,15 @@ def upsert(conn, dados, arquivo):
         "SELECT id FROM alunos WHERE matricula = ?", (matricula,)
     ).fetchone()[0]
 
-    # Substitui disciplinas antigas por novas
+    # Remove disciplinas antigas
     conn.execute("DELETE FROM disciplinas_cursadas WHERE aluno_id = ?", (aluno_id,))
+
+    # Insere novas
     for m in materias:
         conn.execute(
             """
-            INSERT INTO disciplinas_cursadas (aluno_id, periodo, codigo, nome, creditos, mencao, status)
+            INSERT INTO disciplinas_cursadas
+                (aluno_id, periodo, codigo, nome, creditos, mencao, status)
             VALUES (?, ?, ?, ?, ?, ?, ?)
         """,
             (
@@ -156,50 +168,45 @@ def upsert(conn, dados, arquivo):
 
 
 # ==========================
-# Rota API principal (para o front)
+# Rota principal
 # ==========================
 @app.route("/upload", methods=["POST"])
 def upload_pdf():
-    """Recebe o PDF, processa e devolve os dados em JSON."""
     f = request.files.get("file")
+
     if not f or not f.filename.lower().endswith(".pdf"):
         return jsonify({"error": "Envie um arquivo PDF válido."}), 400
 
-    from werkzeug.utils import secure_filename
-    from datetime import datetime
-
     fname = secure_filename(f.filename)
     base, ext = os.path.splitext(fname)
+
     unique = f"{base}_{datetime.now().strftime('%Y%m%d_%H%M%S')}{ext}"
     save_path = os.path.join(app.config["UPLOAD_FOLDER"], unique)
     f.save(save_path)
 
     try:
-        # Extrai os dados do histórico
         dados = parse_basico(save_path)
+
         if not dados:
             raise ValueError("Erro: parse_basico retornou vazio.")
 
-        # Salva no banco
         conn = get_db()
         upsert(conn, dados, save_path)
         conn.close()
 
-        # Atualiza integralização e retorna dados completos
         recalcular_tudo(DB_PATH)
         return jsonify(dados), 200
 
-    except Exception as e:
+    except Exception:
         print("ERRO AO PROCESSAR PDF:", traceback.format_exc())
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"error": "Falha ao processar o PDF."}), 500
 
 
 # ==========================
-# Rota local opcional (teste HTML)
+# Página de teste local
 # ==========================
 @app.route("/", methods=["GET"])
 def home():
-    """Página simples para teste local."""
     return render_template("index.html", status="ok")
 
 

@@ -3,7 +3,7 @@
 import os
 import sqlite3
 from statistics import mean, median, pstdev
-from typing import Dict, List, Tuple, Optional
+from typing import Dict, List, Optional, Tuple
 
 # ---------------------------
 # Configs
@@ -41,7 +41,7 @@ def periodo_anterior(p: str) -> Optional[str]:
         ano = int(p[:4])
         sem = int(p[5:6])
         if sem == 1:
-            return f"{ano-1}/2"
+            return f"{ano - 1}/2"
         return f"{ano}/1"
     except Exception:
         return None

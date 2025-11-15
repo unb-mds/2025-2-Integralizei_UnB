@@ -27,8 +27,8 @@ def _try_pypdf(path: str) -> Optional[str]:
 
 def _try_ocr(path: str) -> Optional[str]:
     try:
-        from pdf2image import convert_from_path
         import pytesseract
+        from pdf2image import convert_from_path
     except Exception:
         return None
     try:
