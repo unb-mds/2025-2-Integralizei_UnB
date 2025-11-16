@@ -9,7 +9,8 @@ import { getDB } from "./db.js";
 import path from "path";
 import { fileURLToPath } from "url";
 import crypto from "crypto"; // (Passo 3) Importa a biblioteca crypto
-import nodemailer from "nodemailer"; // (Passo 4) Importa a biblioteca nodemailer
+//import nodemailer from "nodemailer"; // (Passo 4) Importa a biblioteca nodemailer
+//COMENTEI A LINHA ACIMA PRA RESOLVER ERRO DO PR
 
 dotenv.config();
 
