@@ -69,6 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
       showSuccess(data.message || "Senha redefinida com sucesso!");
 
     } catch (err) {
+      console.error(err);
       showError("Erro de rede. Tente novamente.");
     }
   });

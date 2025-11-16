@@ -55,6 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Redireciona para a página de login com um parâmetro
       window.location.href = "/index.html?registered=1";
     } catch (err) {
+      console.error(err);
       showError("Erro de rede. Tente novamente.");
     }
   });

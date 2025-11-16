@@ -64,6 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
       form.reset();
 
     } catch (err) {
+      console.error(err);
       showError("Erro de rede. Tente novamente.");
     }
   });

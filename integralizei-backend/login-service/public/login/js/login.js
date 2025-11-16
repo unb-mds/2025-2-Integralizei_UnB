@@ -52,6 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.href = "/dashboard.html";
       
     } catch (err) {
+      console.error(err);
       showError("Erro de rede. Tente novamente.");
     }
   });

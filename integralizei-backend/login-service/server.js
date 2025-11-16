@@ -35,7 +35,9 @@ app.use(passport.session());
 
 // (Passo 4) Configuração do Nodemailer (transporter)
 // Usamos as variáveis de ambiente do arquivo .env
-const emailTransport = nodemailer.createTransport({
+
+//DEIXEI ESSA FUNCAO COMO COMENTARIO PRA RESOLVER ERRO DO TESTE DO PULL REQUEST
+/*const emailTransport = nodemailer.createTransport({
   host: process.env.EMAIL_HOST,
   port: process.env.EMAIL_PORT,
   secure: process.env.EMAIL_PORT == 465, // true para porta 465, false para outras
@@ -43,7 +45,7 @@ const emailTransport = nodemailer.createTransport({
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
-});
+});*/
 
 
 passport.serializeUser((user, done) => {
