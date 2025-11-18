@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Redefinir Senha - Integralizei UnB</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="login-card">
+      <header class="card-header">
+        <img
+          class="logo"
+          src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Webysther_20160322_-_Logo_UnB_%28sem_texto%29.svg"
+          alt="Logo Universidade de Brasília - UnB"
+        />
+        <h2>Crie uma nova senha</h2>
+      </header>
+
+      <form id="resetForm" class="login-form" novalidate>
+        <!-- Mensagem de Sucesso -->
+        <div id="successMessage" class="success-message hidden" role="alert">
+          <div class="icon-container" aria-hidden="true">
+            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+          </div>
+          <div class="text-container">
+            <p id="successText">Senha redefinida com sucesso! Você já pode fazer login.</p>
+          </div>
+        </div>
+
+        <!-- Mensagem de Erro -->
+        <div id="errorMessage" class="error-message hidden" role="alert" aria-live="assertive">
+          <div class="icon-container" aria-hidden="true">
+            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm-.75-11.5a.75.75 0 011.5 0v5a.75.75 0 01-1.5 0v-5zm.75 8a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" /></svg>
+          </div>
+          <div class="text-container">
+            <p id="errorText">Token inválido ou expirado. Solicite um novo link.</p>
+          </div>
+        </div>
+        
+        <div id="formContent">
+          <div class="form-group">
+            <label for="passwordField">Nova Senha</label>
+            <input id="passwordField" name="passwordField" type="password" required placeholder="••••••••" />
+          </div>
+  
+          <div class="form-group">
+            <label for="confirmField">Confirmar Nova Senha</label>
+            <input id="confirmField" name="confirmField" type="password" required placeholder="••••••••" />
+          </div>
+  
+          <button type="submit" class="submit-btn">Salvar Nova Senha</button>
+        </div>
+
+      </form>
+
+      <p id="loginLink" class="signup-link hidden">
+        <a href="index.html">Voltar para o Login</a>
+      </p>
+    </div>
+    <script src="js/redefinir-senha.js"></script>
+  </body>
+</html>
