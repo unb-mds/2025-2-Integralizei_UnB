@@ -23,10 +23,7 @@ def gerar_estatisticas_agregadas(db_path):
 
     for codigo, nome, integr in registros:
         if codigo not in materias:
-            materias[codigo] = {
-                "nome": nome,
-                "valores": []
-            }
+            materias[codigo] = {"nome": nome, "valores": []}
         materias[codigo]["valores"].append(float(integr))
 
     # Limpar tabela agregada

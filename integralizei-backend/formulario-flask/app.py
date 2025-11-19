@@ -126,9 +126,9 @@ def get_db():
             AND i.periodo  = d.periodo
         """
     )
-    
+
     conn.execute(
-    """
+        """
     CREATE TABLE IF NOT EXISTS estatisticas_disciplinas_agregadas (
         codigo TEXT PRIMARY KEY,
         nome TEXT,
@@ -139,8 +139,7 @@ def get_db():
         atualizado_em TEXT DEFAULT (datetime('now'))
     )
     """
-)
-
+    )
 
     conn.commit()
     return conn
@@ -233,10 +232,14 @@ def upload_pdf():
         conn.close()
 
         recalcular_tudo(DB_PATH)
-        from scripts.preencher_estatisticas_disciplinas import preencher_estatisticas_disciplinas 
+        from scripts.preencher_estatisticas_disciplinas import (
+            preencher_estatisticas_disciplinas,
+        )
+
         preencher_estatisticas_disciplinas(DB_PATH)
-        
+
         from scripts.gerar_estatisticas_agregadas import gerar_estatisticas_agregadas
+
         gerar_estatisticas_agregadas(DB_PATH)
 
         return jsonify(dados), 200
@@ -252,6 +255,7 @@ def upload_pdf():
 @app.route("/", methods=["GET"])
 def home():
     return render_template("index.html", status="ok")
+
 
 @app.route("/api/estatisticas/<codigo>", methods=["GET"])
 def estatisticas_disciplina(codigo):
@@ -285,6 +289,7 @@ def estatisticas_disciplina(codigo):
         }
     )
 
+
 @app.route("/api/estatisticas/<codigo>", methods=["GET"])
 def estatisticas_disciplina(codigo):
     """
@@ -312,20 +317,21 @@ def estatisticas_disciplina(codigo):
 
     codigo, nome, media, min_v, max_v, total = row
 
-    return jsonify(
-        {
-            "codigo": codigo,
-            "nome": nome,
-            "media_integralizacao": round(media, 2) if media is not None else None,
-            "faixa_integralizacao": {
-                "min": round(min_v, 2) if min_v is not None else None,
-                "max": round(max_v, 2) if max_v is not None else None,
-            },
-            "total_alunos": total,
-        }
-    ), 200
-
-
+    return (
+        jsonify(
+            {
+                "codigo": codigo,
+                "nome": nome,
+                "media_integralizacao": round(media, 2) if media is not None else None,
+                "faixa_integralizacao": {
+                    "min": round(min_v, 2) if min_v is not None else None,
+                    "max": round(max_v, 2) if max_v is not None else None,
+                },
+                "total_alunos": total,
+            }
+        ),
+        200,
+    )
 
 
 # ==========================
