@@ -259,39 +259,6 @@ def home():
 
 @app.route("/api/estatisticas/<codigo>", methods=["GET"])
 def estatisticas_disciplina(codigo):
-    conn = get_db()
-    cur = conn.cursor()
-
-    row = cur.execute(
-        """
-        SELECT codigo, nome, media, min_integralizacao, max_integralizacao, total_alunos
-        FROM estatisticas_disciplinas_agregadas
-        WHERE codigo = ?
-        """,
-        (codigo,),
-    ).fetchone()
-
-    conn.close()
-
-    if not row:
-        return jsonify({"error": "Disciplina não encontrada"}), 404
-
-    return jsonify(
-        {
-            "codigo": row[0],
-            "nome": row[1],
-            "media_integralizacao": round(row[2], 2) if row[2] else None,
-            "faixa_integralizacao": {
-                "min": round(row[3], 2) if row[3] else None,
-                "max": round(row[4], 2) if row[4] else None,
-            },
-            "total_alunos": row[5],
-        }
-    )
-
-
-@app.route("/api/estatisticas/<codigo>", methods=["GET"])
-def estatisticas_disciplina(codigo):
     """
     Retorna as estatísticas agregadas de uma disciplina:
     - média de integralização
