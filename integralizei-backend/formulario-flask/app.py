@@ -104,6 +104,43 @@ def get_db():
     """
     )
 
+    # VIEW: disciplinas + integralização no período
+    conn.execute(
+        """
+        CREATE VIEW IF NOT EXISTS disciplinas_com_integralizacao AS
+        SELECT
+            d.id             AS disciplina_id,
+            d.aluno_id       AS aluno_id,
+            d.periodo        AS periodo,
+            d.codigo         AS codigo,
+            d.nome           AS nome,
+            d.creditos       AS creditos,
+            d.mencao         AS mencao,
+            d.status         AS status,
+            d.criado_em      AS criado_em,
+            i.ch_acumulada   AS ch_acumulada,
+            i.integralizacao AS integralizacao_no_periodo
+        FROM disciplinas_cursadas d
+        JOIN integralizacoes_semestre i
+             ON i.aluno_id = d.aluno_id
+            AND i.periodo  = d.periodo
+        """
+    )
+
+    conn.execute(
+        """
+    CREATE TABLE IF NOT EXISTS estatisticas_disciplinas_agregadas (
+        codigo TEXT PRIMARY KEY,
+        nome TEXT,
+        media REAL,
+        min_integralizacao REAL,
+        max_integralizacao REAL,
+        total_alunos INTEGER,
+        atualizado_em TEXT DEFAULT (datetime('now'))
+    )
+    """
+    )
+
     conn.commit()
     return conn
 
@@ -195,6 +232,16 @@ def upload_pdf():
         conn.close()
 
         recalcular_tudo(DB_PATH)
+        from scripts.preencher_estatisticas_disciplinas import (
+            preencher_estatisticas_disciplinas,
+        )
+
+        preencher_estatisticas_disciplinas(DB_PATH)
+
+        from scripts.gerar_estatisticas_agregadas import gerar_estatisticas_agregadas
+
+        gerar_estatisticas_agregadas(DB_PATH)
+
         return jsonify(dados), 200
 
     except Exception:
@@ -208,6 +255,50 @@ def upload_pdf():
 @app.route("/", methods=["GET"])
 def home():
     return render_template("index.html", status="ok")
+
+
+@app.route("/api/estatisticas/<codigo>", methods=["GET"])
+def estatisticas_disciplina(codigo):
+    """
+    Retorna as estatísticas agregadas de uma disciplina:
+    - média de integralização
+    - faixa (min e max)
+    - total de alunos analisados
+    """
+    conn = get_db()
+    cur = conn.cursor()
+
+    row = cur.execute(
+        """
+        SELECT codigo, nome, media, min_integralizacao, max_integralizacao, total_alunos
+        FROM estatisticas_disciplinas_agregadas
+        WHERE codigo = ?
+        """,
+        (codigo,),
+    ).fetchone()
+
+    conn.close()
+
+    if not row:
+        return jsonify({"error": "Disciplina não encontrada"}), 404
+
+    codigo, nome, media, min_v, max_v, total = row
+
+    return (
+        jsonify(
+            {
+                "codigo": codigo,
+                "nome": nome,
+                "media_integralizacao": round(media, 2) if media is not None else None,
+                "faixa_integralizacao": {
+                    "min": round(min_v, 2) if min_v is not None else None,
+                    "max": round(max_v, 2) if max_v is not None else None,
+                },
+                "total_alunos": total,
+            }
+        ),
+        200,
+    )
 
 
 # ==========================
