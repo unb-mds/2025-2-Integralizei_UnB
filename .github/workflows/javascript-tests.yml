@@ -46,11 +46,4 @@ jobs:
         run: npm test
       
       - name: Run Tests with Coverage check
-        run: pytest --cov=. --cov-report=xml --cov-fail-under=50
-      
-      # Mantenha comentado até ter o token
-      # - name: Upload coverage to Codecov
-      #   uses: codecov/codecov-action@v4
-      #   with:
-      #     token: ${{ secrets.CODECOV_TOKEN }}
-      #     files: ./integralizei-backend/coverage.xml
+        run: npm test -- --coverage

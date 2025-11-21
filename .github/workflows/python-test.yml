@@ -50,16 +50,13 @@ jobs:
       - name: Run Tests
         run: pytest
 
-      - name: Run Tests with Coverage
-        run: |
-          # --cov=. indica para medir cobertura na pasta atual
-          # --cov-report=xml gera o arquivo coverage.xml necessário para o Codecov
-          pytest --cov=. --cov-report=xml
-
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }} 
-          files: ./integralizei-backend/coverage.xml
-          flags: backend
-          fail_ci_if_error: true
+      - name: Run Tests with Coverage check
+        # Gera o relatório XML (para futuro uso) e falha se a cobertura for < 50%
+        run: pytest --cov=. --cov-report=xml --cov-fail-under=50
+      
+      # Mantenha comentado até ter o token
+      # - name: Upload coverage to Codecov
+      #   uses: codecov/codecov-action@v4
+      #   with:
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+      #     files: ./integralizei-backend/coverage.xml
