@@ -1,8 +1,10 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import styles from "./Cadastro.module.css";
 
 export default function CadastroPage() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     nome: "",
     email: "",
@@ -12,58 +14,37 @@ export default function CadastroPage() {
 
   const [mensagem, setMensagem] = useState("");
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-<<<<<<< HEAD
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-=======
- //TROQUEI A FUNÇAO HANDLESUBMIT PARA CONECTAR COM O BACKEND
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setMensagem(""); 
+    setMensagem("");
 
-    
-    if (
-      !formData.nome ||
-      !formData.email ||
-      !formData.senha ||
-      !formData.confirmarSenha
-    ) {
+    if (!formData.nome || !formData.email || !formData.senha || !formData.confirmarSenha) {
       setMensagem("Preencha todos os campos!");
       return;
     }
-    
+
     if (formData.senha.length < 8) {
       setMensagem("A senha deve ter pelo menos 8 caracteres.");
       return;
     }
->>>>>>> 460a0d0dd2e02e76cc5ed7509f964937399e6b86
 
     if (formData.senha !== formData.confirmarSenha) {
       setMensagem("As senhas não coincidem!");
       return;
     }
 
-<<<<<<< HEAD
-    // Aqui você pode enviar os dados para o backend futuramente:
-    console.log("Usuário cadastrado:", formData);
-
-    setMensagem("Cadastro realizado com sucesso!");
-    setFormData({ nome: "", email: "", senha: "", confirmarSenha: "" });
-=======
-   
     try {
-      setMensagem("Cadastrando..."); 
-      
-      const BACKEND_URL = "http://localhost:3001";
-      
-      const API_ROUTE = "/api/register"; 
+      setMensagem("Cadastrando...");
+      // Conecta na porta 3001 (onde roda o login-service)
+      const BACKEND_URL = "http://localhost:3001"; 
+      const API_ROUTE = "/api/register";
 
-      const res = await fetch(BACKEND_URL + API_ROUTE, {
+      const res = await fetch(`${BACKEND_URL}${API_ROUTE}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -76,23 +57,21 @@ export default function CadastroPage() {
       const data = await res.json();
 
       if (!res.ok) {
-        
         setMensagem(data.message || "Não foi possível cadastrar.");
         return;
       }
-      
-      setMensagem("Cadastro realizado com sucesso! Redirecionando para o login...");
-      
+
+      setMensagem("Cadastro realizado com sucesso! Redirecionando...");
       setFormData({ nome: "", email: "", senha: "", confirmarSenha: "" });
+      
       setTimeout(() => {
-        window.location.href = "/login";
+        router.push("/login");
       }, 2000);
 
     } catch (error) {
       console.error("Erro de conexão:", error);
-      setMensagem("Não foi possível conectar ao servidor. O backend está rodando?");
+      setMensagem("Não foi possível conectar ao servidor. O backend de login (3001) está rodando?");
     }
->>>>>>> 460a0d0dd2e02e76cc5ed7509f964937399e6b86
   };
 
   return (
@@ -110,7 +89,6 @@ export default function CadastroPage() {
             required
             className={styles.input}
           />
-
           <input
             type="email"
             name="email"
@@ -120,7 +98,6 @@ export default function CadastroPage() {
             required
             className={styles.input}
           />
-
           <input
             type="password"
             name="senha"
@@ -130,7 +107,6 @@ export default function CadastroPage() {
             required
             className={styles.input}
           />
-
           <input
             type="password"
             name="confirmarSenha"
@@ -140,7 +116,6 @@ export default function CadastroPage() {
             required
             className={styles.input}
           />
-
           <button type="submit" className={styles.button}>
             Cadastrar
           </button>

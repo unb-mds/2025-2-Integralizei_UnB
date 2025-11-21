@@ -1,3 +1,32 @@
-/public
-.vscode
-node_modules
+# Ambientes Virtuais Python
+venv/
+.venv/
+env/
+__pycache__/
+*.pyc
+
+# Dependências Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Arquivos de Build (Next.js gera isso localmente)
+.next/
+dist/
+build/
+out/
+
+# Bancos de Dados Locais
+*.db
+*.sqlite3
+*.sqlite
+
+# Logs e Arquivos de Sistema
+*.log
+.DS_Store
+Thumbs.db
+
+# IDEs (Configurações locais do VS Code)
+.vscode/
+.idea/
