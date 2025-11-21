@@ -1,4 +1,4 @@
-name: Deploy Hugo site to Pages
+name: Deploy Documentation (Hugo)
 
 on:
   push:
@@ -15,25 +15,39 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  deploy-site:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          submodules: 'recursive' 
+          submodules: recursive
+          fetch-depth: 0
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: 'latest'
+          hugo-version: '0.128.0' 
           extended: true
-
-      - name: Build
-        run: hugo --minify
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
+
+
+      - name: Cache Hugo resources
+        uses: actions/cache@v4
+        with:
+          path: resources
+          key: ${{ runner.os }}-hugo-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-hugo-
+
+      - name: Build Site
+        run: hugo --minify
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
@@ -41,4 +55,5 @@ jobs:
           path: ./public
 
       - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4

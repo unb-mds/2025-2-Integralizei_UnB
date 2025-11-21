@@ -1,3 +1,79 @@
-/public
-.vscode
+# =========================
+# 📦 Node.js & Package Managers
+# =========================
 node_modules
+.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# Logs & Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# =========================
+# ⚛️ Frontend (Next.js & React)
+# =========================
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+# Vercel deployment
+.vercel
+
+# =========================
+# 🐍 Backend (Python)
+# =========================
+# Virtual Environments
+venv/
+.venv/
+
+# Bytecode & Cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+
+# Distribution & Builds (Front & Back)
+dist/
+build/
+
+# Testing coverage
+coverage/
+
+# =========================
+# 🗄️ Database & Storage
+# =========================
+*.db
+# Flask 'instance' folder (often contains DBs or secrets)
+instance/
+# User uploads
+uploads/
+
+# =========================
+# 🔐 Environment & Secrets (CRITICAL)
+# =========================
+.env
+.env*
+*.pem
+
+# =========================
+# 💻 IDE & Editors
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# ⚙️ OS & Misc
+# =========================
+.DS_Store
+*.log
+*.tmp
+*.bak
