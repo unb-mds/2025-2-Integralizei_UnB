@@ -2,9 +2,9 @@ name: JavaScript CI (Frontend & Backend)
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [ "pipeline-Ci/Cd" ]
   push:
-    branches: [ main ]
+    branches: [ "pipeline-Ci/Cd" ]
   workflow_dispatch:
 
 jobs:
