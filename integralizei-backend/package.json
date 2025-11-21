@@ -8,5 +8,21 @@
     "eslint-config-prettier": "^10.1.8",
     "jest": "^30.2.0",
     "prettier": "^3.6.2"
+  }, 
+  "jest": {
+    "collectCoverageFrom": [
+      "**/*.{js,jsx}",
+      "!**/node_modules/**",
+      "!**/coverage/**",
+      "!**/*.config.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "lines": 50,
+        "statements": 50,
+        "functions": 50,
+        "branches": 50
+      }
+    }
   }
 }
