@@ -5,7 +5,7 @@
     <description>Recent content in Docs on Integralizei UNB - Documentação</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>pt-br</language>
-    <lastBuildDate>Mon, 22 Sep 2025 13:35:00 -0300</lastBuildDate>
+    <lastBuildDate>Sun, 28 Sep 2025 23:59:59 -0300</lastBuildDate>
     
 	  <atom:link href="http://localhost:1313/2025-2-Integralizei_UnB/docs/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,6 +14,26 @@
         
       
     
+    
+    <item>
+      <title>Coleta de Dados</title>
+      <link>http://localhost:1313/2025-2-Integralizei_UnB/docs/arquitetura/coleta-de-dados/</link>
+      <pubDate>Mon, 22 Sep 2025 12:20:00 -0300</pubDate>
+      
+      <guid>http://localhost:1313/2025-2-Integralizei_UnB/docs/arquitetura/coleta-de-dados/</guid>
+      <description>
+        
+        
+        &lt;h3&gt;1 - Coleta de dados&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;1---coleta-de-dados&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#1---coleta-de-dados&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;O sucesso da nossa análise depende da qualidade e quantidade de dados. Nossa estratégia de coleta será dividida em duas fases:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Fase 1 (Pré-lançamento):&lt;/strong&gt; Iniciaremos com uma base de dados menor, coletada através de envios voluntários. Isso nos permitirá treinar nossos modelos e garantir que a plataforma já seja útil desde o primeiro dia.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Fase 2 (Site ativo):&lt;/strong&gt; Com o site no ar, os próprios usuários poderão fazer o upload de seus históricos. Este processo será simples, rápido e seguro.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;O tratamento dos dados é de extrema importância, dados sensíveis como nome, CPF e matrícula são &lt;strong&gt;imediatamente descartados&lt;/strong&gt; e nunca armazenados.&lt;/p&gt;
+
+      </description>
+    </item>
     
     <item>
       <title>Reunião - 06/09/2025</title>
@@ -68,82 +88,154 @@
     </item>
     
     <item>
-      <title>Sprints do Projeto 🏃‍♂️</title>
-      <link>http://localhost:1313/2025-2-Integralizei_UnB/docs/sprints/</link>
-      <pubDate>Mon, 22 Sep 2025 13:35:00 -0300</pubDate>
+      <title>Extração de Dados</title>
+      <link>http://localhost:1313/2025-2-Integralizei_UnB/docs/arquitetura/extracao-com-ia/</link>
+      <pubDate>Mon, 22 Sep 2025 12:20:00 -0300</pubDate>
       
-      <guid>http://localhost:1313/2025-2-Integralizei_UnB/docs/sprints/</guid>
+      <guid>http://localhost:1313/2025-2-Integralizei_UnB/docs/arquitetura/extracao-com-ia/</guid>
       <description>
         
         
-        &lt;p&gt;Bem-vindo ao registro de Sprints do projeto &lt;strong&gt;Integralizei UNB&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;Esta seção é dedicada a documentar o ciclo de desenvolvimento iterativo e incremental do nosso projeto. Cada sprint representa um período focado de trabalho com o objetivo de entregar um incremento de valor ao produto final.&lt;/p&gt;
-&lt;hr&gt;
-&lt;h3&gt;Nossa Metodologia de Sprints&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;nossa-metodologia-de-sprints&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#nossa-metodologia-de-sprints&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Adotamos um framework ágil para garantir entregas contínuas e de alta qualidade. Nossas sprints são estruturadas da seguinte forma:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Duração:&lt;/strong&gt; Cada sprint tem a duração de uma semana, começando na segunda-feira e terminando no domingo.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Planejamento (Planning):&lt;/strong&gt; No início de cada sprint, a equipe se reúne para definir as metas e selecionar as tarefas do backlog que serão desenvolvidas.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Execução:&lt;/strong&gt; Durante a semana, a equipe trabalha nas tarefas definidas.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Revisão (Review):&lt;/strong&gt; Ao final da sprint, apresentamos o que foi concluído para validar o incremento de software.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Retrospectiva:&lt;/strong&gt; Após a revisão, a equipe discute o que correu bem, o que pode ser melhorado e define ações para o próximo ciclo.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3&gt;Histórico de Sprints&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;histórico-de-sprints&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#hist%c3%b3rico-de-sprints&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Abaixo está a lista de todas as sprints executadas no projeto, com links para seus respectivos planejamentos e resultados.&lt;/p&gt;
-&lt;hr&gt;
-&lt;h3&gt;Artigos da Seção&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;artigos-da-seção&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#artigos-da-se%c3%a7%c3%a3o&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
-  {{ range .Pages }}
-    &lt;li&gt;&lt;a href=&#34;{{ .RelPermalink }}&#34;&gt;{{ .Title }}&lt;/a&gt;&lt;/li&gt;
-  {{ end }}
-&lt;/ul&gt;
----
-## DEBUG: Listando sub-páginas encontradas
-&lt;ul&gt;
-{{ range .Pages }}
-    &lt;li&gt;Página Encontrada: &lt;a href=&#34;{{ .RelPermalink }}&#34;&gt;{{ .Title }}&lt;/a&gt; (Arquivo: {{ .File.Path }})&lt;/li&gt;
-{{ end }}
-&lt;/ul&gt;
----
+        &lt;h3&gt;2 - Extração de dados&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;2---extração-de-dados&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#2---extra%c3%a7%c3%a3o-de-dados&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;A fase de extração de informações é a mais crítica, já que os históricos em PDF possuem estruturas inconsistentes que dificultam a leitura por um software comum. Para resolver esse problema, utilizaremos um agente de Inteligência Artificial. Ele será capaz de analisar o PDF e facilmente nos devolver os dados que precisamos no formato necessário.&lt;/p&gt;
+
       </description>
     </item>
     
     <item>
-      <title>Arquitetura do Sistema 🏗️</title>
-      <link>http://localhost:1313/2025-2-Integralizei_UnB/docs/arquitetura/</link>
-      <pubDate>Mon, 22 Sep 2025 13:22:00 -0300</pubDate>
+      <title>Lógica de Análise</title>
+      <link>http://localhost:1313/2025-2-Integralizei_UnB/docs/arquitetura/logica-de-analise/</link>
+      <pubDate>Mon, 22 Sep 2025 12:20:00 -0300</pubDate>
       
-      <guid>http://localhost:1313/2025-2-Integralizei_UnB/docs/arquitetura/</guid>
+      <guid>http://localhost:1313/2025-2-Integralizei_UnB/docs/arquitetura/logica-de-analise/</guid>
       <description>
         
         
-        &lt;p&gt;Bem-vindo à documentação da arquitetura do projeto &lt;strong&gt;Integralizei UNB&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;Esta seção detalha a estrutura técnica, as tecnologias escolhidas e as decisões de design que formam a espinha dorsal da nossa aplicação. O objetivo é fornecer uma visão clara de como os componentes do sistema se conectam e operam.&lt;/p&gt;
+        &lt;p&gt;Para comparar os dados dos usuários utilizaremos o sistema oficial de “ranqueamento” da UNB:
+&lt;img src=&#34;http://localhost:1313/2025-2-Integralizei_UnB/images/image.png&#34; alt=&#34;Fórmula de Ranqueamento da UNB&#34;  loading=&#34;lazy&#34; /&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Armazenamento de Dados</title>
+      <link>http://localhost:1313/2025-2-Integralizei_UnB/docs/arquitetura/armazenamento/</link>
+      <pubDate>Mon, 22 Sep 2025 12:20:00 -0300</pubDate>
+      
+      <guid>http://localhost:1313/2025-2-Integralizei_UnB/docs/arquitetura/armazenamento/</guid>
+      <description>
+        
+        
+        &lt;h3&gt;3 - Armazenamento de dados&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;3---armazenamento-de-dados&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#3---armazenamento-de-dados&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Os dados extraídos precisam ser organizados em um banco de dados para que possam ser consultados de forma eficiente. Um banco de dados relacional (SQL), ainda estamos vendo quais bancos usaremos.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Product Backlog 📋</title>
+      <link>http://localhost:1313/2025-2-Integralizei_UnB/docs/planejamento/backlog/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/2025-2-Integralizei_UnB/docs/planejamento/backlog/</guid>
+      <description>
+        
+        
+        &lt;p&gt;O Product Backlog é a nossa fonte única da verdade: uma lista ordenada de tudo o que é conhecido ser necessário no produto. Ele é dinâmico e evolui à medida que o projeto avança.
+&lt;em&gt;Última atualização: 01 de Outubro de 2025&lt;/em&gt;&lt;/p&gt;
 &lt;hr&gt;
-&lt;h3&gt;Pilares da Nossa Arquitetura&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;pilares-da-nossa-arquitetura&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#pilares-da-nossa-arquitetura&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;A construção do nosso sistema foi guiada por quatro princípios fundamentais para garantir um produto robusto, seguro e eficiente.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;Modularidade:&lt;/strong&gt; Cada componente do backend (coleta, extração, armazenamento e análise) foi projetado para operar de forma independente. Isso facilita a manutenção, o teste e futuras atualizações sem impactar o resto do sistema.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;Escalabilidade:&lt;/strong&gt; A arquitetura foi pensada para suportar um número crescente de usuários e um volume cada vez maior de dados de históricos, garantindo que a performance não seja degradada com o tempo.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;Segurança e Privacidade:&lt;/strong&gt; A proteção dos dados do usuário é nossa maior prioridade. Implementamos uma política de descarte imediato de dados sensíveis e utilizamos as melhores práticas para o armazenamento seguro das informações relevantes.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;Acurácia:&lt;/strong&gt; A escolha de usar um agente de IA para a extração de dados foi uma decisão estratégica para garantir a máxima precisão na leitura dos diferentes formatos de históricos, que é o núcleo da nossa funcionalidade.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3&gt;Diagrama da Arquitetura&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;diagrama-da-arquitetura&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#diagrama-da-arquitetura&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;A imagem abaixo ilustra o fluxo de dados e a interação entre os principais componentes do nosso sistema.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/2025-2-Integralizei_UnB/images/diagrama-arquitetura.png&#34; alt=&#34;Diagrama da Arquitetura do Integralizei UNB&#34;  loading=&#34;lazy&#34; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-  {{ range .Pages }}
-    &lt;li&gt;&lt;a href=&#34;{{ .RelPermalink }}&#34;&gt;{{ .Title }}&lt;/a&gt;&lt;/li&gt;
-  {{ end }}
-&lt;/ul&gt;
+&lt;h2&gt;🧗 ÉPICO 1: Análise de Histórico Pessoal e Predição de Vaga&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;-épico-1-análise-de-histórico-pessoal-e-predição-de-vaga&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#-%c3%a9pico-1-an%c3%a1lise-de-hist%c3%b3rico-pessoal-e-predi%c3%a7%c3%a3o-de-vaga&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Este épico foca na jornada central do usuário: obter uma análise personalizada com base em seus dados acadêmicos.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;US01: Cadastro de Novo Usuário&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Como um &lt;strong&gt;novo&lt;/strong&gt; estudante da UnB, eu quero &lt;strong&gt;criar uma conta&lt;/strong&gt; na plataforma, para que eu possa ter um espaço seguro para enviar meu histórico e ver minhas análises.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;US02: Login de Usuário Existente&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Como um estudante &lt;strong&gt;já cadastrado&lt;/strong&gt;, eu quero &lt;strong&gt;fazer login&lt;/strong&gt; na minha conta, para que eu possa acessar minhas análises anteriores ou enviar um novo histórico.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;US03: Upload do Histórico&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Como um estudante logado, eu quero &lt;strong&gt;encontrar uma seção e um botão para anexar meu arquivo&lt;/strong&gt; de histórico, para que eu possa iniciar o processo de análise de forma fácil e intuitiva.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;US04: Feedback de Processamento&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Como um estudante que acabou de enviar seu histórico, eu quero &lt;strong&gt;ver uma tela mostrando o progresso da análise&lt;/strong&gt;, para que eu saiba que o sistema está funcionando e tenha uma ideia de quanto tempo vai demorar.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;US05: Visualização do Dashboard&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Como um estudante cujo histórico foi processado, eu quero &lt;strong&gt;ver um painel (dashboard) com os dados extraídos do meu histórico&lt;/strong&gt;, para que eu possa confirmar que a leitura foi correta e ter uma visão geral da minha situação acadêmica.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;US06: Visualização de Métricas Principais&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Como um estudante no meu painel, eu quero &lt;strong&gt;ver meu IRA, percentual de integralização e número de matérias feitas em destaque&lt;/strong&gt;, para que eu possa entender rapidamente meu desempenho.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;US07: Listagem de Matérias Pendentes&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Como um estudante planejando o próximo semestre, eu quero &lt;strong&gt;ver uma lista das minhas matérias obrigatórias pendentes&lt;/strong&gt;, para que eu saiba o que preciso cursar para avançar no meu curso.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;US08: Sugestão de Matérias Optativas&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Como um estudante buscando opções, eu quero &lt;strong&gt;receber sugestões de matérias optativas&lt;/strong&gt;, para que eu possa descobrir disciplinas interessantes.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;US09: Predição de Chance na Vaga&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Como um estudante analisando as matérias, eu quero &lt;strong&gt;ver uma indicação da minha chance (ex: Alta, Média, Baixa) de conseguir a vaga&lt;/strong&gt;, para que eu possa tomar uma decisão informada e estratégica na matrícula.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h2&gt;💡 ÉPICO 2: Calculadora de Simulação de Semestre&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;-épico-2-calculadora-de-simulação-de-semestre&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#-%c3%a9pico-2-calculadora-de-simula%c3%a7%c3%a3o-de-semestre&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Este épico foca em dar ao usuário uma ferramenta proativa para planejar seus próximos passos acadêmicos.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;US10: Acesso à Calculadora&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Como um estudante logado, eu quero &lt;strong&gt;encontrar e acessar a Calculadora de Simulação&lt;/strong&gt; para planejar meu próximo semestre de forma proativa.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;US11: Busca de Matérias para Simulação&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Como um estudante na calculadora, eu quero &lt;strong&gt;buscar e ver uma lista de matérias disponíveis&lt;/strong&gt; para adicionar à minha simulação.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;US12: Montagem da Simulação&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Como um estudante montando minha grade, eu quero &lt;strong&gt;poder adicionar e remover matérias&lt;/strong&gt; da minha lista de simulação, para que eu possa experimentar diferentes cenários.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;US13: Visualização do Resultado da Simulação&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Como um estudante que adicionou matérias, eu quero &lt;strong&gt;ver o total de créditos e meu novo percentual de integralização calculados automaticamente&lt;/strong&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;US14: Salvar Simulação&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Como um estudante que montou uma simulação, eu quero &lt;strong&gt;ter um botão para salvar essa simulação&lt;/strong&gt;, para que eu possa consultá-la mais tarde.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h2&gt;🔎 ÉPICO 3: Pesquisa e Comparação de Turmas&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;-épico-3-pesquisa-e-comparação-de-turmas&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#-%c3%a9pico-3-pesquisa-e-compara%c3%a7%c3%a3o-de-turmas&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Este épico foca em dar ao usuário o poder de explorar dados históricos do universo de turmas da UnB para tomar decisões mais inteligentes.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;US15: Pesquisa de Matéria e Turmas&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Como um estudante na tela de pesquisa, eu quero &lt;strong&gt;buscar uma matéria pelo nome ou código&lt;/strong&gt;, para encontrar as diferentes turmas ofertadas.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;US16: Visualização de Estatísticas da Turma&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Como um estudante que selecionou uma turma, eu quero &lt;strong&gt;ver estatísticas agregadas&lt;/strong&gt;, como o IRA médio dos aprovados e a taxa de aprovação geral.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;US17: Visualização de &amp;ldquo;Ranking&amp;rdquo; Anônimo&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Como um estudante analisando uma turma, eu quero &lt;strong&gt;ver uma lista anônima dos alunos que conseguiram a vaga&lt;/strong&gt; no passado, para que eu possa comparar meu perfil com o deles.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;US18: Favoritar Turmas de Interesse&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Como um estudante pesquisando, eu quero &lt;strong&gt;poder favoritar as turmas que mais me interessam&lt;/strong&gt;, para que eu possa criar uma lista de desejos.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h2&gt;⚙️ Requisitos Globais (Não-Funcionais)&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;-requisitos-globais-não-funcionais&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#-requisitos-globais-n%c3%a3o-funcionais&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Estes são requisitos de qualidade que se aplicam a múltiplas funcionalidades do sistema.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;RNF01: Acurácia da Extração&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;O sistema deve garantir uma &lt;strong&gt;acurácia superior a 95%&lt;/strong&gt; na extração de dados dos históricos em PDF.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;RNF02: Performance da Análise&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;O tempo total entre o upload do histórico e a exibição do resultado da análise deve ocorrer no intervalo de &lt;strong&gt;2 a 15 segundos&lt;/strong&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+
       </description>
     </item>
     

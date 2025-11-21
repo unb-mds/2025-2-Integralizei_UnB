@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Integralizei UnB</title>
+  
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="login-card">
+    <h2>Login efetuado!</h2>
+    <p class="subtitle">Bem-vindo ao Integralizei UnB.</p>
+    
+    <div style="margin-top: 2rem; text-align: center;">
+      <p style="font-size: 1.1rem; color: #333;">
+        Olá, <strong id="userName">...</strong>!
+      </p>
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;" id="userEmail">
+        ...
+      </p>
+      
+      <a 
+        href="#" 
+        id="logoutButton" 
+        style="
+          display: inline-block; 
+          padding: 10px 20px; 
+          background: #d9534f; 
+          color: white; 
+          text-decoration: none; 
+          border-radius: 8px;
+          font-weight: 600;"
+      >
+        Sair
+      </a>
+    </div>
+
+  </div>
+  
+  <script src="js/dashboard.js" type="module"></script>
+</body>
+</html>

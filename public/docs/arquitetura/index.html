@@ -8,53 +8,45 @@
 <link rel="icon" href="/2025-2-Integralizei_UnB/favicon-32x32.png" type="image/png" sizes="32x32" />
 <link rel="apple-touch-icon" href="/2025-2-Integralizei_UnB/apple-touch-icon.png" sizes="180x180" />
 <link fetchpriority="low" href="/2025-2-Integralizei_UnB/site.webmanifest" rel="manifest" />
-<title>Arquitetura do Sistema 🏗️ – Integralizei UNB - Documentação</title>
-  <meta name="description" content="Bem-vindo à documentação da arquitetura do projeto Integralizei UNB.
-Esta seção detalha a estrutura técnica, as tecnologias escolhidas e as decisões de design que formam a espinha dorsal da nossa aplicação. O objetivo é fornecer uma visão clara de como os componentes do sistema se conectam e operam.
-Pilares da Nossa Arquitetura A construção do nosso sistema foi guiada por quatro princípios fundamentais para garantir um produto robusto, seguro e eficiente." /><link rel="canonical" href="http://localhost:1313/2025-2-Integralizei_UnB/docs/arquitetura/" itemprop="url" />
+<title>Documento de Arquitetura 🏗️ – Integralizei UNB - Documentação</title>
+  <meta name="description" content="O projeto Integralizei UnB foi criado para reduzir a incerteza e a ansiedade dos alunos durante o período de matrículas na UnB. Esta plataforma analisa o histórico acadêmico para fornecer clareza sobre o progresso do curso e a viabilidade de cursar disciplinas.
+Este documento apresenta a arquitetura do sistema, servindo como um guia central para a equipe de desenvolvimento.
+Funcionalidades Principais ✅ Cálculo Preciso: Fornece valores atualizados de integralização e IRA.
+✅ Verificação de Viabilidade: Confirma se o aluno pode cursar disciplinas específicas.
+✅ Sugestões Inteligentes: Recomenda matérias optativas com base nos critérios do aluno." /><link rel="canonical" href="http://localhost:1313/2025-2-Integralizei_UnB/docs/arquitetura/" itemprop="url" />
 
-<meta property="og:title" content="Arquitetura do Sistema 🏗️">
+<meta property="og:title" content="Documento de Arquitetura 🏗️">
 <meta
   property="og:description"
   content="
     
-      Bem-vindo à documentação da arquitetura do projeto Integralizei UNB.
-Esta seção detalha a estrutura técnica, as tecnologias escolhidas e as decisões de design que formam a espinha dorsal da nossa aplicação. O objetivo é fornecer uma visão clara de como os componentes do sistema se conectam e operam.
-
-Pilares da Nossa Arquitetura
-    A construção do nosso sistema foi guiada por quatro princípios fundamentais para garantir um produto robusto, seguro e eficiente.
+      
     
   ">
 <meta
   property="og:type"
   content="
-    article
+    website
   ">
-<meta property="og:url" content="http://localhost:1313/2025-2-Integralizei_UnB/docs/arquitetura/"><meta property="article:section" content="docs">
-
-<meta
-  property="article:published_time"
-  content="2025-09-22T13:22:00-03:00">
+<meta property="og:url" content="http://localhost:1313/2025-2-Integralizei_UnB/docs/arquitetura/">
 
 
-<meta
-  property="article:modified_time"
-  content="2025-09-22T13:22:00-03:00">
-
-
-
-  <meta itemprop="name" content="Arquitetura do Sistema 🏗️">
-  <meta itemprop="description" content="Bem-vindo à documentação da arquitetura do projeto Integralizei UNB.
-Esta seção detalha a estrutura técnica, as tecnologias escolhidas e as decisões de design que formam a espinha dorsal da nossa aplicação. O objetivo é fornecer uma visão clara de como os componentes do sistema se conectam e operam.
-Pilares da Nossa Arquitetura A construção do nosso sistema foi guiada por quatro princípios fundamentais para garantir um produto robusto, seguro e eficiente.">
-  <meta itemprop="datePublished" content="2025-09-22T13:22:00-03:00">
-  <meta itemprop="dateModified" content="2025-09-22T13:22:00-03:00">
-  <meta itemprop="wordCount" content="237">
+  <meta itemprop="name" content="Documento de Arquitetura 🏗️">
+  <meta itemprop="description" content="O projeto Integralizei UnB foi criado para reduzir a incerteza e a ansiedade dos alunos durante o período de matrículas na UnB. Esta plataforma analisa o histórico acadêmico para fornecer clareza sobre o progresso do curso e a viabilidade de cursar disciplinas.
+Este documento apresenta a arquitetura do sistema, servindo como um guia central para a equipe de desenvolvimento.
+Funcionalidades Principais ✅ Cálculo Preciso: Fornece valores atualizados de integralização e IRA.
+✅ Verificação de Viabilidade: Confirma se o aluno pode cursar disciplinas específicas.
+✅ Sugestões Inteligentes: Recomenda matérias optativas com base nos critérios do aluno.">
+  <meta itemprop="datePublished" content="2025-09-22T12:20:00-03:00">
+  <meta itemprop="dateModified" content="2025-09-22T12:20:00-03:00">
+  <meta itemprop="wordCount" content="405">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Arquitetura do Sistema 🏗️">
-  <meta name="twitter:description" content="Bem-vindo à documentação da arquitetura do projeto Integralizei UNB.
-Esta seção detalha a estrutura técnica, as tecnologias escolhidas e as decisões de design que formam a espinha dorsal da nossa aplicação. O objetivo é fornecer uma visão clara de como os componentes do sistema se conectam e operam.
-Pilares da Nossa Arquitetura A construção do nosso sistema foi guiada por quatro princípios fundamentais para garantir um produto robusto, seguro e eficiente.">
+  <meta name="twitter:title" content="Documento de Arquitetura 🏗️">
+  <meta name="twitter:description" content="O projeto Integralizei UnB foi criado para reduzir a incerteza e a ansiedade dos alunos durante o período de matrículas na UnB. Esta plataforma analisa o histórico acadêmico para fornecer clareza sobre o progresso do curso e a viabilidade de cursar disciplinas.
+Este documento apresenta a arquitetura do sistema, servindo como um guia central para a equipe de desenvolvimento.
+Funcionalidades Principais ✅ Cálculo Preciso: Fornece valores atualizados de integralização e IRA.
+✅ Verificação de Viabilidade: Confirma se o aluno pode cursar disciplinas específicas.
+✅ Sugestões Inteligentes: Recomenda matérias optativas com base nos critérios do aluno.">
 <link href="/2025-2-Integralizei_UnB/css/compiled/main.css" rel="stylesheet" />
     <link href="/2025-2-Integralizei_UnB/css/variables.css" rel="stylesheet" />
     <link href="/2025-2-Integralizei_UnB/css/custom.css" rel="stylesheet" />
@@ -112,7 +104,7 @@ Pilares da Nossa Arquitetura A construção do nosso sistema foi guiada por quat
   href="/2025-2-Integralizei_UnB/docs/levantamento-de-requisitos/"
   
   class="hx:text-sm hx:contrast-more:text-gray-700 hx:contrast-more:dark:text-gray-100 hx:relative hx:-ml-2 hx:hidden hx:whitespace-nowrap hx:p-2 hx:md:inline-flex hx:items-center hx:gap-1 hx:text-gray-600 hx:hover:text-gray-800 hx:dark:text-gray-400 hx:dark:hover:text-gray-200"
-><span class="hx:text-center">Levantamento de Requisitos</span>
+><span class="hx:text-center">Requisitos</span>
 </a><a
   title=""
   href="/2025-2-Integralizei_UnB/docs/planejamento/"
@@ -272,17 +264,80 @@ Pilares da Nossa Arquitetura A construção do nosso sistema foi guiada por quat
         <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/2025-2-Integralizei_UnB/docs/planejamento/"
+    
+  >Planejamento do Projeto 🎯
+        <span class="hextra-sidebar-collapsible-button"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="hx:h-[18px] hx:min-w-[18px] hx:rounded-xs hx:p-0.5 hx:hover:bg-gray-800/5 hx:dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx:origin-center hx:transition-transform hx:rtl:-rotate-180"></path></svg></span>
+    </a>
+              <div class="hx:ltr:pr-0 hx:overflow-hidden">
+        <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/2025-2-Integralizei_UnB/docs/planejamento/backlog/"
+    
+  >Product Backlog 📋
+    </a>
+              
+            </li></ul>
+      </div>
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/2025-2-Integralizei_UnB/docs/sprints/"
     
   >Sprints do Projeto 🏃‍♂️
+        <span class="hextra-sidebar-collapsible-button"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="hx:h-[18px] hx:min-w-[18px] hx:rounded-xs hx:p-0.5 hx:hover:bg-gray-800/5 hx:dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx:origin-center hx:transition-transform hx:rtl:-rotate-180"></path></svg></span>
+    </a>
+              <div class="hx:ltr:pr-0 hx:overflow-hidden">
+        <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/2025-2-Integralizei_UnB/docs/sprints/sprint-00/"
+    
+  >Sprint 00: Iniciação e Pesquisa
     </a>
               
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/2025-2-Integralizei_UnB/docs/sprints/sprint-01/"
+    
+  >Sprint 01: Estruturação e Definição do Projeto
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/2025-2-Integralizei_UnB/docs/sprints/sprint-02/"
+    
+  >Sprint 02: Aprofundamento Técnico e Benchmarking
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/2025-2-Integralizei_UnB/docs/sprints/sprint-03/"
+    
+  >Sprint 03: Primeiras Implementações e Arquitetura
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/2025-2-Integralizei_UnB/docs/sprints/sprint-04/"
+    
+  >Sprint 04: Refinamento para a Release 1
+    </a>
+              
+            </li></ul>
+      </div>
             </li><li class="hx:flex hx:flex-col open"><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hextra-sidebar-active-item hx:bg-primary-100 hx:font-semibold hx:text-primary-800 hx:contrast-more:border hx:contrast-more:border-primary-500 hx:dark:bg-primary-400/10 hx:dark:text-primary-600 hx:contrast-more:dark:border-primary-500"
     href="/2025-2-Integralizei_UnB/docs/arquitetura/"
     
-  >Arquitetura do Sistema 🏗️
+  >Documento de Arquitetura 🏗️
+        <span class="hextra-sidebar-collapsible-button"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="hx:h-[18px] hx:min-w-[18px] hx:rounded-xs hx:p-0.5 hx:hover:bg-gray-800/5 hx:dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx:origin-center hx:transition-transform hx:rtl:-rotate-180"></path></svg></span>
     </a>
   
     <ul class='hx:flex hx:flex-col hx:gap-1 hx:relative hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:dark:before:bg-neutral-800 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:pr-3 hx:rtl:before:right-0 hx:ltr:ml-3 hx:rtl:mr-3'><li>
@@ -293,7 +348,49 @@ Pilares da Nossa Arquitetura A construção do nosso sistema foi guiada por quat
             </li>
           </ul>
   
+              <div class="hx:ltr:pr-0 hx:overflow-hidden">
+        <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/2025-2-Integralizei_UnB/docs/arquitetura/coleta-de-dados/"
+    
+  >Coleta de Dados
+    </a>
               
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/2025-2-Integralizei_UnB/docs/arquitetura/extracao-com-ia/"
+    
+  >Extração de Dados
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/2025-2-Integralizei_UnB/docs/arquitetura/logica-de-analise/"
+    
+  >Lógica de Análise
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/2025-2-Integralizei_UnB/docs/arquitetura/armazenamento/"
+    
+  >Armazenamento de Dados
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/2025-2-Integralizei_UnB/docs/arquitetura/adr001/"
+    
+  >ADR - 01
+    </a>
+              
+            </li></ul>
+      </div>
             </li><li class="hx:flex hx:flex-col "><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
@@ -309,6 +406,30 @@ Pilares da Nossa Arquitetura A construção do nosso sistema foi guiada por quat
     href="/2025-2-Integralizei_UnB/docs/ata-de-reunioes/reuniao00/"
     
   >Reunião - 06/09/2025
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/2025-2-Integralizei_UnB/docs/ata-de-reunioes/reuniao01/"
+    
+  >Reunião - 10/09/2025
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/2025-2-Integralizei_UnB/docs/ata-de-reunioes/reuniao02/"
+    
+  >Reunião - 18/09/2025
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/2025-2-Integralizei_UnB/docs/ata-de-reunioes/reuniao03/"
+    
+  >Reunião - 21/09/2025
     </a>
               
             </li></ul>
@@ -329,6 +450,14 @@ Pilares da Nossa Arquitetura A construção do nosso sistema foi guiada por quat
   >Requisitos
     </a>
               
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/2025-2-Integralizei_UnB/docs/story-map/"
+    
+  >User Story Map 🗺️
+    </a>
+              
             </li></ul>
       </div></li>
     </ul>
@@ -338,17 +467,121 @@ Pilares da Nossa Arquitetura A construção do nosso sistema foi guiada por quat
           <li class=""><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/2025-2-Integralizei_UnB/docs/planejamento/"
+    
+  >Planejamento do Projeto 🎯
+        <span class="hextra-sidebar-collapsible-button"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="hx:h-[18px] hx:min-w-[18px] hx:rounded-xs hx:p-0.5 hx:hover:bg-gray-800/5 hx:dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx:origin-center hx:transition-transform hx:rtl:-rotate-180"></path></svg></span>
+    </a><div class="hx:ltr:pr-0 hx:overflow-hidden">
+        <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/2025-2-Integralizei_UnB/docs/planejamento/backlog/"
+    
+  >Product Backlog 📋
+    </a>
+              
+            </li></ul>
+      </div></li>
+          <li class=""><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
     href="/2025-2-Integralizei_UnB/docs/sprints/"
     
   >Sprints do Projeto 🏃‍♂️
-    </a></li>
+        <span class="hextra-sidebar-collapsible-button"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="hx:h-[18px] hx:min-w-[18px] hx:rounded-xs hx:p-0.5 hx:hover:bg-gray-800/5 hx:dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx:origin-center hx:transition-transform hx:rtl:-rotate-180"></path></svg></span>
+    </a><div class="hx:ltr:pr-0 hx:overflow-hidden">
+        <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/2025-2-Integralizei_UnB/docs/sprints/sprint-00/"
+    
+  >Sprint 00: Iniciação e Pesquisa
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/2025-2-Integralizei_UnB/docs/sprints/sprint-01/"
+    
+  >Sprint 01: Estruturação e Definição do Projeto
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/2025-2-Integralizei_UnB/docs/sprints/sprint-02/"
+    
+  >Sprint 02: Aprofundamento Técnico e Benchmarking
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/2025-2-Integralizei_UnB/docs/sprints/sprint-03/"
+    
+  >Sprint 03: Primeiras Implementações e Arquitetura
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/2025-2-Integralizei_UnB/docs/sprints/sprint-04/"
+    
+  >Sprint 04: Refinamento para a Release 1
+    </a>
+              
+            </li></ul>
+      </div></li>
           <li class="open"><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hextra-sidebar-active-item hx:bg-primary-100 hx:font-semibold hx:text-primary-800 hx:contrast-more:border hx:contrast-more:border-primary-500 hx:dark:bg-primary-400/10 hx:dark:text-primary-600 hx:contrast-more:dark:border-primary-500"
     href="/2025-2-Integralizei_UnB/docs/arquitetura/"
     
-  >Arquitetura do Sistema 🏗️
-    </a></li>
+  >Documento de Arquitetura 🏗️
+        <span class="hextra-sidebar-collapsible-button"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="hx:h-[18px] hx:min-w-[18px] hx:rounded-xs hx:p-0.5 hx:hover:bg-gray-800/5 hx:dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx:origin-center hx:transition-transform hx:rtl:-rotate-180"></path></svg></span>
+    </a><div class="hx:ltr:pr-0 hx:overflow-hidden">
+        <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/2025-2-Integralizei_UnB/docs/arquitetura/coleta-de-dados/"
+    
+  >Coleta de Dados
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/2025-2-Integralizei_UnB/docs/arquitetura/extracao-com-ia/"
+    
+  >Extração de Dados
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/2025-2-Integralizei_UnB/docs/arquitetura/logica-de-analise/"
+    
+  >Lógica de Análise
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/2025-2-Integralizei_UnB/docs/arquitetura/armazenamento/"
+    
+  >Armazenamento de Dados
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/2025-2-Integralizei_UnB/docs/arquitetura/adr001/"
+    
+  >ADR - 01
+    </a>
+              
+            </li></ul>
+      </div></li>
           <li class=""><a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
@@ -363,6 +596,30 @@ Pilares da Nossa Arquitetura A construção do nosso sistema foi guiada por quat
     href="/2025-2-Integralizei_UnB/docs/ata-de-reunioes/reuniao00/"
     
   >Reunião - 06/09/2025
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/2025-2-Integralizei_UnB/docs/ata-de-reunioes/reuniao01/"
+    
+  >Reunião - 10/09/2025
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/2025-2-Integralizei_UnB/docs/ata-de-reunioes/reuniao02/"
+    
+  >Reunião - 18/09/2025
+    </a>
+              
+            </li><li class="hx:flex hx:flex-col "><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/2025-2-Integralizei_UnB/docs/ata-de-reunioes/reuniao03/"
+    
+  >Reunião - 21/09/2025
     </a>
               
             </li></ul>
@@ -380,6 +637,13 @@ Pilares da Nossa Arquitetura A construção do nosso sistema foi guiada por quat
     href="/2025-2-Integralizei_UnB/docs/requisitos/"
     
   >Requisitos
+    </a></li>
+          <li class=""><a
+    class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+    href="/2025-2-Integralizei_UnB/docs/story-map/"
+    
+  >User Story Map 🗺️
     </a></li>
         
       </ul>
@@ -438,14 +702,46 @@ Pilares da Nossa Arquitetura A construção do nosso sistema foi guiada por quat
 <nav class="hextra-toc hx:order-last hx:hidden hx:w-64 hx:shrink-0 hx:xl:block hx:print:hidden hx:px-4" aria-label="table of contents">
     <div class="hextra-scrollbar hx:sticky hx:top-16 hx:overflow-y-auto hx:pr-4 hx:pt-6 hx:text-sm [hyphens:auto] hx:max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] hx:ltr:-mr-4 hx:rtl:-ml-4"><p class="hx:mb-4 hx:font-semibold hx:tracking-tight">On this page</p><ul>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#pilares-da-nossa-arquitetura">Pilares da Nossa Arquitetura
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#funcionalidades-principais">Funcionalidades Principais
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#diagrama-da-arquitetura">Diagrama da Arquitetura
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#2-princ%c3%adpios-da-arquitetura">2. Princípios da Arquitetura
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#3-pilha-tecnol%c3%b3gica">3. Pilha Tecnológica
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#4-modelo-arquitetural-c4">4. Modelo Arquitetural (C4)
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-8 hx:rtl:pr-8 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#n%c3%advel-1-diagrama-de-contexto">Nível 1: Diagrama de Contexto
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-8 hx:rtl:pr-8 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#n%c3%advel-2-diagrama-de-cont%c3%aaineres">Nível 2: Diagrama de Contêineres
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-8 hx:rtl:pr-8 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#n%c3%advel-3-diagrama-de-componentes">Nível 3: Diagrama de Componentes
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#5-fluxo-de-dados">5. Fluxo de Dados
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#6-decis%c3%b5es-arquiteturais-adrs">6. Decisões Arquiteturais (ADRs)
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:break-words" href="#7-conclus%c3%a3o">7. Conclusão
         </a>
       </li></ul>
-      <div class="hx:mt-8 hx:border-t hx:bg-white hx:pt-8 hx:shadow-[0_-12px_16px_white] hx:dark:bg-dark hx:dark:shadow-[0_-12px_16px_#111] hx:sticky hx:bottom-0 hx:flex hx:flex-col hx:items-start hx:gap-2 hx:pb-8 hx:border-gray-200 hx:dark:border-neutral-800 hx:contrast-more:border-t hx:contrast-more:border-neutral-400 hx:contrast-more:shadow-none hx:contrast-more:dark:border-neutral-400"><a class="hx:text-xs hx:font-medium hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-100 hx:contrast-more:text-gray-800 hx:contrast-more:dark:text-gray-50" href="https://github.com/unb-mds/2025-2-Integralizei_UnB/tree/main/content/docs/arquitetura/index.md" target="_blank" rel="noreferrer">Edit this page on GitHub →</a>
+      <div class="hx:mt-8 hx:border-t hx:bg-white hx:pt-8 hx:shadow-[0_-12px_16px_white] hx:dark:bg-dark hx:dark:shadow-[0_-12px_16px_#111] hx:sticky hx:bottom-0 hx:flex hx:flex-col hx:items-start hx:gap-2 hx:pb-8 hx:border-gray-200 hx:dark:border-neutral-800 hx:contrast-more:border-t hx:contrast-more:border-neutral-400 hx:contrast-more:shadow-none hx:contrast-more:dark:border-neutral-400"><a class="hx:text-xs hx:font-medium hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-100 hx:contrast-more:text-gray-800 hx:contrast-more:dark:text-gray-50" href="https://github.com/unb-mds/2025-2-Integralizei_UnB/tree/main/content/docs/arquitetura/_index.md" target="_blank" rel="noreferrer">Edit this page on GitHub →</a>
         <button aria-hidden="true" id="backToTop" onClick="scrollUp();" class="hx:cursor-pointer hx:transition-all hx:duration-75 hx:opacity-0 hx:text-xs hx:font-medium hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-100 hx:contrast-more:text-gray-800 hx:contrast-more:dark:text-gray-50">
           <span>Scroll to top</span>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="hx:inline hx:ltr:ml-1 hx:rtl:mr-1 hx:h-3.5 hx:w-3.5 hx:rounded-full hx:border hx:border-gray-500 hx:hover:border-gray-900 hx:dark:border-gray-400 hx:dark:hover:border-gray-100 hx:contrast-more:border-gray-800 hx:contrast-more:dark:border-gray-50">
@@ -462,45 +758,67 @@ Pilares da Nossa Arquitetura A construção do nosso sistema foi guiada por quat
         <div class="hx:mt-1.5 hx:flex hx:items-center hx:gap-1 hx:overflow-hidden hx:text-sm hx:text-gray-500 hx:dark:text-gray-400 hx:contrast-more:text-current">
         <div class="hx:whitespace-nowrap hx:transition-colors hx:min-w-[24px] hx:overflow-hidden hx:text-ellipsis hx:hover:text-gray-900 hx:dark:hover:text-gray-100">
           <a href="/2025-2-Integralizei_UnB/docs/">Docs</a>
-        </div><svg class="hx:w-3.5 hx:shrink-0 hx:rtl:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg><div class="hx:whitespace-nowrap hx:transition-colors hx:font-medium hx:text-gray-700 hx:contrast-more:font-bold hx:contrast-more:text-current hx:dark:text-gray-100 hx:contrast-more:dark:text-current">Arquitetura do Sistema 🏗️</div>
+        </div><svg class="hx:w-3.5 hx:shrink-0 hx:rtl:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg><div class="hx:whitespace-nowrap hx:transition-colors hx:font-medium hx:text-gray-700 hx:contrast-more:font-bold hx:contrast-more:text-current hx:dark:text-gray-100 hx:contrast-more:dark:text-current">Documento de Arquitetura 🏗️</div>
   </div>
 
         <div class="content">
-          <h1>Arquitetura do Sistema 🏗️</h1>
-          <p>Bem-vindo à documentação da arquitetura do projeto <strong>Integralizei UNB</strong>.</p>
-<p>Esta seção detalha a estrutura técnica, as tecnologias escolhidas e as decisões de design que formam a espinha dorsal da nossa aplicação. O objetivo é fornecer uma visão clara de como os componentes do sistema se conectam e operam.</p>
+          <h1>Documento de Arquitetura 🏗️</h1>
+          <p>O projeto <strong>Integralizei UnB</strong> foi criado para reduzir a incerteza e a ansiedade dos alunos durante o período de matrículas na UnB. Esta plataforma analisa o histórico acadêmico para fornecer clareza sobre o progresso do curso e a viabilidade de cursar disciplinas.</p>
+<p>Este documento apresenta a arquitetura do sistema, servindo como um guia central para a equipe de desenvolvimento.</p>
+<h3>Funcionalidades Principais<span class="hx:absolute hx:-mt-20" id="funcionalidades-principais"></span>
+    <a href="#funcionalidades-principais" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>✅ <strong>Cálculo Preciso:</strong> Fornece valores atualizados de integralização e IRA.<br>
+✅ <strong>Verificação de Viabilidade:</strong> Confirma se o aluno pode cursar disciplinas específicas.<br>
+✅ <strong>Sugestões Inteligentes:</strong> Recomenda matérias optativas com base nos critérios do aluno.</p>
 <hr>
-<h3>Pilares da Nossa Arquitetura<span class="hx:absolute hx:-mt-20" id="pilares-da-nossa-arquitetura"></span>
-    <a href="#pilares-da-nossa-arquitetura" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>A construção do nosso sistema foi guiada por quatro princípios fundamentais para garantir um produto robusto, seguro e eficiente.</p>
-<ol>
-<li>
-<p><strong>Modularidade:</strong> Cada componente do backend (coleta, extração, armazenamento e análise) foi projetado para operar de forma independente. Isso facilita a manutenção, o teste e futuras atualizações sem impactar o resto do sistema.</p>
-</li>
-<li>
-<p><strong>Escalabilidade:</strong> A arquitetura foi pensada para suportar um número crescente de usuários e um volume cada vez maior de dados de históricos, garantindo que a performance não seja degradada com o tempo.</p>
-</li>
-<li>
-<p><strong>Segurança e Privacidade:</strong> A proteção dos dados do usuário é nossa maior prioridade. Implementamos uma política de descarte imediato de dados sensíveis e utilizamos as melhores práticas para o armazenamento seguro das informações relevantes.</p>
-</li>
-<li>
-<p><strong>Acurácia:</strong> A escolha de usar um agente de IA para a extração de dados foi uma decisão estratégica para garantir a máxima precisão na leitura dos diferentes formatos de históricos, que é o núcleo da nossa funcionalidade.</p>
-</li>
-</ol>
-<h3>Diagrama da Arquitetura<span class="hx:absolute hx:-mt-20" id="diagrama-da-arquitetura"></span>
-    <a href="#diagrama-da-arquitetura" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>A imagem abaixo ilustra o fluxo de dados e a interação entre os principais componentes do nosso sistema.</p>
-<p><img src="/2025-2-Integralizei_UnB/images/diagrama-arquitetura.png" alt="Diagrama da Arquitetura do Integralizei UNB"  loading="lazy" /></p>
+<h3>2. Princípios da Arquitetura<span class="hx:absolute hx:-mt-20" id="2-princípios-da-arquitetura"></span>
+    <a href="#2-princ%c3%adpios-da-arquitetura" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Nossa arquitetura foi projetada sobre três pilares essenciais para garantir a qualidade e a longevidade do projeto:</p>
 <ul>
-  {{ range .Pages }}
-    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
-  {{ end }}
+<li><strong>Manutenibilidade:</strong> Uma modularidade clara que permite ajustes e a evolução contínua do sistema sem grandes impactos.</li>
+<li><strong>Testabilidade:</strong> Cada componente é isolado, permitindo a criação de testes unitários e de integração confiáveis.</li>
+<li><strong>Produtividade:</strong> Um ecossistema tecnológico coeso (Next.js/TypeScript) que simplifica o desenvolvimento e a integração.</li>
 </ul>
+<hr>
+<h3>3. Pilha Tecnológica<span class="hx:absolute hx:-mt-20" id="3-pilha-tecnológica"></span>
+    <a href="#3-pilha-tecnol%c3%b3gica" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><ul>
+<li><strong>Front-end:</strong> Next.js (React + TypeScript) com <strong>Zustand</strong> para gerenciamento de estado global.</li>
+<li><strong>Back-end:</strong> Next.js API Routes (Node.js + TypeScript).</li>
+<li><strong>Banco de Dados:</strong> PostgreSQL.</li>
+<li><strong>Serviços Externos:</strong> Google Gemini API (extração de dados de PDF) e API da Sua Grade UnB.</li>
+</ul>
+<hr>
+<h3>4. Modelo Arquitetural (C4)<span class="hx:absolute hx:-mt-20" id="4-modelo-arquitetural-c4"></span>
+    <a href="#4-modelo-arquitetural-c4" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><h4>Nível 1: Diagrama de Contexto<span class="hx:absolute hx:-mt-20" id="nível-1-diagrama-de-contexto"></span>
+    <a href="#n%c3%advel-1-diagrama-de-contexto" class="subheading-anchor" aria-label="Permalink for this section"></a></h4><p>Mostra o sistema como uma &ldquo;caixa-preta&rdquo;, suas interações com o usuário (Aluno) e sistemas externos.</p>
+<p><img src="/2025-2-Integralizei_UnB/images/Diagrama1.png" alt="Diagrama de Contexto Nível 1"  loading="lazy" /></p>
+<h4>Nível 2: Diagrama de Contêineres<span class="hx:absolute hx:-mt-20" id="nível-2-diagrama-de-contêineres"></span>
+    <a href="#n%c3%advel-2-diagrama-de-cont%c3%aaineres" class="subheading-anchor" aria-label="Permalink for this section"></a></h4><p>Apresenta os contêineres principais: SPA, Backend API e Banco de Dados.</p>
+<p><img src="/2025-2-Integralizei_UnB/images/Diagrama2.png" alt="Diagrama de Contêineres Nível 2"  loading="lazy" /></p>
+<h4>Nível 3: Diagrama de Componentes<span class="hx:absolute hx:-mt-20" id="nível-3-diagrama-de-componentes"></span>
+    <a href="#n%c3%advel-3-diagrama-de-componentes" class="subheading-anchor" aria-label="Permalink for this section"></a></h4><p>Detalha os principais blocos internos do Backend API.</p>
+<p><img src="/2025-2-Integralizei_UnB/images/Diagrama3.png" alt="Diagrama de Componentes Nível 3"  loading="lazy" /></p>
+<hr>
+<h3>5. Fluxo de Dados<span class="hx:absolute hx:-mt-20" id="5-fluxo-de-dados"></span>
+    <a href="#5-fluxo-de-dados" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><ol>
+<li><strong>Envio:</strong> O aluno envia o histórico acadêmico (PDF) através da interface (SPA).</li>
+<li><strong>Orquestração:</strong> O <code>Analysis Controller</code> no back-end recebe o arquivo e gerencia o fluxo de processamento.</li>
+<li><strong>Extração:</strong> O <code>PDF Extractor</code>, usando a API do Gemini, extrai os dados estruturados do histórico.</li>
+<li><strong>Análise:</strong> O <code>Ranking &amp; Analysis Service</code> recebe os dados, consulta o repositório histórico e realiza todos os cálculos.</li>
+<li><strong>Resultado:</strong> A análise final (IRA, integralização, sugestões) é retornada para a SPA e exibida ao aluno.</li>
+</ol>
+<hr>
+<h3>6. Decisões Arquiteturais (ADRs)<span class="hx:absolute hx:-mt-20" id="6-decisões-arquiteturais-adrs"></span>
+    <a href="#6-decis%c3%b5es-arquiteturais-adrs" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><blockquote>
+  <p>Todas as decisões arquiteturais importantes são documentadas e mantidas na pasta <code>/docs/adr/</code>. Isso garante a rastreabilidade e o compartilhamento de conhecimento sobre as escolhas técnicas que moldaram o projeto.</p>
+</blockquote>
+<hr>
+<h3>7. Conclusão<span class="hx:absolute hx:-mt-20" id="7-conclusão"></span>
+    <a href="#7-conclus%c3%a3o" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><blockquote>
+  <p>A arquitetura do Integralizei UnB foi pensada para ser robusta e flexível, garantindo que o sistema não só atenda às necessidades atuais dos alunos, mas que também possa evoluir e incorporar novas funcionalidades no futuro.</p>
+</blockquote>
+
         </div>
         <div class="hx:mt-16"></div>
-        <div class="hx:mb-8 hx:flex hx:items-center hx:border-t hx:pt-8 hx:border-gray-200 hx:dark:border-neutral-800 hx:contrast-more:border-neutral-400 hx:dark:contrast-more:border-neutral-400 hx:print:hidden"><a
-        href="/2025-2-Integralizei_UnB/docs/sprints/"
-        title="Sprints do Projeto 🏃‍♂️"
-        class="hx:flex hx:max-w-[50%] hx:items-center hx:gap-1 hx:py-4 hx:text-base hx:font-medium hx:text-gray-600 hx:transition-colors [word-break:break-word] hx:hover:text-primary-600 hx:dark:text-gray-300 hx:md:text-lg hx:ltr:pr-4 hx:rtl:pl-4"
-      ><svg class="hx:inline hx:h-5 hx:shrink-0 hx:ltr:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>Sprints do Projeto 🏃‍♂️</a></div>
+        
         
       </main>
     </article>

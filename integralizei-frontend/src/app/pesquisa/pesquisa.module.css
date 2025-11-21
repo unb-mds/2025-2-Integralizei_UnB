@@ -171,6 +171,7 @@
   appearance: textfield;
 }
 
+<<<<<<< HEAD
 /* ======== CARDS DE TURMAS ======== */
 .materiaCard {
   box-sizing: border-box;
@@ -304,3 +305,5 @@
 .favorited:hover {
   box-shadow: 0 8px 20px rgba(255, 95, 109, 0.5);
 }
+=======
+>>>>>>> 460a0d0dd2e02e76cc5ed7509f964937399e6b86
