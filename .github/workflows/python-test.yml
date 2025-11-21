@@ -2,9 +2,9 @@ name: Python CI (Backend)
 
 on:
   pull_request:
-    branches: [ "pipeline-Ci/Cd" ]
+    branches: [ "main" ]
   push:
-    branches: [ "pipeline-Ci/Cd" ]
+    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:

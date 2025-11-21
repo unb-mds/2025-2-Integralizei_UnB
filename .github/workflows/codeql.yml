@@ -2,9 +2,9 @@ name: "Security Scan (CodeQL)"
 
 on:
   push:
-    branches: [ "pipeline-Ci/Cd" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "pipeline-Ci/Cd" ]
+    branches: [ "main" ]
   schedule:  #Agenda a varedura para domingo às 03:30
     - cron: '30 3 * * 0'
   workflow_dispatch: 
