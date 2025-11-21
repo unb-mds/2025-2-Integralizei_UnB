@@ -1,0 +1,125 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Integralizei UNB - Documentação – Planejamento do Projeto 🎯</title>
+    <link>http://localhost:1313/2025-2-Integralizei_UnB/docs/planejamento/</link>
+    <description>Recent content in Planejamento do Projeto 🎯 on Integralizei UNB - Documentação</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>pt-br</language>
+    
+	  <atom:link href="http://localhost:1313/2025-2-Integralizei_UnB/docs/planejamento/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Product Backlog 📋</title>
+      <link>http://localhost:1313/2025-2-Integralizei_UnB/docs/planejamento/backlog/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/2025-2-Integralizei_UnB/docs/planejamento/backlog/</guid>
+      <description>
+        
+        
+        &lt;p&gt;O Product Backlog é a nossa fonte única da verdade: uma lista ordenada de tudo o que é conhecido ser necessário no produto. Ele é dinâmico e evolui à medida que o projeto avança.
+&lt;em&gt;Última atualização: 01 de Outubro de 2025&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2&gt;🧗 ÉPICO 1: Análise de Histórico Pessoal e Predição de Vaga&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;-épico-1-análise-de-histórico-pessoal-e-predição-de-vaga&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#-%c3%a9pico-1-an%c3%a1lise-de-hist%c3%b3rico-pessoal-e-predi%c3%a7%c3%a3o-de-vaga&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Este épico foca na jornada central do usuário: obter uma análise personalizada com base em seus dados acadêmicos.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;US01: Cadastro de Novo Usuário&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Como um &lt;strong&gt;novo&lt;/strong&gt; estudante da UnB, eu quero &lt;strong&gt;criar uma conta&lt;/strong&gt; na plataforma, para que eu possa ter um espaço seguro para enviar meu histórico e ver minhas análises.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;US02: Login de Usuário Existente&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Como um estudante &lt;strong&gt;já cadastrado&lt;/strong&gt;, eu quero &lt;strong&gt;fazer login&lt;/strong&gt; na minha conta, para que eu possa acessar minhas análises anteriores ou enviar um novo histórico.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;US03: Upload do Histórico&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Como um estudante logado, eu quero &lt;strong&gt;encontrar uma seção e um botão para anexar meu arquivo&lt;/strong&gt; de histórico, para que eu possa iniciar o processo de análise de forma fácil e intuitiva.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;US04: Feedback de Processamento&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Como um estudante que acabou de enviar seu histórico, eu quero &lt;strong&gt;ver uma tela mostrando o progresso da análise&lt;/strong&gt;, para que eu saiba que o sistema está funcionando e tenha uma ideia de quanto tempo vai demorar.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;US05: Visualização do Dashboard&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Como um estudante cujo histórico foi processado, eu quero &lt;strong&gt;ver um painel (dashboard) com os dados extraídos do meu histórico&lt;/strong&gt;, para que eu possa confirmar que a leitura foi correta e ter uma visão geral da minha situação acadêmica.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;US06: Visualização de Métricas Principais&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Como um estudante no meu painel, eu quero &lt;strong&gt;ver meu IRA, percentual de integralização e número de matérias feitas em destaque&lt;/strong&gt;, para que eu possa entender rapidamente meu desempenho.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;US07: Listagem de Matérias Pendentes&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Como um estudante planejando o próximo semestre, eu quero &lt;strong&gt;ver uma lista das minhas matérias obrigatórias pendentes&lt;/strong&gt;, para que eu saiba o que preciso cursar para avançar no meu curso.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;US08: Sugestão de Matérias Optativas&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Como um estudante buscando opções, eu quero &lt;strong&gt;receber sugestões de matérias optativas&lt;/strong&gt;, para que eu possa descobrir disciplinas interessantes.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;US09: Predição de Chance na Vaga&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Como um estudante analisando as matérias, eu quero &lt;strong&gt;ver uma indicação da minha chance (ex: Alta, Média, Baixa) de conseguir a vaga&lt;/strong&gt;, para que eu possa tomar uma decisão informada e estratégica na matrícula.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h2&gt;💡 ÉPICO 2: Calculadora de Simulação de Semestre&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;-épico-2-calculadora-de-simulação-de-semestre&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#-%c3%a9pico-2-calculadora-de-simula%c3%a7%c3%a3o-de-semestre&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Este épico foca em dar ao usuário uma ferramenta proativa para planejar seus próximos passos acadêmicos.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;US10: Acesso à Calculadora&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Como um estudante logado, eu quero &lt;strong&gt;encontrar e acessar a Calculadora de Simulação&lt;/strong&gt; para planejar meu próximo semestre de forma proativa.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;US11: Busca de Matérias para Simulação&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Como um estudante na calculadora, eu quero &lt;strong&gt;buscar e ver uma lista de matérias disponíveis&lt;/strong&gt; para adicionar à minha simulação.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;US12: Montagem da Simulação&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Como um estudante montando minha grade, eu quero &lt;strong&gt;poder adicionar e remover matérias&lt;/strong&gt; da minha lista de simulação, para que eu possa experimentar diferentes cenários.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;US13: Visualização do Resultado da Simulação&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Como um estudante que adicionou matérias, eu quero &lt;strong&gt;ver o total de créditos e meu novo percentual de integralização calculados automaticamente&lt;/strong&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;US14: Salvar Simulação&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Como um estudante que montou uma simulação, eu quero &lt;strong&gt;ter um botão para salvar essa simulação&lt;/strong&gt;, para que eu possa consultá-la mais tarde.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h2&gt;🔎 ÉPICO 3: Pesquisa e Comparação de Turmas&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;-épico-3-pesquisa-e-comparação-de-turmas&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#-%c3%a9pico-3-pesquisa-e-compara%c3%a7%c3%a3o-de-turmas&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Este épico foca em dar ao usuário o poder de explorar dados históricos do universo de turmas da UnB para tomar decisões mais inteligentes.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;US15: Pesquisa de Matéria e Turmas&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Como um estudante na tela de pesquisa, eu quero &lt;strong&gt;buscar uma matéria pelo nome ou código&lt;/strong&gt;, para encontrar as diferentes turmas ofertadas.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;US16: Visualização de Estatísticas da Turma&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Como um estudante que selecionou uma turma, eu quero &lt;strong&gt;ver estatísticas agregadas&lt;/strong&gt;, como o IRA médio dos aprovados e a taxa de aprovação geral.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;US17: Visualização de &amp;ldquo;Ranking&amp;rdquo; Anônimo&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Como um estudante analisando uma turma, eu quero &lt;strong&gt;ver uma lista anônima dos alunos que conseguiram a vaga&lt;/strong&gt; no passado, para que eu possa comparar meu perfil com o deles.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;US18: Favoritar Turmas de Interesse&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Como um estudante pesquisando, eu quero &lt;strong&gt;poder favoritar as turmas que mais me interessam&lt;/strong&gt;, para que eu possa criar uma lista de desejos.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h2&gt;⚙️ Requisitos Globais (Não-Funcionais)&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;-requisitos-globais-não-funcionais&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#-requisitos-globais-n%c3%a3o-funcionais&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Estes são requisitos de qualidade que se aplicam a múltiplas funcionalidades do sistema.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;RNF01: Acurácia da Extração&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;O sistema deve garantir uma &lt;strong&gt;acurácia superior a 95%&lt;/strong&gt; na extração de dados dos históricos em PDF.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;RNF02: Performance da Análise&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;O tempo total entre o upload do histórico e a exibição do resultado da análise deve ocorrer no intervalo de &lt;strong&gt;2 a 15 segundos&lt;/strong&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

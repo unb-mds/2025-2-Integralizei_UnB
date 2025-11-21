@@ -1,77 +1,45 @@
-name: Testes JavaScript (Frontend e Backend)
+name: JavaScript CI (Frontend & Backend)
 
 on:
   pull_request:
     branches: [ main ]
+  push:
+    branches: [ main ]
 
 jobs:
-  test-frontend:
-    name: Testes (Frontend)
+  js-quality-check:
+    name: Check ${{ matrix.service }}
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        service: ['integralizei-frontend', 'integralizei-backend']
+
     defaults:
       run:
-        working-directory: ./integralizei-frontend 
+        working-directory: ./${{ matrix.service }}
+
     steps:
-      - name: Checkout repository and submodules
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
           submodules: recursive
-      - name: Use Node.js 18
-        uses: actions/setup-node@v3
+
+      - name: Setup Node.js 18
+        uses: actions/setup-node@v4
         with:
           node-version: 18
-      - name: Install dependencies (Frontend)
-        run: npm install
-      - name: Run tests (Frontend)
-        run: npm test
+          cache: 'npm'
+          cache-dependency-path: ./${{ matrix.service }}/package-lock.json
 
-  test-backend:
-    name: Testes (Backend)
-    runs-on: ubuntu-latest
-    defaults:
-      run:
+      - name: Install Dependencies (Clean)
+        run: npm ci
 
-        working-directory: ./integralizei-backend
-    steps:
-      - name: Checkout repository and submodules
-        uses: actions/checkout@v3
-        with:
-          submodules: recursive
-      - name: Use Node.js 18
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-      - name: Install dependencies (Backend)
-        run: npm install
-      - name: Run tests (Backend)
-        run: npm test
+      - name: Run Linter
 
-  lint-javascript:
-    name: 🎨 JavaScript Linter
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository and submodules
-        uses: actions/checkout@v3
-        with:
-          submodules: recursive
-      - name: Use Node.js 18
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-      
-      - name: Install & Lint (Frontend)
-    
         env:
-          ESLINT_USE_FLAT_CONFIG: "false" 
-        run: |
-          npm install
-          npm run lint 
-        working-directory: ./integralizei-frontend 
+          ESLINT_USE_FLAT_CONFIG: "false"
+        run: npm run lint
 
-      - name: Install & Lint (Backend)
-        env:
-          ESLINT_USE_FLAT_CONFIG: "false" 
-        run: |
-          npm install
-          npm run lint 
-        working-directory: ./integralizei-backend
+      - name: Run Tests
+        run: npm test
