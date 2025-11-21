@@ -1,6 +1,4 @@
-
 .pageContainer {
-  
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -17,7 +15,6 @@
   margin-bottom: 2rem; 
 }
 
-
 .title {
   font-family: 'Inter', sans-serif; 
   font-size: 3rem; 
@@ -30,7 +27,6 @@
   background-repeat: no-repeat;
 }
 
-
 .subtitle {
   font-family: 'Inter', sans-serif;
   font-size: 1.125rem; 
@@ -39,11 +35,7 @@
   text-align: center;
 }
 
-
-
 /* BARRA DE PESQUISA */
-
-
 .searchForm {
   width: 100%;
   max-width: 700px; 
@@ -53,14 +45,12 @@
   margin-bottom: 2.5rem; 
 }
 
-
 .searchContainer {
   position: relative;
   width: 100%; 
   font-family: 'Inter', sans-serif;
   margin-bottom: 1rem; 
 }
-
 
 .searchInput {
   box-sizing: border-box;
@@ -77,17 +67,14 @@
   font-family: 'Inter', sans-serif; 
 }
 
-
 .searchInput:focus {
   border-color: #0055aa;
   box-shadow: 0 0 8px rgba(0, 85, 170, 0.2);
 }
 
-
 .searchInput::placeholder {
   color: #aaa;
 }
-
 
 .searchButton {
   position: absolute;
@@ -105,7 +92,6 @@
   justify-content: center;
 }
 
-
 .searchButton svg {
   width: 20px;
   height: 20px;
@@ -113,11 +99,9 @@
   transition: fill 0.2s ease;
 }
 
-
 .searchButton:hover svg {
   fill: #333;
 }
-
 
 .optionsContainer {
   display: flex;
@@ -171,7 +155,6 @@
   appearance: textfield;
 }
 
-<<<<<<< HEAD
 /* ======== CARDS DE TURMAS ======== */
 .materiaCard {
   box-sizing: border-box;
@@ -188,7 +171,6 @@
   width: min(95vw, 1000px); 
   margin: 10px auto; 
 }
-
 
 .materiaInfo {
   display: flex;
@@ -213,51 +195,7 @@
   gap: 15px;
 }
 
-/* ================= BOTÃO DE SETA ================= */
-
-.botaoSeta {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 40px;
-  height: 40px;
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-  transition: all 0.2s ease;
-  --icon-mask: none;
-}
-
-/* Ícone dentro do botão */
-.botaoSeta::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ffffff;
-  mask-image: var(--icon-mask);
-  mask-repeat: no-repeat;
-  mask-position: center;
-  mask-size: 22px 22px;
-}
-
-/* Hover */
-.botaoSeta:hover {
-  transform: translateY(-2px);
-  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
-}
-
-/* Setas possíveis */
-.baixo {
-  --icon-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-}
-
 /* ================= BOTÃO DE FAVORITAR ================= */
-
 .favoriteBtn {
   display: inline-flex;
   align-items: center;
@@ -305,5 +243,3 @@
 .favorited:hover {
   box-shadow: 0 8px 20px rgba(255, 95, 109, 0.5);
 }
-=======
->>>>>>> 460a0d0dd2e02e76cc5ed7509f964937399e6b86
