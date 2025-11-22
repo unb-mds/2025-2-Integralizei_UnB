@@ -8,20 +8,21 @@ exclude = '''
     | __pycache__
     | build
     | dist
+    | node_modules
+    | login-service/node_modules
   )/
 )
 '''
 
 [tool.flake8]
-
-max-line-length = 88
-
-# Ignora o erro E203 (espaço antes de ':') 
+max-line-length = 120
 extend-ignore = "E203"
-
 exclude = [
     ".venv",
     "__pycache__",
     "build",
-    "dist"
+    "dist",
+    "node_modules",
+    ".git",
+    "instance"
 ]

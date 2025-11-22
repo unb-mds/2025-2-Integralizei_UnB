@@ -1,39 +1,79 @@
-# Ambientes Virtuais Python (GIGANTES, nunca devem subir)
-venv/
-.venv/
-env/
-__pycache__/
-*.pyc
+# =========================
+# 📦 Node.js & Package Managers
+# =========================
+node_modules
+.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
 
-# Dependências Node.js (GIGANTES, nunca devem subir)
-node_modules/
+# Logs & Debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.pnpm-debug.log*
 
-# Arquivos de Build (Next.js gera isso localmente)
+# =========================
+# ⚛️ Frontend (Next.js & React)
+# =========================
 .next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+# Vercel deployment
+.vercel
+
+# =========================
+# 🐍 Backend (Python)
+# =========================
+# Virtual Environments
+venv/
+.venv/
+
+# Bytecode & Cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+
+# Distribution & Builds (Front & Back)
 dist/
 build/
-out/
 
-# Variáveis de Ambiente (SEGURANÇA MÁXIMA - CONTÉM SENHAS)
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+# Testing coverage
+coverage/
 
-# Bancos de Dados Locais
+# =========================
+# 🗄️ Database & Storage
+# =========================
 *.db
-*.sqlite3
-*.sqlite
+# Flask 'instance' folder (often contains DBs or secrets)
+instance/
+# User uploads
+uploads/
 
-# Logs e Arquivos de Sistema
-*.log
-.DS_Store
-Thumbs.db
+# =========================
+# 🔐 Environment & Secrets (CRITICAL)
+# =========================
+.env
+.env*
+*.pem
 
-# IDEs (Configurações locais do seu VS Code)
+# =========================
+# 💻 IDE & Editors
+# =========================
 .vscode/
 .idea/
+
+# =========================
+# ⚙️ OS & Misc
+# =========================
+.DS_Store
+*.log
+*.tmp
+*.bak

@@ -1,0 +1,19 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Integralizei UNB - Documentação – Sprint 00: Iniciação e Pesquisa</title>
+    <link>http://localhost:1313/2025-2-Integralizei_UnB/docs/sprints/sprint-00/</link>
+    <description>Recent content in Sprint 00: Iniciação e Pesquisa on Integralizei UNB - Documentação</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>pt-br</language>
+    <lastBuildDate>Sun, 24 Aug 2025 23:59:59 -0300</lastBuildDate>
+    
+	  <atom:link href="http://localhost:1313/2025-2-Integralizei_UnB/docs/sprints/sprint-00/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+  </channel>
+</rss>

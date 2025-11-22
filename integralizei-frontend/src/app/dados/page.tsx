@@ -42,17 +42,20 @@ export default function DadosPage() {
   const [dados, setDados] = useState<DadosAluno | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Carrega dados do localStorage apenas no cliente (evita erro de Hydration)
   useEffect(() => {
-    const dadosSalvos = localStorage.getItem("dadosAluno");
-    if (dadosSalvos) {
-      try {
-        setDados(JSON.parse(dadosSalvos) as DadosAluno);
-      } catch (e) {
-        console.error("Erro ao ler dados:", e);
+    const timer = setTimeout(() => {
+      const dadosSalvos = localStorage.getItem("dadosAluno");
+      if (dadosSalvos) {
+        try {
+          setDados(JSON.parse(dadosSalvos) as DadosAluno);
+        } catch (e) {
+          console.error("Erro ao ler dados:", e);
+        }
       }
-    }
-    setLoading(false);
+      setLoading(false);
+    }, 0);
+
+    return () => clearTimeout(timer);
   }, []);
 
   // Tela de Carregamento ou Sem Dados
