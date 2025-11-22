@@ -1,8 +1,8 @@
 import { render, screen, waitFor, fireEvent, act } from "@testing-library/react";
-import PesquisaPage from "./page";
+import PesquisaPage from "../../../src/app/pesquisa/page";
 import "@testing-library/jest-dom";
 
-jest.mock("../../components/Navbar2/Navbar2", () => {
+jest.mock("@/components/Navbar2/Navbar2", () => {
   return function DummyNavbar() { return <div data-testid="navbar">Navbar</div>; };
 });
 

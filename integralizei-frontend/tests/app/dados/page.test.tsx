@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from "@testing-library/react";
-import DadosPage from "./page";
+import DadosPage from "../../../src/app/dados/page";
 
-jest.mock("../../components/Navbar2/Navbar2", () => {
+jest.mock("@/components/Navbar2/Navbar2", () => {
   return function DummyNavbar() {
     return <div data-testid="navbar">Navbar Mock</div>;
   };
