@@ -47,3 +47,11 @@ Para comparar os dados dos usuários utilizaremos o sistema oficial de “ranque
 [Protótipo Figma Alta Fidelidade](https://www.figma.com/proto/aZz3Z42XS3ukfA1dmO4CSy/Integralizei-UnB-Prototipo?page-id=2%3A5057&node-id=86-738&viewport=430%2C484%2C0.16&t=4WOKKrP3IuPDyc7T-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=20%3A2016&hide-ui=1)
 
 [Protótipo Figma Baixa Fidelidade](https://www.figma.com/design/aZz3Z42XS3ukfA1dmO4CSy/Integralizei-UnB-Prototipo?node-id=274-782&p=f&t=iHei4xLPFjjhZMzQ-0)
+
+[Teamplate Figma](https://www.figma.com/board/iYClmkeuO6PYRTE8YbSFgY/Integralizei-UnB?node-id=0-1&p=f&t=sJNDJnBSvUTxPIw6-0)
+
+[Documentação da Arquitetura](https://github.com/unb-mds/2025-2-Integralizei_UnB/blob/c7bc131d6d4e7f049eca74789768dd40ea1634e6/doc/arquitetura/DocumentoDeArquitetura.md)
+
+
+
+

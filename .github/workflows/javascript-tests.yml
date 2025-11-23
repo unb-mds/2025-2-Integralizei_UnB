@@ -1,0 +1,49 @@
+name: JavaScript CI (Frontend & Backend)
+
+on:
+  pull_request:
+    branches: [ "main" ]
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  js-quality-check:
+    name: Check ${{ matrix.service }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        service: ['integralizei-frontend', 'integralizei-backend']
+
+    defaults:
+      run:
+        working-directory: ./${{ matrix.service }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+          cache-dependency-path: ./${{ matrix.service }}/package-lock.json
+
+      - name: Install Dependencies (Clean)
+        run: npm ci
+
+      - name: Run Linter
+
+        env:
+          ESLINT_USE_FLAT_CONFIG: "false"
+        run: npm run lint
+
+      - name: Run Tests
+        run: npm test
+      
+      - name: Run Tests with Coverage check
+        run: npm test -- --coverage

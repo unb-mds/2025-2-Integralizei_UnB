@@ -1,0 +1,136 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Integralizei UNB - Documentação – Documento de Arquitetura 🏗️</title>
+    <link>http://localhost:1313/2025-2-Integralizei_UnB/docs/arquitetura/</link>
+    <description>Recent content in Documento de Arquitetura 🏗️ on Integralizei UNB - Documentação</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>pt-br</language>
+    <lastBuildDate>Mon, 22 Sep 2025 12:20:00 -0300</lastBuildDate>
+    
+	  <atom:link href="http://localhost:1313/2025-2-Integralizei_UnB/docs/arquitetura/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Coleta de Dados</title>
+      <link>http://localhost:1313/2025-2-Integralizei_UnB/docs/arquitetura/coleta-de-dados/</link>
+      <pubDate>Mon, 22 Sep 2025 12:20:00 -0300</pubDate>
+      
+      <guid>http://localhost:1313/2025-2-Integralizei_UnB/docs/arquitetura/coleta-de-dados/</guid>
+      <description>
+        
+        
+        &lt;h3&gt;1 - Coleta de dados&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;1---coleta-de-dados&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#1---coleta-de-dados&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;O sucesso da nossa análise depende da qualidade e quantidade de dados. Nossa estratégia de coleta será dividida em duas fases:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Fase 1 (Pré-lançamento):&lt;/strong&gt; Iniciaremos com uma base de dados menor, coletada através de envios voluntários. Isso nos permitirá treinar nossos modelos e garantir que a plataforma já seja útil desde o primeiro dia.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Fase 2 (Site ativo):&lt;/strong&gt; Com o site no ar, os próprios usuários poderão fazer o upload de seus históricos. Este processo será simples, rápido e seguro.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;O tratamento dos dados é de extrema importância, dados sensíveis como nome, CPF e matrícula são &lt;strong&gt;imediatamente descartados&lt;/strong&gt; e nunca armazenados.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Extração de Dados</title>
+      <link>http://localhost:1313/2025-2-Integralizei_UnB/docs/arquitetura/extracao-com-ia/</link>
+      <pubDate>Mon, 22 Sep 2025 12:20:00 -0300</pubDate>
+      
+      <guid>http://localhost:1313/2025-2-Integralizei_UnB/docs/arquitetura/extracao-com-ia/</guid>
+      <description>
+        
+        
+        &lt;h3&gt;2 - Extração de dados&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;2---extração-de-dados&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#2---extra%c3%a7%c3%a3o-de-dados&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;A fase de extração de informações é a mais crítica, já que os históricos em PDF possuem estruturas inconsistentes que dificultam a leitura por um software comum. Para resolver esse problema, utilizaremos um agente de Inteligência Artificial. Ele será capaz de analisar o PDF e facilmente nos devolver os dados que precisamos no formato necessário.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Lógica de Análise</title>
+      <link>http://localhost:1313/2025-2-Integralizei_UnB/docs/arquitetura/logica-de-analise/</link>
+      <pubDate>Mon, 22 Sep 2025 12:20:00 -0300</pubDate>
+      
+      <guid>http://localhost:1313/2025-2-Integralizei_UnB/docs/arquitetura/logica-de-analise/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Para comparar os dados dos usuários utilizaremos o sistema oficial de “ranqueamento” da UNB:
+&lt;img src=&#34;http://localhost:1313/2025-2-Integralizei_UnB/images/image.png&#34; alt=&#34;Fórmula de Ranqueamento da UNB&#34;  loading=&#34;lazy&#34; /&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Armazenamento de Dados</title>
+      <link>http://localhost:1313/2025-2-Integralizei_UnB/docs/arquitetura/armazenamento/</link>
+      <pubDate>Mon, 22 Sep 2025 12:20:00 -0300</pubDate>
+      
+      <guid>http://localhost:1313/2025-2-Integralizei_UnB/docs/arquitetura/armazenamento/</guid>
+      <description>
+        
+        
+        &lt;h3&gt;3 - Armazenamento de dados&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;3---armazenamento-de-dados&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#3---armazenamento-de-dados&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Os dados extraídos precisam ser organizados em um banco de dados para que possam ser consultados de forma eficiente. Um banco de dados relacional (SQL), ainda estamos vendo quais bancos usaremos.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>ADR - 01</title>
+      <link>http://localhost:1313/2025-2-Integralizei_UnB/docs/arquitetura/adr001/</link>
+      <pubDate>Mon, 22 Sep 2025 12:20:00 -0300</pubDate>
+      
+      <guid>http://localhost:1313/2025-2-Integralizei_UnB/docs/arquitetura/adr001/</guid>
+      <description>
+        
+        
+        &lt;h1&gt;Escolha de TypeScript para Front-end e Back-end&lt;/h1&gt;&lt;h2&gt;Status&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;status&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#status&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Aceita&lt;/p&gt;
+&lt;h2&gt;Contexto&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;contexto&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#contexto&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;O projeto &lt;strong&gt;Integralizei UnB&lt;/strong&gt; envolve desenvolvimento de &lt;strong&gt;SPA (Single-Page Application)&lt;/strong&gt; para front-end e lógica de backend integrando APIs externas e banco de dados.&lt;/p&gt;
+&lt;p&gt;Duas opções principais foram consideradas para a linguagem de desenvolvimento:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Python&lt;/strong&gt;: excelente para prototipagem, processamento de dados e integrações rápidas.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;TypeScript (com Next.js e Node.js)&lt;/strong&gt;: oferece tipagem estática, unificação de front-end e back-end e forte suporte para aplicações web modernas.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;Decisão&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;decisão&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#decis%c3%a3o&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Optamos por &lt;strong&gt;TypeScript&lt;/strong&gt; para todo o projeto, tanto no front-end quanto no back-end.
+As mudanças necessárias de linguagem serão aplicadas futuramente.&lt;/p&gt;
+&lt;p&gt;Motivos:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Unificação da stack&lt;/strong&gt;: front-end e back-end usam a mesma linguagem, facilitando manutenção e aprendizado da equipe.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Tipagem estática&lt;/strong&gt;: reduz bugs comuns relacionados a tipos de dados, aumentando confiabilidade e segurança do código.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Integração com Next.js&lt;/strong&gt;: permite desenvolvimento de SPA com SSR (Server-Side Rendering), simplificando roteamento e otimização de performance.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Produtividade e manutenibilidade&lt;/strong&gt;: maior consistência no código, refatoração segura e melhor suporte a IDEs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Consequências&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;consequências&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#consequ%c3%aancias&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Prós:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Código mais consistente e seguro.&lt;/li&gt;
+&lt;li&gt;Maior produtividade da equipe e facilidade para novos membros.&lt;/li&gt;
+&lt;li&gt;Melhor integração com ferramentas web modernas (Next.js, React, Zustand).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Contras:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Menor familiaridade da equipe com TypeScript em relação a Python.&lt;/li&gt;
+&lt;li&gt;Algumas bibliotecas de processamento de dados mais avançadas podem estar mais maduras em Python.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Notas&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;notas&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#notas&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;A escolha do TypeScript reflete uma prioridade de unificação da stack, produtividade e manutenção de longo prazo, mesmo que sacrifiquemos algumas facilidades do Python em análise de dados.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

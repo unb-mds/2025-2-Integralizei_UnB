@@ -1,9 +1,13 @@
+
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import styles from "./login.module.css";
+import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
     senha: "",
@@ -16,21 +20,49 @@ export default function LoginPage() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+ const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setMensagem(""); 
 
     if (formData.email === "" || formData.senha === "") {
       setMensagem("Preencha todos os campos!");
       return;
     }
 
-    console.log("Login realizado com:", formData);
-    setMensagem("Login efetuado com sucesso!");
-    setFormData({ email: "", senha: "" });
+    try {
+      setMensagem("Entrando..."); 
+
+      const BACKEND_URL = "http://localhost:3001";
+      const API_ROUTE = "/api/login";
+
+      const res = await fetch(BACKEND_URL + API_ROUTE, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.senha, 
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setMensagem(data.message || "E-mail ou senha inválidos.");
+        return;
+      }
+
+      setMensagem("Login efetuado com sucesso! Redirecionando..."); 
+      
+      router.push('/'); 
+
+    } catch (error) {
+      console.error("Erro de conexão:", error);
+      setMensagem("Não foi possível conectar ao servidor. O backend está rodando?");
+    }
   };
 
   const handleGoogleLogin = () => {
-    // Integrar o login com Google futuramente
+    
     console.log("Login com Google clicado");
     setMensagem("Tentando login com Google...");
   };
@@ -68,16 +100,18 @@ export default function LoginPage() {
 
         <div className={styles.separator}>ou</div>
 
+        {/* Login com Google */}
         <div className={styles.googleContainer}>
-        <button onClick={handleGoogleLogin} className={styles.googleButton}>
-            <img
-            src="https://www.svgrepo.com/show/355037/google.svg"
-            alt="Google logo"
+          <button onClick={handleGoogleLogin} className={styles.googleButton}>
+            <Image
+              src="https://www.svgrepo.com/show/355037/google.svg"
+              alt="Google logo"
+              width={24}
+              height={24}
             />
             Entrar com Google
-        </button>
+          </button>
         </div>
-
 
         {mensagem && <p className={styles.mensagem}>{mensagem}</p>}
 

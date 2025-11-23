@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Integralizei UnB</title>
+
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="login-card">
+      <header class="card-header">
+        <img
+          class="logo"
+          src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Webysther_20160322_-_Logo_UnB_%28sem_texto%29.svg"
+          alt="Logo Universidade de Brasília - UnB"
+        />
+        <h2>Acesse sua conta</h2>
+        <p class="subtitle">Bem-vindo ao Integralizei UnB!</p>
+      </header>
+
+      <button type="button" class="google-btn" id="googleLogin">
+        <svg class="google-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <g clip-path="url(#clip0_17_80)">
+            <path d="M47.532 24.5528C47.532 22.9214 47.3888 21.36 47.108 19.8633H24.2391V28.6025H37.4328C36.8617 31.7138 35.1456 34.3272 32.5322 36.0433V41.8528H40.2447C44.635 37.8156 47.532 31.8156 47.532 24.5528Z" fill="#4285F4"/>
+            <path d="M24.2391 48.0001C30.7984 48.0001 36.2031 45.8156 40.2447 41.8528L32.5322 36.0434C30.3616 37.4931 27.6197 38.341 24.2391 38.341C17.9069 38.341 12.5175 34.2584 10.6063 28.9819H2.74805V34.9656C6.76419 42.4254 14.777 48.0001 24.2391 48.0001Z" fill="#34A853"/>
+            <path d="M10.6063 28.9818C10.1063 27.5315 9.81328 25.9876 9.81328 24.3999C9.81328 22.8122 10.1063 21.2684 10.6063 19.8181V13.8344H2.74805C1.03194 17.215 0.0712891 20.9425 0.0712891 24.3999C0.0712891 27.8573 1.03194 31.5847 2.74805 34.9653L10.6063 28.9818Z" fill="#FBBC05"/>
+            <path d="M24.2391 8.73145C27.9116 8.73145 31.1197 10.0019 33.6197 12.3656L40.4203 5.56504C36.2031 1.63979 30.7984 -0.000244141 24.2391 -0.000244141C14.777  -0.000244141 6.76419 5.57448 2.74805 13.0342L10.6063 19.0177C12.5175 13.7412 17.9069 9.65862 24.2391 9.65862V8.73145Z" fill="#EA4335"/>
+          </g>
+          <defs>
+            <clipPath id="clip0_17_80">
+              <rect width="48" height="48" fill="white"/>
+            </clipPath>
+          </defs>
+        </svg>
+        <span>Entrar com Google</span>
+      </button>
+
+      <div class="divider"><span>Ou entre com seu e-mail</span></div>
+
+      <form id="loginForm" class="login-form" action="#" method="POST" novalidate>
+        <div id="errorMessage" class="error-message hidden" role="alert" aria-live="assertive">
+          <div class="icon-container" aria-hidden="true">
+            <svg viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm-.75-11.5a.75.75 0 011.5 0v5a.75.75 0 01-1.5 0v-5zm.75 8a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" />
+            </svg>
+          </div>
+          <div class="text-container">
+            <p>E-mail ou senha inválidos. Tente novamente.</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="loginField">E-mail</label>
+          <input id="loginField" name="loginField" type="email" autocomplete="email" required placeholder="seu.email@aluno.unb.br" />
+        </div>
+
+        <div class="form-group">
+          <label for="passwordField">Senha</label>
+          <input id="passwordField" name="passwordField" type="password" autocomplete="current-password" required placeholder="••••••••" />
+        </div>
+
+        <div class="form-options">
+          <div class="remember-me">
+            <input id="remember-me" name="remember-me" type="checkbox" />
+            <label for="remember-me">Lembrar-me</label>
+          </div>
+          <div class="forgot-password"><a href="esqueci-senha.html">Esqueceu sua senha?</a></div>
+        </div>
+
+        <button type="submit" class="submit-btn">Entrar</button>
+      </form>
+
+      <p class="signup-link">Não tem uma conta? <a href="register.html">Quero me cadastrar</a></p>
+    </div>
+
+    <script src="js/login.js"></script>
+  </body>
+</html>
+

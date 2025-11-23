@@ -1,0 +1,247 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Integralizei UNB - Documentação – Sprints do Projeto 🏃‍♂️</title>
+    <link>http://localhost:1313/2025-2-Integralizei_UnB/docs/sprints/</link>
+    <description>Recent content in Sprints do Projeto 🏃‍♂️ on Integralizei UNB - Documentação</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>pt-br</language>
+    <lastBuildDate>Mon, 22 Sep 2025 13:35:00 -0300</lastBuildDate>
+    
+	  <atom:link href="http://localhost:1313/2025-2-Integralizei_UnB/docs/sprints/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Sprint 00: Iniciação e Pesquisa</title>
+      <link>http://localhost:1313/2025-2-Integralizei_UnB/docs/sprints/sprint-00/</link>
+      <pubDate>Sun, 24 Aug 2025 23:59:59 -0300</pubDate>
+      
+      <guid>http://localhost:1313/2025-2-Integralizei_UnB/docs/sprints/sprint-00/</guid>
+      <description>
+        
+        
+        &lt;h3&gt;Backlog da Sprint 00 (O Plano)&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;backlog-da-sprint-00-o-plano&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#backlog-da-sprint-00-o-plano&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Meta da Sprint:&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&amp;ldquo;Nivelar o conhecimento da equipe nos conceitos e tecnologias fundamentais para o projeto, garantindo que todos tenham a base teórica necessária para as próximas fases de desenvolvimento.&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Itens do Backlog da Sprint (Tarefas de Estudo):&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;[CONCLUÍDO] Task #1:&lt;/strong&gt; Estudar os fundamentos e o fluxo de trabalho do GitHub para gerenciamento de versão.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;[CONCLUÍDO] Task #2:&lt;/strong&gt; Estudar os conceitos básicos do framework Flutter para desenvolvimento de interface.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;[CONCLUÍDO] Task #3:&lt;/strong&gt; Pesquisar e entender os princípios das Metodologias Ágeis, com foco em Scrum.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;[CONCLUÍDO] Task #4:&lt;/strong&gt; Estudar as técnicas de levantamento e documentação de Requisitos de Software.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;[CONCLUÍDO] Task #5:&lt;/strong&gt; Pesquisar os principais conceitos de Arquitetura de Software e padrões de mercado.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3&gt;Relatório da Sprint 00 (O Resultado)&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;relatório-da-sprint-00-o-resultado&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#relat%c3%b3rio-da-sprint-00-o-resultado&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;1. Resumo da Sprint&lt;/strong&gt;
+A Sprint 00 foi dedicada à capacitação e pesquisa da equipe. O objetivo era construir uma base de conhecimento sólida sobre os processos e tecnologias que serão utilizados ao longo do projeto.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2. O que foi Concluído?&lt;/strong&gt;
+Todos os itens planejados para a Sprint foram concluídos com sucesso. A equipe realizou estudos teóricos nas seguintes áreas:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Arquitetura de Software&lt;/li&gt;
+&lt;li&gt;Requisitos de Software&lt;/li&gt;
+&lt;li&gt;Metodologias Ágeis&lt;/li&gt;
+&lt;li&gt;Flutter&lt;/li&gt;
+&lt;li&gt;GitHub&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;3. O que Não foi Concluído?&lt;/strong&gt;
+Nenhum item. Todas as metas de estudo da Sprint foram atingidas.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4. Principais Dificuldades e Aprendizados&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Dificuldades:&lt;/strong&gt; A principal dificuldade encontrada pela equipe foi a familiarização com uma grande quantidade de termos técnicos novos e conceitos abstratos, especialmente em Arquitetura de Software e Metodologias Ágeis.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Aprendizados:&lt;/strong&gt; A equipe concluiu a Sprint com um entendimento fundamental e alinhado sobre como o projeto será gerenciado (GitHub, Metodologias Ágeis) e como será estruturado (Arquitetura, Requisitos). Essa base teórica foi crucial para preparar o time para as Sprints de desenvolvimento prático.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Sprint 01: Estruturação e Definição do Projeto</title>
+      <link>http://localhost:1313/2025-2-Integralizei_UnB/docs/sprints/sprint-01/</link>
+      <pubDate>Sun, 07 Sep 2025 23:59:59 -0300</pubDate>
+      
+      <guid>http://localhost:1313/2025-2-Integralizei_UnB/docs/sprints/sprint-01/</guid>
+      <description>
+        
+        
+        &lt;h3&gt;Backlog da Sprint 01 (O Plano)&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;backlog-da-sprint-01-o-plano&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#backlog-da-sprint-01-o-plano&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Meta da Sprint:&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&amp;ldquo;Dar os primeiros passos na estruturação do projeto, investigando tecnologias-chave, definindo os requisitos iniciais e estabelecendo a identidade visual e a documentação base.&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Itens do Backlog da Sprint (Tarefas Planejadas):&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;[CONCLUÍDO] Task #6:&lt;/strong&gt; Estruturar um banco de dados inicial utilizando JSON.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;[CONCLUÍDO] Task #7:&lt;/strong&gt; Realizar estudos básicos sobre APIs para entender a viabilidade de integrações.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;[CONCLUÍDO] Task #8:&lt;/strong&gt; Criar e configurar o &lt;code&gt;README.md&lt;/code&gt; principal do projeto e ajustar o tema da documentação.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;[CONCLUÍDO] Task #9:&lt;/strong&gt; Realizar o levantamento de requisitos funcionais e não funcionais para o projeto.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;[CONCLUÍDO] Task #10:&lt;/strong&gt; Desenvolver os protótipos de tela de baixa/média fidelidade no Figma.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3&gt;Relatório da Sprint 01 (O Resultado)&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;relatório-da-sprint-01-o-resultado&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#relat%c3%b3rio-da-sprint-01-o-resultado&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;1. Resumo da Sprint&lt;/strong&gt;
+A Sprint 01 marcou a transição da fase puramente teórica para a aplicação prática e o planejamento do projeto. A equipe focou em levantar os requisitos, explorar a estrutura de dados com JSON, estudar APIs e iniciar a prototipação visual no Figma. O evento mais significativo da sprint foi a &lt;strong&gt;mudança estratégica no escopo do projeto&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2. O que foi Concluído?&lt;/strong&gt;
+Todos os itens planejados para a Sprint foram 100% concluídos. As entregas foram:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Levantamento de Requisitos documentado.&lt;/li&gt;
+&lt;li&gt;Protótipos de tela no Figma.&lt;/li&gt;
+&lt;li&gt;Estrutura inicial para o banco de dados em JSON.&lt;/li&gt;
+&lt;li&gt;Estudos sobre API.&lt;/li&gt;
+&lt;li&gt;Documentação inicial (&lt;code&gt;README.md&lt;/code&gt;) configurada.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;3. O que Não foi Concluído?&lt;/strong&gt;
+Nenhum item. Todas as metas da Sprint foram atingidas.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4. Principais Dificuldades e Aprendizados&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Dificuldades:&lt;/strong&gt; A equipe continuou a enfrentar desafios com a assimilação de novos termos e conceitos técnicos, um processo natural na fase inicial de um projeto.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Aprendizados:&lt;/strong&gt; O principal aprendizado da Sprint foi a &lt;strong&gt;validação da viabilidade do projeto&lt;/strong&gt;. A equipe descobriu que a ideia original não era factível devido à falta de acesso aos dados necessários. Isso levou a uma decisão ágil e crucial de &lt;strong&gt;pivotar para o novo tema &amp;ldquo;Integralizei UNB&amp;rdquo;&lt;/strong&gt;. Este aprendizado evitou que a equipe desperdiçesse tempo em um caminho inviável e demonstrou grande capacidade de adaptação.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Sprint 02: Aprofundamento Técnico e Benchmarking</title>
+      <link>http://localhost:1313/2025-2-Integralizei_UnB/docs/sprints/sprint-02/</link>
+      <pubDate>Sun, 14 Sep 2025 23:59:59 -0300</pubDate>
+      
+      <guid>http://localhost:1313/2025-2-Integralizei_UnB/docs/sprints/sprint-02/</guid>
+      <description>
+        
+        
+        &lt;h3&gt;Backlog da Sprint 02 (O Plano)&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;backlog-da-sprint-02-o-plano&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#backlog-da-sprint-02-o-plano&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Meta da Sprint:&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&amp;ldquo;Aprofundar o conhecimento da equipe em áreas técnicas cruciais para a implementação do projeto, investigando soluções para IA, automação, autenticação, e analisando produtos através de benchmarking.&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Itens do Backlog da Sprint (Tarefas de Estudo):&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;[CONCLUÍDO] Task #11:&lt;/strong&gt; Estudar o funcionamento e a configuração do GitHub Pages para a documentação do projeto.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;[CONCLUÍDO] Task #12:&lt;/strong&gt; Pesquisar sobre Agentes de IA e tecnologias para a extração de dados de PDFs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;[CONCLUÍDO] Task #13:&lt;/strong&gt; Estudar a criação de um pipeline de automação (CI/CD) utilizando GitHub Actions.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;[CONCLUÍDO] Task #14:&lt;/strong&gt; Pesquisar sobre métodos e tecnologias para a autenticação de usuários.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;[CONCLUÍDO] Task #15:&lt;/strong&gt; Realizar um benchmark de projetos ou ferramentas similares para extrair insights e boas práticas.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3&gt;Relatório da Sprint 02 (O Resultado)&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;relatório-da-sprint-02-o-resultado&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#relat%c3%b3rio-da-sprint-02-o-resultado&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;1. Resumo da Sprint&lt;/strong&gt;
+A Sprint 02 continuou o foco em pesquisa, mas com um nível de profundidade maior, visando responder a questões específicas de implementação. O objetivo foi capacitar a equipe para tomar decisões arquiteturais importantes nas sprints de desenvolvimento.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2. O que foi Concluído?&lt;/strong&gt;
+Todos os 5 estudos planejados para a Sprint foram concluídos com sucesso, e o conhecimento foi compartilhado entre a equipe. As áreas pesquisadas foram:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Agentes de IA para extração de dados.&lt;/li&gt;
+&lt;li&gt;GitHub Pages.&lt;/li&gt;
+&lt;li&gt;Benchmarking de mercado.&lt;/li&gt;
+&lt;li&gt;Autenticação de usuários.&lt;/li&gt;
+&lt;li&gt;Pipeline com GitHub Actions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;3. O que Não foi Concluído?&lt;/strong&gt;
+Nenhum item. Todas as metas de estudo da Sprint foram atingidas.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4. Principais Dificuldades e Aprendizados&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Dificuldades:&lt;/strong&gt; O aprofundamento nos temas trouxe à tona a complexidade das escolhas tecnológicas. A equipe debateu sobre as vantagens e desvantagens de diferentes abordagens, o que é uma dificuldade natural e produtiva nesta fase.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Aprendizados:&lt;/strong&gt; O principal resultado desta Sprint foi a &lt;strong&gt;clareza sobre o caminho tecnológico&lt;/strong&gt;. A pesquisa ajudou a equipe a formular perguntas mais concretas, como a escolha da linguagem de programação principal e quais frameworks seriam mais adequados. O benchmark, em particular, forneceu insights valiosos que influenciarão o design e as funcionalidades do &amp;ldquo;Integralizei UNB&amp;rdquo;.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Sprint 03: Primeiras Implementações e Arquitetura</title>
+      <link>http://localhost:1313/2025-2-Integralizei_UnB/docs/sprints/sprint-03/</link>
+      <pubDate>Sun, 21 Sep 2025 23:59:59 -0300</pubDate>
+      
+      <guid>http://localhost:1313/2025-2-Integralizei_UnB/docs/sprints/sprint-03/</guid>
+      <description>
+        
+        
+        &lt;h3&gt;Backlog da Sprint 03 (O Plano)&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;backlog-da-sprint-03-o-plano&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#backlog-da-sprint-03-o-plano&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Meta da Sprint:&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&amp;ldquo;Finalizar os preparativos técnicos e de design para a primeira release do projeto, iniciando o desenvolvimento de componentes-chave e validando as escolhas de arquitetura.&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Itens do Backlog da Sprint (Tarefas Planejadas):&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;[CONCLUÍDO] Task #17:&lt;/strong&gt; Reorganizar e refinar os protótipos de alta fidelidade no Figma.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;[CONCLUÍDO] Task #18:&lt;/strong&gt; Desenvolver um formulário funcional para o upload de histórico acadêmico.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;[CONCLUÍDO] Task #19:&lt;/strong&gt; Realizar estudo técnico sobre a viabilidade de integração com a API do Sigaa.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;[CONCLUÍDO] Task #20:&lt;/strong&gt; Implementar o protótipo inicial do site com base nos designs do Figma.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;[CONCLUÍDO] Task #21:&lt;/strong&gt; Configurar o deploy contínuo do site de documentação com Hugo e GitHub Pages/Actions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3&gt;Relatório da Sprint 03 (O Resultado)&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;relatório-da-sprint-03-o-resultado&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#relat%c3%b3rio-da-sprint-03-o-resultado&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;1. Resumo da Sprint&lt;/strong&gt;
+A Sprint 03 marcou o início efetivo do desenvolvimento e da validação técnica do projeto. A equipe deixou a fase de pesquisa teórica e começou a aplicar o conhecimento adquirido, trabalhando na implementação de protótipos funcionais, na configuração da infraestrutura de documentação e na tomada de decisões arquiteturais concretas.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2. O que foi Concluído?&lt;/strong&gt;
+Todas as tarefas planejadas para a sprint foram concluídas com sucesso. As principais entregas foram:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;O site de documentação do projeto foi configurado e publicado com sucesso via GitHub Pages.&lt;/li&gt;
+&lt;li&gt;Um protótipo navegável do site foi desenvolvido.&lt;/li&gt;
+&lt;li&gt;O formulário para upload de histórico foi criado, representando o primeiro componente interativo do sistema.&lt;/li&gt;
+&lt;li&gt;Os designs no Figma foram ajustados e finalizados para guiar o desenvolvimento.&lt;/li&gt;
+&lt;li&gt;O estudo sobre a API do Sigaa forneceu clareza sobre os próximos passos de integração de dados.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;3. O que Não foi Concluído?&lt;/strong&gt;
+Nenhum item. Todas as metas da Sprint foram atingidas.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4. Principais Dificuldades e Aprendizados&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Dificuldades:&lt;/strong&gt; O contato direto com as novas tecnologias (Hugo, GitHub Actions, desenvolvimento de formulários web) apresentou a curva de aprendizado esperada. A aplicação prática dos conceitos teóricos se mostrou um desafio produtivo para a equipe, exigindo pesquisa e colaboração para solucionar problemas.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Aprendizados:&lt;/strong&gt; O maior aprendizado foi a &lt;strong&gt;transição bem-sucedida da teoria para a prática&lt;/strong&gt;. A equipe começou a testar suas hipóteses e a fazer escolhas de arquitetura reais. A configuração do pipeline do site de documentação, por exemplo, deu à equipe uma vitória importante e um aprofundamento prático em CI/CD.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Sprint 04: Refinamento para a Release 1</title>
+      <link>http://localhost:1313/2025-2-Integralizei_UnB/docs/sprints/sprint-04/</link>
+      <pubDate>Sun, 28 Sep 2025 23:59:59 -0300</pubDate>
+      
+      <guid>http://localhost:1313/2025-2-Integralizei_UnB/docs/sprints/sprint-04/</guid>
+      <description>
+        
+        
+        &lt;h3&gt;Backlog da Sprint 04 (O Plano)&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;backlog-da-sprint-04-o-plano&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#backlog-da-sprint-04-o-plano&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Meta da Sprint:&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&amp;ldquo;Refinar e organizar os artefatos do projeto, validando a aplicação das metodologias ágeis e identificando possíveis lacunas para garantir que todos os critérios para a primeira release fossem atendidos.&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Itens do Backlog da Sprint (Tarefas Planejadas):&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;[CONCLUÍDO] Task #23:&lt;/strong&gt; Finalizar a documentação de Arquitetura do sistema.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;[CONCLUÍDO] Task #24:&lt;/strong&gt; Realizar estudos e testes iniciais com Next.js como uma possível tecnologia para o frontend.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;[CONCLUÍDO] Task #26:&lt;/strong&gt; Estruturar e documentar o Product Backlog completo do projeto.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;[CONCLUÍDO] Task #27:&lt;/strong&gt; Criar o protótipo de baixa e alta fidelidade para validar os fluxos de usuário.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3&gt;Relatório da Sprint 04 (O Resultado)&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;relatório-da-sprint-04-o-resultado&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#relat%c3%b3rio-da-sprint-04-o-resultado&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;1. Resumo da Sprint&lt;/strong&gt;
+A Sprint 04 serviu como uma &amp;ldquo;sprint de fechamento&amp;rdquo; da fase de planejamento. O foco foi consolidar toda a documentação gerada, refinar o Product Backlog, criar e refinar os protótipos de baixa e alta fidelidade para validação de conceito e realizar uma autoavaliação sobre a aplicação das metodologias ágeis no projeto até o momento.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2. O que foi Concluído?&lt;/strong&gt;
+Apesar da pressão do prazo para a release, todos os itens planejados foram concluídos com sucesso:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;O Product Backlog foi formalmente documentado.&lt;/li&gt;
+&lt;li&gt;A Documentação de Arquitetura foi finalizada.&lt;/li&gt;
+&lt;li&gt;Estudos importantes sobre a tecnologia do frontend (Next.js) foram realizados.&lt;/li&gt;
+&lt;li&gt;O protótipo de baixa fidelidade foi entregue, ajudando a clarificar os fluxos da aplicação.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;3. O que Não foi Concluído?&lt;/strong&gt;
+Nenhum item. Todas as metas da Sprint foram atingidas.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4. Principais Dificuldades e Aprendizados&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Dificuldades:&lt;/strong&gt; A principal dificuldade foi o gerenciamento do tempo. A proximidade da data da primeira release, somada a outras demandas, criou um ambiente de pressão para a equipe.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Aprendizados:&lt;/strong&gt; O maior aprendizado desta sprint foi o valor da &lt;strong&gt;revisão e da reflexão&lt;/strong&gt;. Ao parar para analisar o trabalho feito, a equipe conseguiu identificar lacunas e garantir a coerência entre todos os artefatos do projeto (requisitos, arquitetura, backlog). A autoavaliação sobre o uso das metodologias ágeis também foi crucial para fortalecer o processo de trabalho da equipe para as futuras sprints de desenvolvimento.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

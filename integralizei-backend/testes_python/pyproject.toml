@@ -1,0 +1,27 @@
+[tool.black]
+line-length = 88
+exclude = '''
+(
+  /(
+      \.venv
+    | \.git
+    | __pycache__
+    | build
+    | dist
+  )/
+)
+'''
+
+[tool.flake8]
+
+max-line-length = 88
+
+# Ignora o erro E203 (espaço antes de ':') 
+extend-ignore = "E203"
+
+exclude = [
+    ".venv",
+    "__pycache__",
+    "build",
+    "dist"
+]

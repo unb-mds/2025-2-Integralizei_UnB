@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastro - Integralizei UnB</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="login-card">
+      <header class="card-header">
+        <img
+          class="logo"
+          src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Webysther_20160322_-_Logo_UnB_%28sem_texto%29.svg"
+          alt="Logo Universidade de Brasília - UnB"
+        />
+        <h2>Crie sua conta</h2>
+      </header>
+
+      <form id="registerForm" class="login-form" action="#" method="POST" novalidate>
+        <div id="regError" class="error-message hidden" role="alert" aria-live="assertive">
+          <div class="icon-container" aria-hidden="true">
+            <svg viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm-.75-11.5a.75.75 0 011.5 0v5a.75.75 0 01-1.5 0v-5zm.75 8a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" />
+            </svg>
+          </div>
+          <div class="text-container">
+            <p>Verifique os dados informados.</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="nameField">Nome completo</label>
+          <input id="nameField" name="nameField" type="text" autocomplete="name" required placeholder="Seu nome" />
+        </div>
+
+        <div class="form-group">
+          <label for="emailField">E-mail</label>
+          <input id="emailField" name="emailField" type="email" autocomplete="email" required placeholder="aluno@email.com" />
+        </div>
+
+        <div class="form-group">
+          <label for="passwordField">Senha</label>
+          <input id="passwordField" name="passwordField" type="password" autocomplete="new-password" required placeholder="••••••••" />
+        </div>
+
+        <div class="form-group">
+          <label for="confirmField">Confirmar senha</label>
+          <input id="confirmField" name="confirmField" type="password" autocomplete="new-password" required placeholder="••••••••" />
+        </div>
+
+        <button type="submit" class="submit-btn">Cadastrar</button>
+      </form>
+
+      <p class="signup-link">Já tem conta? <a href="index.html">Entrar</a></p>
+    </div>
+    <script src="js/register.js"></script>
+  </body>
+</html>
+
