@@ -39,7 +39,7 @@ def gerar_estatisticas_agregadas(db_path):
         max_v = int(round(max(valores)))
         total = len(valores)
         atualizado_em = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        
+
         cur.execute(
             """
             INSERT INTO estatisticas_disciplinas_agregadas
