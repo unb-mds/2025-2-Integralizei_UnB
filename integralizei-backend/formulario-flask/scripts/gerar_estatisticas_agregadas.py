@@ -34,12 +34,12 @@ def gerar_estatisticas_agregadas(db_path):
         valores = dados["valores"]
         nome = dados["nome"]
 
-        media = sum(valores) / len(valores)
-        min_v = min(valores)
-        max_v = max(valores)
+        media = int(round(sum(valores) / len(valores)))
+        min_v = int(round(min(valores)))
+        max_v = int(round(max(valores)))
         total = len(valores)
         atualizado_em = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
+        
         cur.execute(
             """
             INSERT INTO estatisticas_disciplinas_agregadas
