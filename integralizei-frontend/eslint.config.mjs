@@ -10,11 +10,9 @@ const compat = new FlatCompat({
   baseDirectory: __dirname,
 });
 
-export default [
-  // Config padrão do Next.js + TypeScript
+const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
 
-  // Ignorar pastas
   {
     ignores: [
       "node_modules/**",
@@ -22,10 +20,11 @@ export default [
       "out/**",
       "build/**",
       "next-env.d.ts",
+      "jest.config.js",
+      "jest.setup.js"
     ],
   },
 
-  // Plugin react-hooks
   {
     plugins: {
       "react-hooks": reactHooks,
@@ -36,3 +35,5 @@ export default [
     },
   },
 ];
+
+export default eslintConfig;

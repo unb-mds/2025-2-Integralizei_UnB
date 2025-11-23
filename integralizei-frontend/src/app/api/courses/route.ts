@@ -4,17 +4,19 @@ interface Course {
   id: number;
   name: string;
   code: string;
-  classes: unknown[]; // use o tipo real se souber, ex: { professor: string; horario: string }[]
-  [key: string]: unknown; // para campos adicionais vindos da API externa
+  classes: unknown[];
+  [key: string]: unknown;
 }
 
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
+    // Usa '??' que é mais seguro que '||' para strings vazias
     const search = searchParams.get("search") ?? "";
     const year = searchParams.get("year") ?? "";
     const period = searchParams.get("period") ?? "";
 
+    // Chama a API externa da UnB
     const response = await fetch(
       `https://api.suagradeunb.com.br/courses/?search=${search}&year=${year}&period=${period}`
     );
@@ -28,7 +30,7 @@ export async function GET(req: NextRequest) {
 
     const data: Course[] = await response.json();
 
-    // Converter classes de string para JSON se necessário
+    // Tratamento de dados (converter string JSON para objeto real)
     data.forEach((d) => {
       if (typeof d.classes === "string") {
         try {

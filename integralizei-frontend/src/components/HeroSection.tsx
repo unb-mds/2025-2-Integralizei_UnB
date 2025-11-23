@@ -36,6 +36,7 @@ export default function HeroSection() {
             width={480}
             height={480}
             className="object-contain drop-shadow-lg"
+            priority
             unoptimized
           />
         </div>
