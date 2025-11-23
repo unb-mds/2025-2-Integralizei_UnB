@@ -34,7 +34,7 @@ Pygments==2.19.2
 PyPDF2==3.0.1
 pypdfium2==5.0.0
 pytesseract==0.3.10
-pytest==8.4.2
+pytest==9.0.1
 python-dateutil==2.9.0.post0
 python-dotenv==1.0.0
 pytokens==0.3.0
