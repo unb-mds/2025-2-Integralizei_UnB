@@ -2,7 +2,7 @@ black==25.11.0
 blinker==1.9.0
 cffi==2.0.0
 charset-normalizer==3.4.4
-click==8.1.8
+click==8.3.1
 colorama==0.4.6
 cryptography==46.0.3
 et_xmlfile==2.0.0
