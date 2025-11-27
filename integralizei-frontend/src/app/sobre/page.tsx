@@ -7,7 +7,7 @@ export default function SobrePage() {
   const criadores = [
     // Pessoas já cadastradas
     { nome: "Ana Beatriz Souza", img: "/criadores/ana.jpeg" },
-    { nome: "Ana Caroline Dantas", img: "/criadores/fulano.jpg" },
+    { nome: "Ana Caroline Dantas", img: "/criadores/carol.jpg" },
     { nome: "Caroline Becker", img: "/criadores/ciclano.jpg" },
 
     // Novos criadores
