@@ -8,7 +8,7 @@ export default function SobrePage() {
     // Pessoas já cadastradas
     { nome: "Ana Beatriz Souza", img: "/criadores/ana.jpeg" },
     { nome: "Ana Caroline Dantas", img: "/criadores/carol.jpg" },
-    { nome: "Caroline Becker", img: "/criadores/ciclano.jpg" },
+    { nome: "Caroline Becker", img: "/criadores/carol2jpeg.jpeg" },
 
     // Novos criadores
     { nome: "Gustavo Fornaciari", img: "/criadores/maria.jpg" },
