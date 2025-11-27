@@ -6,7 +6,7 @@ import Navbar from "../../components/Navbar2/Navbar2";
 export default function SobrePage() {
   const criadores = [
     // Pessoas já cadastradas
-    { nome: "Ana Beatriz Souza", img: "/criadores/ana.jpg" },
+    { nome: "Ana Beatriz Souza", img: "/criadores/ana.jpeg" },
     { nome: "Ana Caroline Dantas", img: "/criadores/fulano.jpg" },
     { nome: "Caroline Becker", img: "/criadores/ciclano.jpg" },
 
