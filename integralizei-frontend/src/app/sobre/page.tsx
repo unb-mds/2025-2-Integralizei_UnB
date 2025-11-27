@@ -13,7 +13,7 @@ export default function SobrePage() {
     // Novos criadores
     { nome: "Gustavo Fornaciari", img: "/criadores/gustavo.jpeg" },
     { nome: "Enzo Menali", img: "/criadores/enzo.jpg" },
-    { nome: "Paulo Vitor", img: "/criadores/lucas.jpg" },
+    { nome: "Paulo Vitor Gomes", img: "/criadores/paulo.jpg" },
   ];
 
   return (
