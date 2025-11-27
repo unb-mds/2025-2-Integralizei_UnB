@@ -11,8 +11,8 @@ export default function SobrePage() {
     { nome: "Caroline Becker", img: "/criadores/carol2jpeg.jpeg" },
 
     // Novos criadores
-    { nome: "Gustavo Fornaciari", img: "/criadores/maria.jpg" },
-    { nome: "Enzo Menali", img: "/criadores/joao.jpg" },
+    { nome: "Gustavo Fornaciari", img: "/criadores/gustavo.jpeg" },
+    { nome: "Enzo Menali", img: "/criadores/enzo.jpg" },
     { nome: "Paulo Vitor", img: "/criadores/lucas.jpg" },
   ];
 
