@@ -37,9 +37,6 @@ jobs:
         run: npm ci
 
       - name: Run Linter
-
-        env:
-          ESLINT_USE_FLAT_CONFIG: "false"
         run: npm run lint
 
       - name: Run Tests
