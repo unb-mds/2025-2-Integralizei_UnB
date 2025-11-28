@@ -23,16 +23,10 @@
       }
     ],
     "paths": {
-<<<<<<< HEAD
-      "@/*": ["./src/*"]
-    },
-    "types": ["jest", "@testing-library/jest-dom"]
-=======
       "@/*": [
         "./src/*"
       ]
     }
->>>>>>> eb4a31372c8462aeb851339db0b6d383c246b3e8
   },
   "include": [
     "next-env.d.ts",
