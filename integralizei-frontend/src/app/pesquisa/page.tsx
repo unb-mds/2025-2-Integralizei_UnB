@@ -43,10 +43,12 @@ export default function Page() {
         `/api/courses/?search=${search}&year=${year}&period=${period}`
       );
 
-      if (!response.ok) {
-        throw new Error(`Erro na API: ${response.statusText}`);
-      }
-
+     if (!response.ok) {
+      console.error("Erro na API:", response.statusText);
+      setError("Houve um problema na busca. Verifique os dados.");
+      return; 
+    }
+      
       const data: Disciplina[] = await response.json();
 
       // converter classes se vierem como string
@@ -113,10 +115,10 @@ export default function Page() {
             <div className={styles.inputGroup}>
               <label htmlFor="period-input">Período</label>
               <input
-                id="period-input"
+                 id="period-input"
                 type="number"
+                value={isNaN(period) ? "" : period}
                 className={styles.numberInput}
-                value={period}
                 onChange={(e) => setPeriod(parseInt(e.target.value, 10))}
               />
             </div>
