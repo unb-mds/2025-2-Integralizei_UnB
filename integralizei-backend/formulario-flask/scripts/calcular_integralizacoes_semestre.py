@@ -55,14 +55,20 @@ def calcular_integralizacao_semestre_para_aluno(
 ):
     """
     Lê disciplinas do aluno, acumula CH aprovada e grava em integralizacoes_semestre
-    um registro por período, com ch_acumulada e %.
+    um registro por período, com ch_acumulada e % NO INÍCIO DO SEMESTRE.
+
+    Ou seja:
+    - 1º período do aluno: ch_acumulada = 0, integralizacao = 0.0
+    - Demais períodos: valor corresponde ao que o aluno tinha ao final do período anterior.
     """
     rows = cur.execute(
         """
         SELECT periodo, creditos, mencao, status
         FROM disciplinas_cursadas
         WHERE aluno_id = ?
-        ORDER BY CAST(substr(periodo,1,4) AS INT), CAST(substr(periodo,6,1) AS INT), id
+        ORDER BY CAST(substr(periodo,1,4) AS INT),
+                 CAST(substr(periodo,6,1) AS INT),
+                 id
         """,
         (aluno_id,),
     ).fetchall()
@@ -77,21 +83,29 @@ def calcular_integralizacao_semestre_para_aluno(
             (ch, (mencao or "").upper(), (status or "").upper())
         )
 
-    total_ch = 0
+    total_ch = 0  # CH acumulada ATÉ o início do período corrente
     inserts = []
+
     for p in sorted(por_periodo.keys(), key=periodo_key):
+        # 1) Primeiro gravamos o estado NO INÍCIO DO PERÍODO p
+        perc_inicio = round(
+            100.0 * total_ch / (ch_exigida or DEFAULT_CH_EXIGIDA), 2
+        )
+        inserts.append((aluno_id, p, total_ch, perc_inicio))
+
+        # 2) Depois somamos a CH aprovada DO PRÓPRIO PERÍODO p,
+        #    para que isso reflita no início do próximo período.
         for ch, mencao, status in por_periodo[p]:
             if (mencao in APR_MENC) or (status in APR_STATUS):
                 total_ch += int(ch or 0)
-        perc = round(100.0 * total_ch / (ch_exigida or DEFAULT_CH_EXIGIDA), 2)
-        inserts.append((aluno_id, p, total_ch, perc))
 
     # limpa antigos e insere novos
     cur.execute("DELETE FROM integralizacoes_semestre WHERE aluno_id = ?", (aluno_id,))
     if inserts:
         cur.executemany(
             """
-            INSERT INTO integralizacoes_semestre (aluno_id, periodo, ch_acumulada, integralizacao)
+            INSERT INTO integralizacoes_semestre
+                (aluno_id, periodo, ch_acumulada, integralizacao)
             VALUES (?, ?, ?, ?)
             """,
             inserts,
@@ -109,34 +123,38 @@ def calcular_integralizacoes_semestre(conn: sqlite3.Connection):
 
 
 # ---------------------------
-# Estatísticas por disciplina (usando t0 = integralização no INÍCIO do semestre)
+# Estatísticas por disciplina (usando t0 = integralização NO INÍCIO do semestre)
 # ---------------------------
 def integralizacao_t0_do_aluno_no_periodo(
     cur: sqlite3.Cursor, aluno_id: int, periodo: str
 ) -> float:
     """
-    t0 = integralização no período anterior (se existir), senão 0.0
-    Ex.: para disciplina em 2024/2, usamos integralização registrada em 2024/1.
-    Para 2024/1, usamos 2023/2 (se houver).
+    t0 = integralização NO INÍCIO do próprio período.
+    Como a tabela integralizacoes_semestre agora guarda o estado inicial,
+    basta ler o registro daquele período. Se não existir, assume 0.0.
     """
-    p_prev = periodo_anterior(periodo)
-    if p_prev:
-        row = cur.execute(
-            """
-            SELECT integralizacao
-            FROM integralizacoes_semestre
-            WHERE aluno_id = ? AND periodo = ?
-            """,
-            (aluno_id, p_prev),
-        ).fetchone()
-        if row and row[0] is not None:
-            return float(row[0])
+    p_norm = norm_periodo(periodo)
+    if not p_norm:
+        return 0.0
+
+    row = cur.execute(
+        """
+        SELECT integralizacao
+        FROM integralizacoes_semestre
+        WHERE aluno_id = ? AND periodo = ?
+        """,
+        (aluno_id, p_norm),
+    ).fetchone()
+
+    if row and row[0] is not None:
+        return float(row[0])
     return 0.0
 
 
 def calcular_estatisticas_disciplinas(conn: sqlite3.Connection, min_n: int = 3):
     """
-    Para cada (disciplina), coletar a integralização t0 dos alunos que a cursaram.
+    Para cada disciplina, coleta a integralização t0 dos alunos que a cursaram
+    (t0 = percentual de integralização NO INÍCIO do semestre da disciplina).
     Grava média, mediana, desvio e N em estatisticas_disciplinas.
     - min_n: limiar mínimo de amostras para gravar (evita ruído).
     """
@@ -146,7 +164,10 @@ def calcular_estatisticas_disciplinas(conn: sqlite3.Connection, min_n: int = 3):
     # Pega (disciplina, aluno, periodo) para calcular t0
     rows = cur.execute(
         """
-        SELECT d.codigo, COALESCE(d.nome, d.codigo) AS nome, d.aluno_id, d.periodo
+        SELECT d.codigo,
+               COALESCE(d.nome, d.codigo) AS nome,
+               d.aluno_id,
+               d.periodo
         FROM disciplinas_cursadas d
         """
     ).fetchall()
@@ -170,22 +191,21 @@ def calcular_estatisticas_disciplinas(conn: sqlite3.Connection, min_n: int = 3):
         inserts.append((codigo, nome, m, med, dp, n))
 
     if inserts:
-        inserts_with_id = [(aluno_id, *row) for row in inserts]
         cur.executemany(
             """
-        INSERT INTO estatisticas_disciplinas
-        (aluno_id, codigo, nome, media_integralizacao, mediana_integralizacao, desvio_padrao, total_alunos)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
-        """,
-            inserts_with_id,
+            INSERT INTO estatisticas_disciplinas
+                (codigo, nome,
+                 media_integralizacao,
+                 mediana_integralizacao,
+                 desvio_padrao,
+                 total_alunos)
+            VALUES (?, ?, ?, ?, ?, ?)
+            """,
+            inserts,
         )
 
     conn.commit()
 
-
-# ---------------------------
-# Função de orquestração (chame essa do app.py se quiser)
-# ---------------------------
 def recalcular_tudo(db_path: str, min_n: int = 3):
     conn = sqlite3.connect(db_path)
     try:
