@@ -84,7 +84,11 @@ export default function DadosPage() {
             const periodos = dataPeriod["year/period"];
             if (Array.isArray(periodos) && periodos.length > 0) {
               const ultimo = periodos[periodos.length - 1];
-              [ano, periodo] = ultimo.split("/");
+              
+              // --- CORREÇÃO AQUI: Split por ponto (.) ---
+              // Normaliza substituindo barra por ponto antes, só por segurança
+              const periodoFormatado = ultimo.replace("/", "."); 
+              [ano, periodo] = periodoFormatado.split(".");
             }
           }
 
@@ -133,11 +137,19 @@ export default function DadosPage() {
 
     let anoAnt = parseInt(anoBase);
     let periodoAnt = parseInt(periodoBase);
-    if (periodoAnt === 1) { periodoAnt = 2; anoAnt -= 1; } else { periodoAnt = 1; }
+    
+    // Lógica de voltar semestre
+    if (periodoAnt === 1) { 
+        periodoAnt = 2; 
+        anoAnt -= 1; 
+    } else { 
+        periodoAnt = 1; 
+    }
     
     nome = await tryFetch(anoAnt.toString(), periodoAnt.toString());
     if (nome) return nome;
 
+    // Volta mais um ano
     anoAnt -= 1; 
     nome = await tryFetch(anoAnt.toString(), "1");
     if (nome) return nome;
@@ -145,30 +157,24 @@ export default function DadosPage() {
     return codigo;
   };
 
-  // --- OTIMIZAÇÃO: Busca em Lote (Paralelo) ---
   const selecionarMelhoresMaterias = async (
     listaCandidata: string[], 
     ano: string, 
     periodo: string
   ): Promise<MateriaRecomendada[]> => {
-    // Tenta pegar um lote de 6 candidatos de uma vez para garantir que acharemos 3 bons
-    // Isso evita o waterfall (um por um) e faz tudo ao mesmo tempo.
     const lote = listaCandidata.slice(0, 6); 
 
     const resultados = await Promise.all(
         lote.map(async (codigo) => {
             const nome = await fetchMateriaInfo(codigo, ano, periodo);
-            // Considera válido se achou um nome diferente do código
             const valido = nome && nome !== codigo && nome !== "Disciplina UnB";
             return { codigo, nome, valido };
         })
     );
 
-    // Prioriza os que tem nome válido
     const validos = resultados.filter(r => r.valido);
     const invalidos = resultados.filter(r => !r.valido);
 
-    // Junta tudo (priorizando os bons) e pega os top 3
     const finais = [...validos, ...invalidos].slice(0, 3).map(r => ({
         codigo: r.codigo,
         nome: r.nome
@@ -201,7 +207,6 @@ export default function DadosPage() {
     const pendentesEmbaralhadas = shuffleArray(todasPendentes);
     const optativasEmbaralhadas = shuffleArray(todasOptativas);
 
-    // Dispara as duas buscas em paralelo (2 lotes simultâneos)
     const [finaisPendentes, finaisOptativas] = await Promise.all([
         selecionarMelhoresMaterias(pendentesEmbaralhadas, ano, periodo),
         selecionarMelhoresMaterias(optativasEmbaralhadas, ano, periodo)
@@ -253,6 +258,7 @@ export default function DadosPage() {
 
         {/* Cards Principais */}
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-12">
+          {/* Card IRA */}
           <div className="bg-gradient-to-b from-green-700 to-blue-800 text-white p-6 rounded-2xl shadow-lg hover:scale-105 transition-transform">
             <h2 className="text-2xl font-semibold mb-3">IRA Atual</h2>
             <p className="text-5xl font-bold">
@@ -261,6 +267,7 @@ export default function DadosPage() {
             <p className="text-sm text-gray-200 mt-2">Índice de Rendimento Acadêmico</p>
           </div>
 
+          {/* Card Integralização */}
           <div className="bg-gradient-to-b from-green-700 to-blue-800 text-white p-6 rounded-2xl shadow-lg hover:scale-105 transition-transform">
             <h2 className="text-2xl font-semibold mb-3">Integralização</h2>
             <p className="text-5xl font-bold">
@@ -277,6 +284,7 @@ export default function DadosPage() {
             </p>
           </div>
 
+          {/* Card Disciplinas */}
           <div className="bg-gradient-to-b from-green-700 to-blue-800 text-white p-6 rounded-2xl shadow-lg hover:scale-105 transition-transform">
             <h2 className="text-2xl font-semibold mb-3">Disciplinas</h2>
             <p className="text-5xl font-bold">{totalMaterias}</p>
@@ -284,7 +292,7 @@ export default function DadosPage() {
           </div>
         </div>
 
-        {/* --- SEÇÃO DE RECOMENDAÇÕES (OTIMIZADA) --- */}
+        {/* --- SEÇÃO DE RECOMENDAÇÕES (DINÂMICA) --- */}
         <div className="flex flex-col md:flex-row gap-8 max-w-6xl mx-auto mb-12">
           
           {/* Card Pendentes (Obrigatórias) */}
@@ -301,9 +309,11 @@ export default function DadosPage() {
                 obrigatoriasPendentes.map((m) => (
                   <div key={m.codigo} className="bg-blue-100/90 text-gray-800 rounded-xl p-4 flex justify-between items-center hover:-translate-y-1 transition-all shadow-sm min-h-[80px]">
                     <div className="flex flex-col justify-center max-w-[80%]">
+                      {/* Nome em Destaque */}
                       <span className="font-bold text-blue-900 text-base mb-1 line-clamp-2 leading-tight">
                         {m.nome}
                       </span>
+                      {/* Código Menor */}
                       <span className="text-sm text-gray-600 font-medium">
                         {m.codigo}
                       </span>
@@ -335,9 +345,11 @@ export default function DadosPage() {
                 optativasSugeridas.map((m) => (
                   <div key={m.codigo} className="bg-blue-100/90 text-gray-800 rounded-xl p-4 flex justify-between items-center hover:-translate-y-1 transition-all shadow-sm min-h-[80px]">
                     <div className="flex flex-col justify-center max-w-[80%]">
+                      {/* Nome em Destaque */}
                       <span className="font-bold text-blue-900 text-base mb-1 line-clamp-2 leading-tight">
                         {m.nome}
                       </span>
+                      {/* Código Menor */}
                       <span className="text-sm text-gray-600 font-medium">
                         {m.codigo}
                       </span>
