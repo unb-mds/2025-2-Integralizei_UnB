@@ -1,0 +1,81 @@
+services:
+  # -------------------------------------------------------
+  # Serviço 1: API Python (Core) - Porta 5000
+  # -------------------------------------------------------
+  backend-python:
+    build: 
+      context: ./integralizei-backend
+      dockerfile: Dockerfile
+    container_name: integralizei-core
+    ports:
+      - "5000:5000"
+    volumes:
+      # Mapeia tudo para atualização em tempo real
+      - ./integralizei-backend:/app
+    environment:
+      - FLASK_DEBUG=1
+      # Aqui você colocará as variáveis que o app.py precisa
+      # - DATABASE_URL=sqlite:///db.sqlite3
+
+  # -------------------------------------------------------
+  # Serviço 2: API Login (Node) - Porta 3001
+  # -------------------------------------------------------
+  backend-login:
+    build:
+      context: ./integralizei-backend/login-service
+      dockerfile: Dockerfile
+    container_name: integralizei-auth
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./integralizei-backend/login-service:/app
+      - /app/node_modules
+    environment:
+      - PORT=3001
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+      # Se esse serviço conecta no banco, coloque a variavel aqui
+
+  # -------------------------------------------------------
+  # Serviço 3: Frontend (Next.js) - Porta 3000
+  # -------------------------------------------------------
+  frontend:
+    build: ./integralizei-frontend
+    container_name: integralizei-front
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./integralizei-frontend:/app
+      - /app/node_modules
+    environment:
+      # O Frontend precisa saber onde os backends estão
+      # ATENÇÃO: No navegador (client-side), usamos localhost
+      - NEXT_PUBLIC_API_URL=http://localhost:5000
+      - NEXT_PUBLIC_AUTH_URL=http://localhost:3001
+    depends_on:
+      - backend-python
+      - backend-login
+
+  # -------------------------------------------------------
+  # Serviço 4: Banco de Dados (Preparado para Postgres)
+  # -------------------------------------------------------
+
+  db:
+    image: postgres:15-alpine
+    container_name: integralizei-db
+    restart: always
+    ports:
+      - "5432:5432" # Libera a porta para você acessar via DBeaver/PgAdmin
+    environment:
+      # Essas variáveis definem a senha inicial.
+      # Dica: No futuro, mova isso para o .env para segurança
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=integralizei_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+# --- O FINAL DO ARQUIVO ---
+volumes:
+  postgres_data:
