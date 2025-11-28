@@ -36,6 +36,7 @@ venv/
 
 # Bytecode & Cache
 __pycache__/
+.pytest_cache
 *.pyc
 *.pyo
 *.pyd
