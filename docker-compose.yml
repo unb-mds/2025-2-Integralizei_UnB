@@ -10,13 +10,11 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      # Mapeia tudo para atualização em tempo real
       - ./integralizei-backend:/app
+      - ./integralizei-backend/formulario-flask/instance:/app/formulario-flask/instance
     environment:
       - FLASK_DEBUG=1
-      # Aqui você colocará as variáveis que o app.py precisa
-      # - DATABASE_URL=sqlite:///db.sqlite3
-
+      - DB_PATH=/app/formulario-flask/instance/integralizei.db
   # -------------------------------------------------------
   # Serviço 2: API Login (Node) - Porta 3001
   # -------------------------------------------------------
@@ -30,12 +28,14 @@ services:
     volumes:
       - ./integralizei-backend/login-service:/app
       - /app/node_modules
+      - ./integralizei-backend/formulario-flask/instance:/app/db-shared
     environment:
       - PORT=3001
       - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
       - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
       - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
-      # Se esse serviço conecta no banco, coloque a variavel aqui
+      - DATABASE_URL=file:/app/db-shared/integralizei.db
+      
 
   # -------------------------------------------------------
   # Serviço 3: Frontend (Next.js) - Porta 3000
@@ -49,8 +49,6 @@ services:
       - ./integralizei-frontend:/app
       - /app/node_modules
     environment:
-      # O Frontend precisa saber onde os backends estão
-      # ATENÇÃO: No navegador (client-side), usamos localhost
       - NEXT_PUBLIC_API_URL=http://localhost:5000
       - NEXT_PUBLIC_AUTH_URL=http://localhost:3001
     depends_on:
@@ -68,11 +66,9 @@ services:
     ports:
       - "5432:5432" # Libera a porta para você acessar via DBeaver/PgAdmin
     environment:
-      # Essas variáveis definem a senha inicial.
-      # Dica: No futuro, mova isso para o .env para segurança
-      - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=admin
-      - POSTGRES_DB=integralizei_db
+      - POSTGRES_USER=${POSTGRES_USER}         
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
     volumes:
       - postgres_data:/var/lib/postgresql/data
 

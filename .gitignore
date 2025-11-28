@@ -62,7 +62,7 @@ uploads/
 # 🔐 Environment & Secrets (CRITICAL)
 # =========================
 .env
-.env*
+.env
 *.pem
 
 # =========================
