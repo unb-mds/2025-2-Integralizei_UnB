@@ -375,7 +375,7 @@ export default function CalculadoraPage() {
         
         <div className={styles.headerSection}>
           <h1 className={styles.title}>Calculadora</h1>
-          <p className={styles.subtitle}>Busque matérias reais da UnB e simule seu semestre</p>
+          <p className={styles.subtitle}>Busque matérias reais da UnB e simule sua integralização do próximo semestre</p>
         </div>
 
         <div className={styles.mainWrapper}>
