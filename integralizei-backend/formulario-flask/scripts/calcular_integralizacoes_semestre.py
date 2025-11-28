@@ -88,9 +88,7 @@ def calcular_integralizacao_semestre_para_aluno(
 
     for p in sorted(por_periodo.keys(), key=periodo_key):
         # 1) Primeiro gravamos o estado NO INÍCIO DO PERÍODO p
-        perc_inicio = round(
-            100.0 * total_ch / (ch_exigida or DEFAULT_CH_EXIGIDA), 2
-        )
+        perc_inicio = round(100.0 * total_ch / (ch_exigida or DEFAULT_CH_EXIGIDA), 2)
         inserts.append((aluno_id, p, total_ch, perc_inicio))
 
         # 2) Depois somamos a CH aprovada DO PRÓPRIO PERÍODO p,
@@ -205,6 +203,7 @@ def calcular_estatisticas_disciplinas(conn: sqlite3.Connection, min_n: int = 3):
         )
 
     conn.commit()
+
 
 def recalcular_tudo(db_path: str, min_n: int = 3):
     conn = sqlite3.connect(db_path)
