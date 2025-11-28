@@ -40,7 +40,7 @@ export default function CadastroPage() {
 
     try {
       setMensagem("Cadastrando...");
-      // Conecta na porta 3001 (onde roda o login-service)
+      
       const BACKEND_URL = "http://localhost:3001"; 
       const API_ROUTE = "/api/register";
 

@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Navbar2 from "../../components/Navbar2/Navbar2";
 import { FLUXOS_POR_CURSO } from "@/data/fluxos";
 
-// --- Interfaces ---
 interface Materia {
   codigo?: string;
   nome?: string;
@@ -84,9 +83,6 @@ export default function DadosPage() {
             const periodos = dataPeriod["year/period"];
             if (Array.isArray(periodos) && periodos.length > 0) {
               const ultimo = periodos[periodos.length - 1];
-              
-              // --- CORREÇÃO AQUI: Split por ponto (.) ---
-              // Normaliza substituindo barra por ponto antes, só por segurança
               const periodoFormatado = ultimo.replace("/", "."); 
               [ano, periodo] = periodoFormatado.split(".");
             }
@@ -137,19 +133,11 @@ export default function DadosPage() {
 
     let anoAnt = parseInt(anoBase);
     let periodoAnt = parseInt(periodoBase);
-    
-    // Lógica de voltar semestre
-    if (periodoAnt === 1) { 
-        periodoAnt = 2; 
-        anoAnt -= 1; 
-    } else { 
-        periodoAnt = 1; 
-    }
+    if (periodoAnt === 1) { periodoAnt = 2; anoAnt -= 1; } else { periodoAnt = 1; }
     
     nome = await tryFetch(anoAnt.toString(), periodoAnt.toString());
     if (nome) return nome;
 
-    // Volta mais um ano
     anoAnt -= 1; 
     nome = await tryFetch(anoAnt.toString(), "1");
     if (nome) return nome;
@@ -224,9 +212,11 @@ export default function DadosPage() {
       <>
         <Navbar2 />
         <main className="flex flex-col items-center justify-center h-screen text-gray-700 font-[Inter]">
-          <h1 className="text-3xl font-bold text-green-800">Nenhum dado encontrado</h1>
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-[#006633] to-[#003366] bg-clip-text text-transparent">
+            Nenhum dado encontrado
+          </h1>
           <p className="mt-2 text-lg">Envie seu histórico novamente para visualizar seus dados.</p>
-          <a href="/upload" className="mt-6 px-6 py-2 bg-green-700 text-white rounded-lg hover:bg-green-800 transition">
+          <a href="/upload" className="mt-6 px-6 py-2 bg-[#006633] text-white rounded-lg hover:bg-[#004d26] transition">
             Ir para Upload
           </a>
         </main>
@@ -249,7 +239,10 @@ export default function DadosPage() {
         
         {/* Cabeçalho */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-extrabold text-green-800">Meus Dados</h1>
+          {/* TÍTULO CORRIGIDO: text-5xl + Degradê Institucional */}
+          <h1 className="text-5xl font-extrabold bg-gradient-to-r from-[#006633] to-[#003366] bg-clip-text text-transparent pb-1">
+            Meus Dados
+          </h1>
           <p className="mt-2 text-xl font-medium text-gray-700">
             {nomeAluno} {matriculaAluno ? `— ${matriculaAluno}` : ""}
           </p>
@@ -259,7 +252,7 @@ export default function DadosPage() {
         {/* Cards Principais */}
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-12">
           {/* Card IRA */}
-          <div className="bg-gradient-to-b from-green-700 to-blue-800 text-white p-6 rounded-2xl shadow-lg hover:scale-105 transition-transform">
+          <div className="bg-gradient-to-b from-[#006633] to-[#003366] text-white p-6 rounded-2xl shadow-lg hover:scale-105 transition-transform">
             <h2 className="text-2xl font-semibold mb-3">IRA Atual</h2>
             <p className="text-5xl font-bold">
               {indices?.ira !== null && indices?.ira !== undefined ? Number(indices.ira).toFixed(4) : "—"}
@@ -268,7 +261,7 @@ export default function DadosPage() {
           </div>
 
           {/* Card Integralização */}
-          <div className="bg-gradient-to-b from-green-700 to-blue-800 text-white p-6 rounded-2xl shadow-lg hover:scale-105 transition-transform">
+          <div className="bg-gradient-to-b from-[#006633] to-[#003366] text-white p-6 rounded-2xl shadow-lg hover:scale-105 transition-transform">
             <h2 className="text-2xl font-semibold mb-3">Integralização</h2>
             <p className="text-5xl font-bold">
               {curriculo.integralizacao != null ? `${Number(curriculo.integralizacao).toFixed(1)}%` : "—"}
@@ -285,20 +278,20 @@ export default function DadosPage() {
           </div>
 
           {/* Card Disciplinas */}
-          <div className="bg-gradient-to-b from-green-700 to-blue-800 text-white p-6 rounded-2xl shadow-lg hover:scale-105 transition-transform">
+          <div className="bg-gradient-to-b from-[#006633] to-[#003366] text-white p-6 rounded-2xl shadow-lg hover:scale-105 transition-transform">
             <h2 className="text-2xl font-semibold mb-3">Disciplinas</h2>
             <p className="text-5xl font-bold">{totalMaterias}</p>
             <p className="text-sm text-gray-200 mt-2">Matérias concluídas/matriculadas</p>
           </div>
         </div>
 
-        {/* --- SEÇÃO DE RECOMENDAÇÕES (DINÂMICA) --- */}
+        {/* --- SEÇÃO DE RECOMENDAÇÕES --- */}
         <div className="flex flex-col md:flex-row gap-8 max-w-6xl mx-auto mb-12">
           
-          {/* Card Pendentes (Obrigatórias) */}
-          <div className="flex-1 bg-gradient-to-b from-green-700 to-blue-800 rounded-2xl p-8 shadow-xl flex flex-col">
+          {/* Card Pendentes */}
+          <div className="flex-1 bg-gradient-to-b from-[#006633] to-[#003366] rounded-2xl p-8 shadow-xl flex flex-col">
             <h2 className="text-2xl font-bold text-white mb-2">Matérias Pendentes</h2>
-            <p className="text-green-200 text-sm mb-6">
+            <p className="text-green-100 text-sm mb-6">
               Algumas matérias obrigatórias para você pegar no próximo semestre
             </p>
 
@@ -307,18 +300,16 @@ export default function DadosPage() {
                  <p className="text-center text-white/70 py-4">Carregando sugestões...</p>
               ) : obrigatoriasPendentes.length > 0 ? (
                 obrigatoriasPendentes.map((m) => (
-                  <div key={m.codigo} className="bg-blue-100/90 text-gray-800 rounded-xl p-4 flex justify-between items-center hover:-translate-y-1 transition-all shadow-sm min-h-[80px]">
+                  <div key={m.codigo} className="bg-white/90 text-gray-800 rounded-xl p-4 flex justify-between items-center hover:-translate-y-1 transition-all shadow-sm min-h-[80px]">
                     <div className="flex flex-col justify-center max-w-[80%]">
-                      {/* Nome em Destaque */}
-                      <span className="font-bold text-blue-900 text-base mb-1 line-clamp-2 leading-tight">
+                      <span className="font-bold text-[#003366] text-base mb-1 line-clamp-2 leading-tight">
                         {m.nome}
                       </span>
-                      {/* Código Menor */}
                       <span className="text-sm text-gray-600 font-medium">
                         {m.codigo}
                       </span>
                     </div>
-                    <span className="bg-blue-900 text-white text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap ml-2">
+                    <span className="bg-[#003366] text-white text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap ml-2">
                         Alta
                     </span>
                   </div>
@@ -331,10 +322,10 @@ export default function DadosPage() {
             </div>
           </div>
 
-          {/* Card Sugestões (Optativas) */}
-          <div className="flex-1 bg-gradient-to-b from-green-700 to-blue-800 rounded-2xl p-8 shadow-xl flex flex-col">
+          {/* Card Sugestões */}
+          <div className="flex-1 bg-gradient-to-b from-[#006633] to-[#003366] rounded-2xl p-8 shadow-xl flex flex-col">
             <h2 className="text-2xl font-bold text-white mb-2">Sugestões de Optativas</h2>
-            <p className="text-green-200 text-sm mb-6">
+            <p className="text-green-100 text-sm mb-6">
               Algumas sugestões de matérias para você pegar semestre que vem
             </p>
 
@@ -343,18 +334,16 @@ export default function DadosPage() {
                  <p className="text-center text-white/70 py-4">Carregando sugestões...</p>
               ) : optativasSugeridas.length > 0 ? (
                 optativasSugeridas.map((m) => (
-                  <div key={m.codigo} className="bg-blue-100/90 text-gray-800 rounded-xl p-4 flex justify-between items-center hover:-translate-y-1 transition-all shadow-sm min-h-[80px]">
+                  <div key={m.codigo} className="bg-white/90 text-gray-800 rounded-xl p-4 flex justify-between items-center hover:-translate-y-1 transition-all shadow-sm min-h-[80px]">
                     <div className="flex flex-col justify-center max-w-[80%]">
-                      {/* Nome em Destaque */}
-                      <span className="font-bold text-blue-900 text-base mb-1 line-clamp-2 leading-tight">
+                      <span className="font-bold text-[#003366] text-base mb-1 line-clamp-2 leading-tight">
                         {m.nome}
                       </span>
-                      {/* Código Menor */}
                       <span className="text-sm text-gray-600 font-medium">
                         {m.codigo}
                       </span>
                     </div>
-                    <span className="bg-blue-900 text-white text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap ml-2">
+                    <span className="bg-[#003366] text-white text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap ml-2">
                         Alta
                     </span>
                   </div>
@@ -368,14 +357,14 @@ export default function DadosPage() {
           </div>
         </div>
 
-        {/* Tabela de Histórico (Mantida) */}
+        {/* Tabela de Histórico */}
         <div className="max-w-6xl mx-auto border border-gray-200 rounded-2xl shadow-lg overflow-hidden">
           <div className="bg-gray-50 p-6 border-b border-gray-200">
             <h2 className="text-2xl font-bold text-gray-800">Histórico Detalhado</h2>
           </div>
           <div className="overflow-x-auto">
             <table className="min-w-full bg-white">
-              <thead className="bg-green-700 text-white">
+              <thead className="bg-[#006633] text-white">
                 <tr>
                   <th className="py-3 px-4 text-left font-semibold">Período</th>
                   <th className="py-3 px-4 text-left font-semibold">Código</th>
@@ -392,7 +381,7 @@ export default function DadosPage() {
                       <td className="py-3 px-4 font-mono text-sm">{m.codigo || "—"}</td>
                       <td className="py-3 px-4 font-medium">{m.nome || "—"}</td>
                       <td className={`py-3 px-4 text-center font-bold ${
-                        ["SS", "MS", "MM", "APROVADO", "APR"].includes(m.situacao || "") ? "text-green-600" : 
+                        ["SS", "MS", "MM", "APROVADO", "APR"].includes(m.situacao || "") ? "text-[#006633]" : 
                         ["MI", "II", "SR", "REP", "TR"].includes(m.situacao || "") ? "text-red-600" : "text-gray-600"
                       }`}>
                         {m.situacao || "—"}

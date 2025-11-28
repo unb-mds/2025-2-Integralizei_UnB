@@ -8,7 +8,7 @@ export default function HeroSection() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-between bg-white font-[Inter]">
       {/* Hero principal */}
-      <section className="flex flex-col md:flex-row items-center justify-between w-full max-w-6xl px-8 mt-36 mb-16">
+      <section className="flex flex-col md:flex-row items-center justify-between w-full max-w-6xl px-8 mt-40 mb-16">
         {/* Texto */}
         <div className="max-w-xl text-center md:text-left">
           <h1 className="text-4xl md:text-5xl font-extrabold leading-tight bg-gradient-to-r from-green-700 to-blue-800 bg-clip-text text-transparent">
@@ -29,13 +29,13 @@ export default function HeroSection() {
         </div>
 
         {/* Ilustração */}
-        <div className="hidden md:flex justify-center mt-10 md:mt-0">
+        <div className="hidden md:flex justify-center mt-10 md:mt-0 ml-auto">
           <Image
             src="/hero-ira.png"
             alt="Ilustração de análise acadêmica"
             width={480}
             height={480}
-            className="object-contain drop-shadow-lg"
+            className="mix-blend-darken object-contain"
             priority
             unoptimized
           />
@@ -43,7 +43,7 @@ export default function HeroSection() {
       </section>
 
       {/* Sessão explicativa */}
-      <section className="w-full bg-gradient-to-b from-green-700 to-blue-800 text-white py-16 text-center">
+      <section className="w-full bg-gradient-to-b from-green-700 to-blue-800 text-white py-16 text-center mt-16">
         <h2 className="text-3xl font-bold mb-10">Como funciona?</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 px-10 md:px-20">
