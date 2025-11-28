@@ -1,10 +1,9 @@
-
 "use client";
 
 import { useState } from "react";
 import Image from "next/image";
 import styles from "./login.module.css";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -20,27 +19,27 @@ export default function LoginPage() {
     setFormData({ ...formData, [name]: value });
   };
 
- const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setMensagem(""); 
+    setMensagem("");
 
-    if (formData.email === "" || formData.senha === "") {
+    if (!formData.email || !formData.senha) {
       setMensagem("Preencha todos os campos!");
       return;
     }
 
     try {
-      setMensagem("Entrando..."); 
-
+      setMensagem("Entrando...");
+      // Conecta na porta 3001
       const BACKEND_URL = "http://localhost:3001";
       const API_ROUTE = "/api/login";
 
-      const res = await fetch(BACKEND_URL + API_ROUTE, {
+      const res = await fetch(`${BACKEND_URL}${API_ROUTE}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           email: formData.email,
-          password: formData.senha, 
+          password: formData.senha,
         }),
       });
 
@@ -51,20 +50,22 @@ export default function LoginPage() {
         return;
       }
 
-      setMensagem("Login efetuado com sucesso! Redirecionando..."); 
-      
-      router.push('/'); 
+      setMensagem("Login efetuado com sucesso! Redirecionando...");
+      // Redireciona para a Home (ou Dashboard se preferir)
+      setTimeout(() => {
+        router.push("/"); 
+      }, 1000);
 
     } catch (error) {
       console.error("Erro de conexão:", error);
-      setMensagem("Não foi possível conectar ao servidor. O backend está rodando?");
+      setMensagem("Não foi possível conectar ao servidor. O backend de login (3001) está rodando?");
     }
   };
 
+  // Função placeholder para Google (ainda não implementada no back)
   const handleGoogleLogin = () => {
-    
     console.log("Login com Google clicado");
-    setMensagem("Tentando login com Google...");
+    setMensagem("Login com Google em desenvolvimento...");
   };
 
   return (
@@ -100,7 +101,6 @@ export default function LoginPage() {
 
         <div className={styles.separator}>ou</div>
 
-        {/* Login com Google */}
         <div className={styles.googleContainer}>
           <button onClick={handleGoogleLogin} className={styles.googleButton}>
             <Image
