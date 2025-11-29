@@ -97,7 +97,8 @@ TERM_INLINE_RX = re.compile(r"^(?P<periodo>\d{4}[./-][12])\s+(?P<nome>.+)$")
 LINE3_RX = re.compile(
     r"""^\s*
         (?P<turma>(--|\d{2}))\s+
-        (?P<status>[A-Z]{3,5})                # APR, MATR, CUMP, etc.
+        # status colado no código: APRFGA0161 → status=APR, codigo=FGA0161
+        (?P<status>APR|MATR|CUMP|REP|TR|SR|II|-)\s*
         (?P<codigo>[A-Z]{2,4}[A-Z]?\d{3,4}[A-Z0-9]*)\s+
         (?P<ch>\d{1,3})\s+                    # CH (60, 90...)
         (?P<freq>\d{1,3},\d|--)\s+            # 96,0  ou --
@@ -105,6 +106,7 @@ LINE3_RX = re.compile(
     """,
     re.X,
 )
+
 # Linha 2 (professor): "... (90h)"  → captura CH caso a linha 3 não traga
 PROF_CH_RX = re.compile(r"\((?P<ch>\d{1,3})h\)")
 
