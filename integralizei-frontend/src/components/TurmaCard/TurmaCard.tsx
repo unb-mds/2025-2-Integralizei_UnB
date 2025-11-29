@@ -50,7 +50,7 @@ export default function TurmaCard({ turma, disciplinaCode, disciplinaName }: Tur
     
     try {
       // Ajuste a URL se não estiver usando proxy no next.config.js
-      const res = await fetch(`/api/ranking/${disciplinaCode}`);
+      const res = await fetch(`http://localhost:8000/api/ranking/${disciplinaCode}`);
       
       if (!res.ok) throw new Error("Erro ao buscar ranking");
       
