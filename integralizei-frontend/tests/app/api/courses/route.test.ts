@@ -1,8 +1,9 @@
 import { GET } from "@/app/api/courses/route";
+import { NextRequest } from "next/server"; // Import necessário
 
 jest.mock("next/server", () => ({
   NextResponse: {
-    json: (body: any, init?: any) => ({
+    json: (body: unknown, init?: { status?: number }) => ({
       body,
       status: init?.status || 200,
       json: async () => body,
@@ -28,15 +29,16 @@ describe("API Route: /api/courses", () => {
       json: async () => mockExternalData,
     });
 
-    // Simula URL com query params
+    // CORREÇÃO AQUI: as unknown as NextRequest
     const req = {
       url: "http://localhost/api/courses?search=APC&year=2024&period=2"
-    } as any;
+    } as unknown as NextRequest;
 
     const res = await GET(req);
     const data = await res.json();
 
     expect(res.status).toBe(200);
+    // @ts-ignore
     expect(data[0].classes[0]._class).toBe("A");
   });
   
@@ -50,13 +52,15 @@ describe("API Route: /api/courses", () => {
       json: async () => mockExternalData,
     });
 
+    // CORREÇÃO AQUI
     const req = {
       url: "http://localhost/api/courses?search=ERR"
-    } as any;
+    } as unknown as NextRequest;
 
     const res = await GET(req);
     const data = await res.json();
 
+    // @ts-ignore
     expect(data[0].classes).toEqual([]);
   });
 
@@ -67,11 +71,13 @@ describe("API Route: /api/courses", () => {
       statusText: "Bad Gateway"
     });
 
-    const req = { url: "http://localhost/api/courses" } as any;
+    // CORREÇÃO AQUI
+    const req = { url: "http://localhost/api/courses" } as unknown as NextRequest;
     const res = await GET(req);
     const body = await res.json();
 
     expect(res.status).toBe(502);
+    // @ts-ignore
     expect(body.error).toMatch(/Erro na API externa/);
   });
 });
