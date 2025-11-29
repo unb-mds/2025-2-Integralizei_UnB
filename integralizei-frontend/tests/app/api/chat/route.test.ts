@@ -1,12 +1,11 @@
 import { POST } from "@/app/api/chat/route";
-import { NextRequest } from "next/server"; // Import necessário para a tipagem
+import { NextRequest } from "next/server";
 
 // Interface para o corpo da requisição
 interface ChatRequestBody {
   history: unknown[];
 }
 
-// Mock do NextResponse
 jest.mock("next/server", () => ({
   NextResponse: {
     json: (body: unknown, init?: { status?: number }) => ({
@@ -35,7 +34,6 @@ describe("API Route: /api/chat", () => {
   it("deve retornar erro 500 se a API Key não estiver configurada", async () => {
     delete process.env.GEMINI_API_KEY;
 
-    // CORREÇÃO AQUI: Cast para NextRequest
     const req = {
       json: async () => ({ history: [] } as ChatRequestBody),
     } as unknown as NextRequest;
@@ -44,7 +42,7 @@ describe("API Route: /api/chat", () => {
     const body = await res.json();
 
     expect(res.status).toBe(500);
-    // @ts-ignore
+    
     expect(body.error).toMatch(/Chave de API não configurada/);
   });
 
@@ -58,7 +56,6 @@ describe("API Route: /api/chat", () => {
       }),
     });
 
-    // CORREÇÃO AQUI
     const req = {
       json: async () => ({ history: [{ role: "user", parts: [{ text: "Oi" }] }] } as ChatRequestBody),
     } as unknown as NextRequest;
@@ -67,7 +64,7 @@ describe("API Route: /api/chat", () => {
     const body = await res.json();
 
     expect(res.status).toBe(200);
-    // @ts-ignore
+    
     expect(body.text).toBe("Olá, sou o UnBot!");
   });
 
@@ -79,7 +76,6 @@ describe("API Route: /api/chat", () => {
       json: async () => ({ error: { message: "Google Error" } }),
     });
 
-    // CORREÇÃO AQUI
     const req = {
       json: async () => ({ history: [] } as ChatRequestBody),
     } as unknown as NextRequest;
@@ -88,7 +84,7 @@ describe("API Route: /api/chat", () => {
     const body = await res.json();
 
     expect(res.status).toBe(500);
-    // @ts-ignore
+    
     expect(body.error).toBe("Falha ao processar mensagem.");
   });
 });

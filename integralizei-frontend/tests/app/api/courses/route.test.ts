@@ -1,5 +1,5 @@
 import { GET } from "@/app/api/courses/route";
-import { NextRequest } from "next/server"; // Import necessário
+import { NextRequest } from "next/server";
 
 jest.mock("next/server", () => ({
   NextResponse: {
@@ -29,7 +29,6 @@ describe("API Route: /api/courses", () => {
       json: async () => mockExternalData,
     });
 
-    // CORREÇÃO AQUI: as unknown as NextRequest
     const req = {
       url: "http://localhost/api/courses?search=APC&year=2024&period=2"
     } as unknown as NextRequest;
@@ -38,7 +37,6 @@ describe("API Route: /api/courses", () => {
     const data = await res.json();
 
     expect(res.status).toBe(200);
-    // @ts-ignore
     expect(data[0].classes[0]._class).toBe("A");
   });
   
@@ -52,7 +50,6 @@ describe("API Route: /api/courses", () => {
       json: async () => mockExternalData,
     });
 
-    // CORREÇÃO AQUI
     const req = {
       url: "http://localhost/api/courses?search=ERR"
     } as unknown as NextRequest;
@@ -60,7 +57,6 @@ describe("API Route: /api/courses", () => {
     const res = await GET(req);
     const data = await res.json();
 
-    // @ts-ignore
     expect(data[0].classes).toEqual([]);
   });
 
@@ -71,13 +67,11 @@ describe("API Route: /api/courses", () => {
       statusText: "Bad Gateway"
     });
 
-    // CORREÇÃO AQUI
     const req = { url: "http://localhost/api/courses" } as unknown as NextRequest;
     const res = await GET(req);
     const body = await res.json();
 
     expect(res.status).toBe(502);
-    // @ts-ignore
     expect(body.error).toMatch(/Erro na API externa/);
   });
 });

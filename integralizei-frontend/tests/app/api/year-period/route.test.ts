@@ -29,7 +29,6 @@ describe("API Route: /api/year-period", () => {
     const data = await res.json();
 
     expect(res.status).toBe(200);
-    // @ts-ignore
     expect(data["year/period"]).toHaveLength(2);
   });
 
@@ -43,7 +42,6 @@ describe("API Route: /api/year-period", () => {
     const body = await res.json();
 
     expect(res.status).toBe(404);
-    // @ts-ignore
     expect(body.error).toBe("Falha ao buscar período na API externa");
   });
 
@@ -54,7 +52,6 @@ describe("API Route: /api/year-period", () => {
     const body = await res.json();
 
     expect(res.status).toBe(500);
-    // @ts-ignore
     expect(body.error).toBe("Erro interno ao buscar período");
   });
 });
