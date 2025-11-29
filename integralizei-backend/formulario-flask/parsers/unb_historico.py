@@ -4,10 +4,8 @@ from typing import Dict, List, Optional, Tuple
 
 # ============== Tentativa de import do extrator do seu projeto ==============
 try:
-    # Se você já tem text_extract.extract_any no seu projeto, ótimo:
     from .text_extract import extract_any  # type: ignore
 except Exception:
-    # Fallback simples usando pdfplumber (texto linear)
     try:
         import pdfplumber  # type: ignore
     except Exception:
