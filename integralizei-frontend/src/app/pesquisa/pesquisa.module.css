@@ -314,14 +314,14 @@
     gap: 10px;
     
     background: linear-gradient(180deg, #006633 0%, #003366 100%);
-    border-radius: 0 0 16px 16px; 
+    border-radius: 16px; 
     
     font-family: 'Inter', sans-serif;
     color: #FFFFFF;
     
     
     animation: slideDown 0.3s ease-out;
-    margin-top: -5px; 
+    margin-top: 10px; 
 }
 
 .rankingLinha {
