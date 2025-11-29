@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Navbar2 from "../../components/Navbar2/Navbar2";
 import { FLUXOS_POR_CURSO } from "@/data/fluxos";
 
+// --- Interfaces ---
 interface Materia {
   codigo?: string;
   nome?: string;
@@ -52,6 +53,108 @@ export default function DadosPage() {
   const [loadingRecomendacoes, setLoadingRecomendacoes] = useState(false);
 
   useEffect(() => {
+    // --- FUNÇÕES AUXILIARES DENTRO DO EFFECT (Evita erro de declaração) ---
+    const shuffleArray = (array: string[]) => {
+      const newArray = [...array];
+      for (let i = newArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+      }
+      return newArray;
+    };
+
+    const fetchMateriaInfo = async (codigo: string, anoBase: string, periodoBase: string): Promise<string> => {
+      const tryFetch = async (a: string, p: string) => {
+        try {
+          const res = await fetch(`/api/courses?search=${codigo}&year=${a}&period=${p}`);
+          if (res.ok) {
+            const data = await res.json();
+            if (Array.isArray(data) && data.length > 0) {
+              return data[0].name;
+            }
+          }
+        } catch { return null; }
+        return null;
+      };
+
+      let nome = await tryFetch(anoBase, periodoBase);
+      if (nome) return nome;
+
+      let anoAnt = parseInt(anoBase);
+      let periodoAnt = parseInt(periodoBase);
+      if (periodoAnt === 1) { periodoAnt = 2; anoAnt -= 1; } else { periodoAnt = 1; }
+      
+      nome = await tryFetch(anoAnt.toString(), periodoAnt.toString());
+      if (nome) return nome;
+
+      anoAnt -= 1; 
+      nome = await tryFetch(anoAnt.toString(), "1");
+      if (nome) return nome;
+
+      return codigo;
+    };
+
+    const selecionarMelhoresMaterias = async (
+      listaCandidata: string[], 
+      ano: string, 
+      periodo: string
+    ): Promise<MateriaRecomendada[]> => {
+      const lote = listaCandidata.slice(0, 6); 
+
+      const resultados = await Promise.all(
+          lote.map(async (codigo) => {
+              const nome = await fetchMateriaInfo(codigo, ano, periodo);
+              const valido = nome && nome !== codigo && nome !== "Disciplina UnB";
+              return { codigo, nome, valido };
+          })
+      );
+
+      const validos = resultados.filter(r => r.valido);
+      const invalidos = resultados.filter(r => !r.valido);
+
+      const finais = [...validos, ...invalidos].slice(0, 3).map(r => ({
+          codigo: r.codigo,
+          nome: r.nome
+      }));
+
+      return finais;
+    };
+
+    const processarRecomendacoes = async (nomeCurso: string, historico: Materia[], ano: string, periodo: string) => {
+      const cursoUpper = nomeCurso.toUpperCase();
+      let chaveCurso = "SOFTWARE"; 
+
+      if (cursoUpper.includes("AEROESPACIAL")) chaveCurso = "AEROESPACIAL";
+      else if (cursoUpper.includes("AUTOMOTIVA")) chaveCurso = "AUTOMOTIVA";
+      else if (cursoUpper.includes("ELETRONICA") || cursoUpper.includes("ELETRÔNICA")) chaveCurso = "ELETRONICA";
+      else if (cursoUpper.includes("ENERGIA")) chaveCurso = "ENERGIA";
+      
+      const fluxo = FLUXOS_POR_CURSO[chaveCurso];
+
+      if (!fluxo) {
+          setLoadingRecomendacoes(false);
+          return;
+      }
+
+      const cursadasCodigos = new Set(historico.map(m => m.codigo?.toUpperCase().trim()));
+
+      const todasPendentes = fluxo.obrigatorias.filter(codigo => !cursadasCodigos.has(codigo));
+      const todasOptativas = fluxo.optativas.filter(codigo => !cursadasCodigos.has(codigo));
+
+      const pendentesEmbaralhadas = shuffleArray(todasPendentes);
+      const optativasEmbaralhadas = shuffleArray(todasOptativas);
+
+      const [finaisPendentes, finaisOptativas] = await Promise.all([
+          selecionarMelhoresMaterias(pendentesEmbaralhadas, ano, periodo),
+          selecionarMelhoresMaterias(optativasEmbaralhadas, ano, periodo)
+      ]);
+
+      setObrigatoriasPendentes(finaisPendentes);
+      setOptativasSugeridas(finaisOptativas);
+      setLoadingRecomendacoes(false);
+    };
+
+    // --- LÓGICA PRINCIPAL DO EFFECT ---
     const init = async () => {
       const dadosSalvos = localStorage.getItem("dadosAluno");
       if (!dadosSalvos) {
@@ -105,106 +208,6 @@ export default function DadosPage() {
     init();
   }, []);
 
-  const shuffleArray = (array: string[]) => {
-    const newArray = [...array];
-    for (let i = newArray.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
-    }
-    return newArray;
-  };
-
-  const fetchMateriaInfo = async (codigo: string, anoBase: string, periodoBase: string): Promise<string> => {
-    const tryFetch = async (a: string, p: string) => {
-      try {
-        const res = await fetch(`/api/courses?search=${codigo}&year=${a}&period=${p}`);
-        if (res.ok) {
-          const data = await res.json();
-          if (Array.isArray(data) && data.length > 0) {
-            return data[0].name;
-          }
-        }
-      } catch { return null; }
-      return null;
-    };
-
-    let nome = await tryFetch(anoBase, periodoBase);
-    if (nome) return nome;
-
-    let anoAnt = parseInt(anoBase);
-    let periodoAnt = parseInt(periodoBase);
-    if (periodoAnt === 1) { periodoAnt = 2; anoAnt -= 1; } else { periodoAnt = 1; }
-    
-    nome = await tryFetch(anoAnt.toString(), periodoAnt.toString());
-    if (nome) return nome;
-
-    anoAnt -= 1; 
-    nome = await tryFetch(anoAnt.toString(), "1");
-    if (nome) return nome;
-
-    return codigo;
-  };
-
-  const selecionarMelhoresMaterias = async (
-    listaCandidata: string[], 
-    ano: string, 
-    periodo: string
-  ): Promise<MateriaRecomendada[]> => {
-    const lote = listaCandidata.slice(0, 6); 
-
-    const resultados = await Promise.all(
-        lote.map(async (codigo) => {
-            const nome = await fetchMateriaInfo(codigo, ano, periodo);
-            const valido = nome && nome !== codigo && nome !== "Disciplina UnB";
-            return { codigo, nome, valido };
-        })
-    );
-
-    const validos = resultados.filter(r => r.valido);
-    const invalidos = resultados.filter(r => !r.valido);
-
-    const finais = [...validos, ...invalidos].slice(0, 3).map(r => ({
-        codigo: r.codigo,
-        nome: r.nome
-    }));
-
-    return finais;
-  };
-
-  const processarRecomendacoes = async (nomeCurso: string, historico: Materia[], ano: string, periodo: string) => {
-    const cursoUpper = nomeCurso.toUpperCase();
-    let chaveCurso = "SOFTWARE"; 
-
-    if (cursoUpper.includes("AEROESPACIAL")) chaveCurso = "AEROESPACIAL";
-    else if (cursoUpper.includes("AUTOMOTIVA")) chaveCurso = "AUTOMOTIVA";
-    else if (cursoUpper.includes("ELETRONICA") || cursoUpper.includes("ELETRÔNICA")) chaveCurso = "ELETRONICA";
-    else if (cursoUpper.includes("ENERGIA")) chaveCurso = "ENERGIA";
-    
-    const fluxo = FLUXOS_POR_CURSO[chaveCurso];
-
-    if (!fluxo) {
-        setLoadingRecomendacoes(false);
-        return;
-    }
-
-    const cursadasCodigos = new Set(historico.map(m => m.codigo?.toUpperCase().trim()));
-
-    const todasPendentes = fluxo.obrigatorias.filter(codigo => !cursadasCodigos.has(codigo));
-    const todasOptativas = fluxo.optativas.filter(codigo => !cursadasCodigos.has(codigo));
-
-    const pendentesEmbaralhadas = shuffleArray(todasPendentes);
-    const optativasEmbaralhadas = shuffleArray(todasOptativas);
-
-    const [finaisPendentes, finaisOptativas] = await Promise.all([
-        selecionarMelhoresMaterias(pendentesEmbaralhadas, ano, periodo),
-        selecionarMelhoresMaterias(optativasEmbaralhadas, ano, periodo)
-    ]);
-
-    setObrigatoriasPendentes(finaisPendentes);
-    setOptativasSugeridas(finaisOptativas);
-    setLoadingRecomendacoes(false);
-  };
-
   if (loading) return <div className="flex h-screen items-center justify-center font-[Inter]">Carregando...</div>;
 
   if (!dados) {
@@ -239,8 +242,7 @@ export default function DadosPage() {
         
         {/* Cabeçalho */}
         <div className="text-center mb-12">
-          {/* TÍTULO CORRIGIDO: text-5xl + Degradê Institucional */}
-          <h1 className="text-5xl font-extrabold bg-gradient-to-r from-[#006633] to-[#003366] bg-clip-text text-transparent pb-1">
+          <h1 className="text-4xl font-extrabold bg-gradient-to-r from-[#006633] to-[#003366] bg-clip-text text-transparent pb-1">
             Meus Dados
           </h1>
           <p className="mt-2 text-xl font-medium text-gray-700">
