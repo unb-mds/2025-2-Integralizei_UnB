@@ -111,9 +111,7 @@ def test_upload_retorna_erro_se_nao_for_pdf(client):
 
 @patch("app.parse_basico")
 @patch("app.recalcular_tudo")
-@patch(
-    "scripts.preencher_estatisticas_disciplinas.preencher_estatisticas_disciplinas"
-)
+@patch("scripts.preencher_estatisticas_disciplinas.preencher_estatisticas_disciplinas")
 @patch("scripts.gerar_estatisticas_agregadas.gerar_estatisticas_agregadas")
 def test_upload_pdf_processa_fluxo(
     mock_agregado,

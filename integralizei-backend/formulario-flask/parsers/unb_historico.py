@@ -557,7 +557,7 @@ def parse_basico(pdf_path: str) -> Dict:
 
 
 # ================================ Execução via CLI ================================
-if __name__ == "__main__": # pragma: no cover 
+if __name__ == "__main__":  # pragma: no cover
     if len(sys.argv) < 2:
         print("Uso: python parser_hist_unb.py caminho/para/historico.pdf")
         sys.exit(1)

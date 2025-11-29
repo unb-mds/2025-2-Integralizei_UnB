@@ -1,9 +1,6 @@
 import pytest
 from unittest.mock import patch
 
-import pytest
-from unittest.mock import patch
-
 from parsers.unb_historico import (
     _norm,
     _cut,
@@ -23,7 +20,6 @@ from parsers.unb_historico import (
 )
 
 
-
 # =========================
 #   Campos básicos
 # =========================
@@ -40,10 +36,11 @@ def test_pegar_matricula_remove_pontos_e_tracos():
 
 
 def test_pegar_curso_retorna_curso_limpo():
-    texto = "Algo\nCurso: ENGENHARIA DE SOFTWARE/FCTE - BACHARELADO - DIURNO - UnB\nMais"
+    texto = (
+        "Algo\nCurso: ENGENHARIA DE SOFTWARE/FCTE - BACHARELADO - DIURNO - UnB\nMais"
+    )
     assert (
-        pegar_curso(texto)
-        == "ENGENHARIA DE SOFTWARE/FCTE - BACHARELADO - DIURNO - UnB"
+        pegar_curso(texto) == "ENGENHARIA DE SOFTWARE/FCTE - BACHARELADO - DIURNO - UnB"
     )
 
 
@@ -146,10 +143,10 @@ def test_calcular_integralizacao_fallback_soma_ch_aprovadas_e_usa_default_curso(
     texto = "sem painel aqui"
     curso = "ENGENHARIA DE SOFTWARE/FCTE - BACHARELADO - DIURNO"
     materias = [
-        {"creditos": 60, "situacao": "MS", "status": "APR"},   # conta (menção MS)
-        {"creditos": 60, "situacao": "MI", "status": "REP"},   # não conta
+        {"creditos": 60, "situacao": "MS", "status": "APR"},  # conta (menção MS)
+        {"creditos": 60, "situacao": "MI", "status": "REP"},  # não conta
         {"creditos": 60, "situacao": "SS", "status": "MATR"},  # conta (menção SS)
-        {"creditos": 60, "situacao": "-", "status": "CUMP"},   # conta (status CUMP)
+        {"creditos": 60, "situacao": "-", "status": "CUMP"},  # conta (status CUMP)
     ]
 
     perc, ch_int, ch_exigida = calcular_integralizacao(texto, curso, materias)
@@ -190,9 +187,7 @@ def test_parse_basico_integra_campos_basicos_materias_e_integralizacao():
     # aluno
     assert aluno["nome"] == "Fulano da Silva"
     assert aluno["matricula"] == "201234567"
-    assert (
-        aluno["curso"] == "ENGENHARIA DE SOFTWARE/FCTE - BACHARELADO - DIURNO"
-    )
+    assert aluno["curso"] == "ENGENHARIA DE SOFTWARE/FCTE - BACHARELADO - DIURNO"
 
     # índices
     assert indices["ira"] == pytest.approx(3.28)
@@ -211,6 +206,7 @@ def test_parse_basico_integra_campos_basicos_materias_e_integralizacao():
     assert m["creditos"] == 60
     assert m["situacao"] == "MS"
     assert m["status"] == "APR"
+
 
 # =========================
 #   Helpers "privados"
@@ -287,7 +283,6 @@ def test_calcular_integralizacao_sem_painel_sem_curso_usa_default():
     assert perc == pytest.approx(1.72, rel=1e-3)
     # ou simplesmente:
     # assert perc == 1.72
-
 
 
 # =========================

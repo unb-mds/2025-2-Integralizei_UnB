@@ -317,7 +317,7 @@ def test_calcular_estatisticas_disciplinas_calcula_media_mediana_dp(conn):
 
     assert codigo == "FGA0001"
     assert nome == "Cálculo"
-    assert media == pytest.approx(30.0)   # (10 + 30 + 50) / 3
+    assert media == pytest.approx(30.0)  # (10 + 30 + 50) / 3
     assert mediana == pytest.approx(30.0)
     # dp populacional de [10, 30, 50] ≈ 16.33
     assert dp == pytest.approx(16.33, rel=1e-2)
@@ -442,12 +442,8 @@ def test_recalcular_tudo_integra_fluxo_completo(tmp_path: Path):
     conn2 = sqlite3.connect(db_path)
     cur2 = conn2.cursor()
 
-    n_int = cur2.execute(
-        "SELECT COUNT(*) FROM integralizacoes_semestre"
-    ).fetchone()[0]
-    n_est = cur2.execute(
-        "SELECT COUNT(*) FROM estatisticas_disciplinas"
-    ).fetchone()[0]
+    n_int = cur2.execute("SELECT COUNT(*) FROM integralizacoes_semestre").fetchone()[0]
+    n_est = cur2.execute("SELECT COUNT(*) FROM estatisticas_disciplinas").fetchone()[0]
 
     conn2.close()
 

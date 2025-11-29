@@ -2,8 +2,6 @@ import sys
 import types
 from unittest.mock import MagicMock, patch
 
-import pytest
-
 from parsers.text_extract import (
     _try_pdfplumber,
     _try_pypdf,
@@ -31,9 +29,7 @@ def test_try_pdfplumber_success():
     fake_ctx.__enter__.return_value = fake_pdf
     fake_ctx.__exit__.return_value = False
 
-    fake_pdfplumber = types.SimpleNamespace(
-        open=MagicMock(return_value=fake_ctx)
-    )
+    fake_pdfplumber = types.SimpleNamespace(open=MagicMock(return_value=fake_ctx))
 
     # injeta um "módulo" pdfplumber falso em sys.modules
     with patch.dict(sys.modules, {"pdfplumber": fake_pdfplumber}):
@@ -68,9 +64,7 @@ def test_try_pypdf_success():
     fake_reader = MagicMock()
     fake_reader.pages = [page1, page2]
 
-    fake_pypdf2 = types.SimpleNamespace(
-        PdfReader=MagicMock(return_value=fake_reader)
-    )
+    fake_pypdf2 = types.SimpleNamespace(PdfReader=MagicMock(return_value=fake_reader))
 
     with patch.dict(sys.modules, {"PyPDF2": fake_pypdf2}):
         result = _try_pypdf("dummy.pdf")
@@ -126,9 +120,7 @@ def test_try_ocr_conversion_error():
     def fake_convert_from_path(*args, **kwargs):
         raise Exception("erro na conversão")
 
-    fake_pdf2image = types.SimpleNamespace(
-        convert_from_path=fake_convert_from_path
-    )
+    fake_pdf2image = types.SimpleNamespace(convert_from_path=fake_convert_from_path)
 
     with patch.dict(
         sys.modules,
@@ -148,9 +140,9 @@ def test_try_ocr_conversion_error():
 
 
 def test_extract_any_usa_pdfplumber_quando_sucesso():
-    with patch("parsers.text_extract._try_pdfplumber", return_value="PDF TEXTO"), \
-         patch("parsers.text_extract._try_pypdf", return_value=None), \
-         patch("parsers.text_extract._try_ocr", return_value=None):
+    with patch("parsers.text_extract._try_pdfplumber", return_value="PDF TEXTO"), patch(
+        "parsers.text_extract._try_pypdf", return_value=None
+    ), patch("parsers.text_extract._try_ocr", return_value=None):
 
         result = extract_any("arquivo.pdf")
 
@@ -158,9 +150,9 @@ def test_extract_any_usa_pdfplumber_quando_sucesso():
 
 
 def test_extract_any_fallback_para_pypdf():
-    with patch("parsers.text_extract._try_pdfplumber", return_value=None), \
-         patch("parsers.text_extract._try_pypdf", return_value="PYPDF TEXTO"), \
-         patch("parsers.text_extract._try_ocr", return_value=None):
+    with patch("parsers.text_extract._try_pdfplumber", return_value=None), patch(
+        "parsers.text_extract._try_pypdf", return_value="PYPDF TEXTO"
+    ), patch("parsers.text_extract._try_ocr", return_value=None):
 
         result = extract_any("arquivo.pdf")
 
@@ -168,9 +160,9 @@ def test_extract_any_fallback_para_pypdf():
 
 
 def test_extract_any_fallback_para_ocr():
-    with patch("parsers.text_extract._try_pdfplumber", return_value=None), \
-         patch("parsers.text_extract._try_pypdf", return_value=None), \
-         patch("parsers.text_extract._try_ocr", return_value="OCR TEXTO"):
+    with patch("parsers.text_extract._try_pdfplumber", return_value=None), patch(
+        "parsers.text_extract._try_pypdf", return_value=None
+    ), patch("parsers.text_extract._try_ocr", return_value="OCR TEXTO"):
 
         result = extract_any("arquivo.pdf")
 
@@ -178,9 +170,9 @@ def test_extract_any_fallback_para_ocr():
 
 
 def test_extract_any_todos_falham_retorna_string_vazia():
-    with patch("parsers.text_extract._try_pdfplumber", return_value=None), \
-         patch("parsers.text_extract._try_pypdf", return_value=None), \
-         patch("parsers.text_extract._try_ocr", return_value=None):
+    with patch("parsers.text_extract._try_pdfplumber", return_value=None), patch(
+        "parsers.text_extract._try_pypdf", return_value=None
+    ), patch("parsers.text_extract._try_ocr", return_value=None):
 
         result = extract_any("arquivo.pdf")
 

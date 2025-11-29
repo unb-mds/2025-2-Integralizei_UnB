@@ -176,7 +176,9 @@ def test_preencher_estatisticas_limpa_tabela_antes(db_path):
 
     conn = sqlite3.connect(db_path)
     cur = conn.cursor()
-    rows = cur.execute("SELECT aluno_id, codigo FROM estatisticas_disciplinas").fetchall()
+    rows = cur.execute(
+        "SELECT aluno_id, codigo FROM estatisticas_disciplinas"
+    ).fetchall()
     conn.close()
 
     # O registro LIXO deve ter sumido
