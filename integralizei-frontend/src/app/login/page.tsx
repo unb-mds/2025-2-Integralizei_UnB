@@ -62,10 +62,9 @@ export default function LoginPage() {
     }
   };
 
-  // Função placeholder para Google (ainda não implementada no back)
   const handleGoogleLogin = () => {
-    console.log("Login com Google clicado");
-    setMensagem("Login com Google em desenvolvimento...");
+    setMensagem("Redirecionando para o Google...");
+    window.location.href = "http://localhost:3001/auth/google";
   };
 
   return (
