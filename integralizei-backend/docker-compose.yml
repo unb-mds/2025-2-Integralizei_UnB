@@ -16,7 +16,7 @@ services:
     image: dpage/pgadmin4:8
     container_name: integralizei_pgadmin
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@integralizei.local
+      PGADMIN_DEFAULT_EMAIL: admin@meuservidor.com
       PGADMIN_DEFAULT_PASSWORD: admin123
     ports:
       - "5050:80"
