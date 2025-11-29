@@ -1,7 +1,16 @@
 import pytest
 from unittest.mock import patch
 
+import pytest
+from unittest.mock import patch
+
 from parsers.unb_historico import (
+    _norm,
+    _cut,
+    _to_int,
+    _to_float,
+    _normalize_breaks,
+    _clean_name,
     pegar_nome,
     pegar_matricula,
     pegar_curso,
@@ -12,6 +21,7 @@ from parsers.unb_historico import (
     calcular_integralizacao,
     parse_basico,
 )
+
 
 
 # =========================
@@ -201,3 +211,135 @@ def test_parse_basico_integra_campos_basicos_materias_e_integralizacao():
     assert m["creditos"] == 60
     assert m["situacao"] == "MS"
     assert m["status"] == "APR"
+
+# =========================
+#   Helpers "privados"
+# =========================
+
+
+def test__norm_normaliza_espacos():
+    assert _norm("  Ola   mundo   ") == "Ola mundo"
+
+
+def test__cut_corta_em_campos_sensitivos():
+    s = "Fulano de Tal - Matrícula: 202012345"
+    # Deve cortar antes de "Matrícula"
+    assert _cut(s) == "Fulano de Tal"
+
+
+def test__to_int_e__to_float_conversoes_basicas():
+    assert _to_int("123") == 123
+    assert _to_int("abc") is None
+    assert _to_int(None) is None
+
+    assert _to_float("3,14") == pytest.approx(3.14)
+    assert _to_float("10.5") == pytest.approx(10.5)
+    assert _to_float("xyz") is None
+    assert _to_float(None) is None
+
+
+def test__normalize_breaks_remove_hifen_e_quebras():
+    s = "ALGORIT-\nMOS AVAN-\nCADOS"
+    norm = _normalize_breaks(s)
+    # Junta as palavras quebradas
+    assert "ALGORITMOS" in norm
+    assert "AVANCADOS" in norm  # AVAN- + CADOS -> AVANCADOS
+
+
+def test__clean_name_remove_espacos_e_tracos():
+    assert _clean_name("  -- Cálculo   I  ") == "Cálculo I"
+    assert _clean_name("   ") is None
+
+
+# =========================
+#   Casos extras de pegar_nome / painel / integralização
+# =========================
+
+
+def test_pegar_nome_variantes_de_rotulo():
+    texto = "Aluno(a): Fulano X\nOutra linha"
+    assert pegar_nome(texto) == "Fulano X"
+
+    texto2 = "Discente : Ciclano Y"
+    assert pegar_nome(texto2) == "Ciclano Y"
+
+
+def test_pegar_totais_painel_sem_numeros_retorna_none():
+    texto = "Bloco de carga horária sem números exigido/integralizado claros."
+    exig, integ = pegar_totais_painel(texto)
+    assert exig is None
+    assert integ is None
+
+
+def test_calcular_integralizacao_sem_painel_sem_curso_usa_default():
+    # sem painel e sem curso conhecido -> usa DEFAULT_TOTAL_EXIGIDO = 3480
+    texto = "sem painel aqui"
+    materias = [
+        {"creditos": 60, "situacao": "MS", "status": "APR"},  # conta
+        {"creditos": 60, "situacao": "MI", "status": "REP"},  # não conta
+    ]
+
+    perc, ch_int, ch_exig = calcular_integralizacao(texto, None, materias)
+
+    assert ch_exig == 3480
+    assert ch_int == 60
+    # 60 / 3480 * 100 ≈ 1.724... → round(..., 2) = 1.72
+    assert perc == pytest.approx(1.72, rel=1e-3)
+    # ou simplesmente:
+    # assert perc == 1.72
+
+
+
+# =========================
+#   extrair_materias — casos raros
+# =========================
+
+
+def test_extrair_materias_linha3_isolada_e_deduplicacao():
+    """
+    Força o caminho:
+      - L1 reconhecida (2024.1 NOME)
+      - não há L3 na posição i+2
+      - L3 aparece só depois -> entra no branch m3_only
+      - mesma disciplina repetida duas vezes -> de-duplicação no final
+    """
+    texto = """
+    2024.1 CÁLCULO I
+    Alguma linha intermediária
+    Outra linha qualquer
+    09 APRFGA0001 60 96,0 MS*
+
+    2024.1 CÁLCULO I
+    Alguma linha intermediária
+    Outra linha qualquer
+    09 APRFGA0001 60 96,0 MS*
+    """
+
+    materias = extrair_materias(texto)
+
+    # Como são duas entradas idênticas de (periodo, codigo, nome),
+    # deve sobrar apenas 1 após a de-duplicação interna.
+    assert len(materias) == 1
+    m = materias[0]
+    assert m["codigo"] == "FGA0001"
+    assert m["creditos"] == 60
+    assert m["situacao"] == "MS"
+    # dependendo da normalização: "2024.1" ou "2024/1"
+    assert m["periodo"] in ("2024.1", "2024/1")
+
+
+def test_extrair_materias_somente_l1_e_credito_em_linha_seguinte_nao_gera_disciplina():
+    """
+    Caso extremo: L1 + linha com 'CH 60' mas sem linha 3.
+    Serve para exercitar o CRED_TOKEN_RX (fallback de créditos)
+    mesmo que no fim nenhuma disciplina seja montada (sem L3).
+    """
+    texto = """
+    2023.2 INTRODUÇÃO À ENGENHARIA
+    CH 60
+    Alguma outra coisa
+    """
+
+    materias = extrair_materias(texto)
+    # Sem linha 3 com código/status, não entra no flush final -> lista vazia
+    assert materias == []
