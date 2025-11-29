@@ -66,7 +66,7 @@ def preencher_estatisticas_disciplinas(db_path: str) -> None:
     conn.close()
 
 
-if __name__ == "__main__":
+if __name__ == "__main__": # pragma: no cover
     # Permite rodar direto: python -m scripts.preencher_estatisticas_disciplinas
     BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
     DB_PATH = os.path.join(BASE_DIR, "instance", "integralizei.db")

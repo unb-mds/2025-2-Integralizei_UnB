@@ -219,7 +219,7 @@ def recalcular_tudo(db_path: str, min_n: int = 3):
 # ---------------------------
 # Execução direta via CLI
 # ---------------------------
-if __name__ == "__main__":
+if __name__ == "__main__": # pragma: no cover
     # Detecta DB em ./instance/integralizei.db por padrão
     BASE_DIR = os.path.abspath(os.path.dirname(__file__))
     DB_DEFAULT = os.path.join(os.path.dirname(BASE_DIR), "instance", "integralizei.db")
