@@ -1,0 +1,28 @@
+services:
+  db:
+    image: postgres:16
+    container_name: integralizei_postgres
+    environment:
+      POSTGRES_USER: integralizei_usuario
+      POSTGRES_PASSWORD: intgr2501
+      POSTGRES_DB: integralizei_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - integralizei_pg_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  pgadmin:
+    image: dpage/pgadmin4:8
+    container_name: integralizei_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@integralizei.local
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+    restart: unless-stopped
+
+volumes:
+  integralizei_pg_data:
