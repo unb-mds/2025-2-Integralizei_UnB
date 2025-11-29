@@ -3,6 +3,7 @@
 import { useState } from "react";
 import styles from "../../app/pesquisa/pesquisa.module.css"; 
 
+// Interfaces
 interface Turma {
   _class: string;
   teachers: string[];
@@ -10,6 +11,12 @@ interface Turma {
   schedule: string;
   days: string[];
   favorited?: boolean;
+}
+
+interface RankingItem {
+  posicao: number;
+  integralizacao: string;
+  ira: string;
 }
 
 interface TurmaCardProps {
@@ -20,20 +27,50 @@ interface TurmaCardProps {
 
 export default function TurmaCard({ turma, disciplinaCode, disciplinaName }: TurmaCardProps) {
   const [expandido, setExpandido] = useState(false);
+  const [ranking, setRanking] = useState<RankingItem[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const toggleRanking = () => {
-    setExpandido(!expandido);
+  const toggleRanking = async () => {
+    // Se estiver fechando, só fecha
+    if (expandido) {
+      setExpandido(false);
+      return;
+    }
+
+    // Se estiver abrindo:
+    setExpandido(true);
+
+    // Se já temos dados, não precisa buscar de novo (Cache local simples)
+    if (ranking.length > 0) return;
+
+    // Busca os dados na API
+    setLoading(true);
+    setError("");
+    
+    try {
+      // Ajuste a URL se não estiver usando proxy no next.config.js
+      const res = await fetch(`/api/ranking/${disciplinaCode}`);
+      
+      if (!res.ok) throw new Error("Erro ao buscar ranking");
+      
+      const data = await res.json();
+      setRanking(data);
+    } catch (err) {
+      console.error(err);
+      setError("Não foi possível carregar o ranking.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    //  Container invisível que segura o Card + o Ranking
     <div style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", marginBottom: "20px" }}>
       
-      {/*  Card  */}
+      {/* --- CARD DA DISCIPLINA --- */}
       <div 
         className={styles.materiaCard} 
-        
-        style={{ marginBottom: expandido ? "0" : "0", transition: "margin 0.2s" }}
+        style={{ marginBottom: expandido ? "0" : "0", transition: "margin 0.2s", zIndex: 2 }}
       >
         <div className={styles.materiaInfo}>
           <p className={styles.titulo}>
@@ -68,31 +105,39 @@ export default function TurmaCard({ turma, disciplinaCode, disciplinaName }: Tur
         </div>
       </div>
 
-      {/* Área do Ranking */}
+      {/* ---  ÁREA DO RANKING --- */}
       {expandido && (
-        <div style={{ 
-            width: '95%', 
-            backgroundColor: 'transparent', 
-            padding: '20px',
-            border: '1px solid #ddd', 
-            borderTop: 'none', 
-            borderRadius: '0 0 15px 15px', 
-            boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
-            animation: 'fadeIn 0.3s ease-in-out'
-        }}>
-            <p style={{textAlign: 'center', color: '#333'}}>
-                Aqui entrará o Ranking... (No fundo branco da página)
-            </p>
+        <div className={styles.rankingContainer}>
+            
+            {loading && <p style={{textAlign: 'center', padding: '20px'}}>Carregando...</p>}
+            
+            {error && <p style={{textAlign: 'center', color: '#ffaaaa', padding: '20px'}}>{error}</p>}
+
+            {!loading && !error && ranking.length === 0 && (
+                <p style={{textAlign: 'center', padding: '20px'}}>Nenhum dado encontrado para esta disciplina.</p>
+            )}
+
+            {!loading && !error && ranking.length > 0 && (
+                <>
+                    {/* Cabeçalho */}
+                    <div className={`${styles.rankingLinha} ${styles.rankingHeader}`}>
+                        <span>Posição</span>
+                        <span>Integralização</span>
+                        <span>IRA</span>
+                    </div>
+
+                    {/* Lista de Alunos */}
+                    {ranking.map((item, index) => (
+                        <div key={index} className={`${styles.rankingLinha} ${styles.rankingAluno}`}>
+                            <span>{item.posicao}º</span>
+                            <span>{item.integralizacao}</span>
+                            <span>{item.ira}</span>
+                        </div>
+                    ))}
+                </>
+            )}
         </div>
       )}
-
-      
-      <style jsx>{`
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(-10px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
     </div>
   );
 }
