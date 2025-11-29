@@ -326,8 +326,7 @@
 
 .rankingLinha {
     display: grid;
-    /* Ajustado para 3 colunas pois removemos o Status */
-    grid-template-columns: 1fr 1fr 1fr; 
+    grid-template-columns: 1fr 1fr;
     align-items: center;
     text-align: center;
     padding: 10px 0;

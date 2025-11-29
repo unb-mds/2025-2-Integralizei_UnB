@@ -307,21 +307,20 @@ def ranking_disciplina(codigo_disciplina):
     Retorna a lista de alunos para o ranking de uma disciplina.
     Ordenação: 
     1. Integralização no semestre cursado (DESC)
-    2. IRA do aluno (DESC)
+   
     """
     conn = get_db()
     cur = conn.cursor()
 
-    # busca a integralização historica e o IRA do aluno .
-    #AGORA ESTA BUSCANDO O IRA ATUAL E NAO O DO SEMESTRE REFERENTE, TEM Q ARRUMAR DEPOIS
+    # busca a integralização historica 
+    
     query = """
         SELECT 
-            e.media_integralizacao,
-            a.ira
+            e.media_integralizacao
         FROM estatisticas_disciplinas e
         JOIN alunos a ON e.aluno_id = a.id
         WHERE e.codigo = ?
-        ORDER BY e.media_integralizacao DESC, a.ira DESC
+        ORDER BY e.media_integralizacao DESC
     """
     
     try:
@@ -330,13 +329,12 @@ def ranking_disciplina(codigo_disciplina):
         ranking = []
         for idx, row in enumerate(rows):
             integralizacao = row[0]
-            ira = row[1]
             
             # Formata os dados para o front
             ranking.append({
                 "posicao": idx + 1,
                 "integralizacao": f"{integralizacao:.2f}%" if integralizacao else "0%",
-                "ira": f"{ira:.4f}" if ira else "0.0"
+                
             })
             
         return jsonify(ranking), 200

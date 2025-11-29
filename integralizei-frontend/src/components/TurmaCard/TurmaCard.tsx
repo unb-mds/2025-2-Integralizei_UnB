@@ -16,7 +16,6 @@ interface Turma {
 interface RankingItem {
   posicao: number;
   integralizacao: string;
-  ira: string;
 }
 
 interface TurmaCardProps {
@@ -123,7 +122,6 @@ export default function TurmaCard({ turma, disciplinaCode, disciplinaName }: Tur
                     <div className={`${styles.rankingLinha} ${styles.rankingHeader}`}>
                         <span>Posição</span>
                         <span>Integralização</span>
-                        <span>IRA</span>
                     </div>
 
                     {/* Lista de Alunos */}
@@ -131,7 +129,6 @@ export default function TurmaCard({ turma, disciplinaCode, disciplinaName }: Tur
                         <div key={index} className={`${styles.rankingLinha} ${styles.rankingAluno}`}>
                             <span>{item.posicao}º</span>
                             <span>{item.integralizacao}</span>
-                            <span>{item.ira}</span>
                         </div>
                     ))}
                 </>
