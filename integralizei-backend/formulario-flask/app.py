@@ -1,16 +1,16 @@
 import os
-import sqlite3
 import sys
 import traceback
 from datetime import datetime
 
 from flask import Flask, jsonify, render_template, request
 from flask_cors import CORS
+from werkzeug.utils import secure_filename
 
 # Importações internas
 from parsers.unb_historico import parse_basico
 from scripts.calcular_integralizacoes_semestre import recalcular_tudo
-from werkzeug.utils import secure_filename
+from db import get_pg_conn
 
 # Ajuste de path
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
@@ -20,7 +20,6 @@ sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 # ==========================
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 UPLOAD_FOLDER = os.path.join(BASE_DIR, "uploads")
-DB_PATH = os.path.join(BASE_DIR, "instance", "integralizei.db")
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(os.path.join(BASE_DIR, "instance"), exist_ok=True)
@@ -34,115 +33,11 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 # Banco de dados
 # ==========================
 def get_db():
-    """Abre conexão com SQLite configurada."""
-    conn = sqlite3.connect(DB_PATH, timeout=10, check_same_thread=False)
-    conn.execute("PRAGMA journal_mode=WAL;")
-    conn.execute("PRAGMA busy_timeout = 8000;")
-    conn.execute("PRAGMA synchronous = NORMAL;")
-    conn.execute("PRAGMA foreign_keys = ON;")
-
-    # Criação das tabelas
-    conn.execute(
-        """
-        CREATE TABLE IF NOT EXISTS alunos (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            matricula TEXT UNIQUE,
-            nome TEXT,
-            curso TEXT,
-            ch_exigida INTEGER DEFAULT 3480,
-            ira REAL,
-            mp REAL,
-            criado_em TEXT DEFAULT (datetime('now')),
-            atualizado_em TEXT DEFAULT (datetime('now'))
-        )
     """
-    )
-
-    conn.execute(
-        """
-        CREATE TABLE IF NOT EXISTS disciplinas_cursadas (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            aluno_id INTEGER,
-            periodo TEXT,
-            codigo TEXT,
-            nome TEXT,
-            creditos INTEGER,
-            mencao TEXT,
-            status TEXT,
-            criado_em TEXT DEFAULT (datetime('now')),
-            FOREIGN KEY (aluno_id) REFERENCES alunos(id)
-        )
+    Abre conexão com o PostgreSQL usando o helper centralizado.
+    A criação de tabelas e migrações agora deve ser feita em scripts separados.
     """
-    )
-
-    conn.execute(
-        """
-        CREATE TABLE IF NOT EXISTS integralizacoes_semestre (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            aluno_id INTEGER NOT NULL,
-            periodo TEXT NOT NULL,
-            ch_acumulada INTEGER,
-            integralizacao REAL,
-            FOREIGN KEY (aluno_id) REFERENCES alunos(id)
-        )
-    """
-    )
-
-    conn.execute(
-        """
-        CREATE TABLE IF NOT EXISTS estatisticas_disciplinas (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            aluno_id INTEGER NOT NULL,
-            codigo TEXT,
-            nome TEXT,
-            mencao TEXT,
-            creditos INTEGER,
-            periodo TEXT,
-            media_integralizacao REAL,
-            FOREIGN KEY (aluno_id) REFERENCES alunos(id)
-        )
-    """
-    )
-
-    # VIEW: disciplinas + integralização no período
-    conn.execute(
-        """
-        CREATE VIEW IF NOT EXISTS disciplinas_com_integralizacao AS
-        SELECT
-            d.id             AS disciplina_id,
-            d.aluno_id       AS aluno_id,
-            d.periodo        AS periodo,
-            d.codigo         AS codigo,
-            d.nome           AS nome,
-            d.creditos       AS creditos,
-            d.mencao         AS mencao,
-            d.status         AS status,
-            d.criado_em      AS criado_em,
-            i.ch_acumulada   AS ch_acumulada,
-            i.integralizacao AS integralizacao_no_periodo
-        FROM disciplinas_cursadas d
-        JOIN integralizacoes_semestre i
-             ON i.aluno_id = d.aluno_id
-            AND i.periodo  = d.periodo
-        """
-    )
-
-    conn.execute(
-        """
-    CREATE TABLE IF NOT EXISTS estatisticas_disciplinas_agregadas (
-        codigo TEXT PRIMARY KEY,
-        nome TEXT,
-        media REAL,
-        min_integralizacao REAL,
-        max_integralizacao REAL,
-        total_alunos INTEGER,
-        atualizado_em TEXT DEFAULT (datetime('now'))
-    )
-    """
-    )
-
-    conn.commit()
-    return conn
+    return get_pg_conn()
 
 
 # ==========================
@@ -160,36 +55,43 @@ def upsert(conn, dados, arquivo):
     ira = indices.get("ira")
     mp = indices.get("mp")
 
+    cur = conn.cursor()
+
     # Inserção ou atualização do aluno
-    conn.execute(
+    cur.execute(
         """
         INSERT INTO alunos (matricula, nome, curso, ira, mp)
-        VALUES (?, ?, ?, ?, ?)
-        ON CONFLICT(matricula) DO UPDATE SET
-            nome = excluded.nome,
-            curso = excluded.curso,
-            ira = excluded.ira,
-            mp = excluded.mp,
-            atualizado_em = datetime('now')
-    """,
+        VALUES (%s, %s, %s, %s, %s)
+        ON CONFLICT (matricula) DO UPDATE SET
+            nome = EXCLUDED.nome,
+            curso = EXCLUDED.curso,
+            ira = EXCLUDED.ira,
+            mp = EXCLUDED.mp,
+            atualizado_em = NOW()
+        """,
         (matricula, nome, curso, ira, mp),
     )
 
-    aluno_id = conn.execute(
-        "SELECT id FROM alunos WHERE matricula = ?", (matricula,)
-    ).fetchone()[0]
+    cur.execute(
+        "SELECT id FROM alunos WHERE matricula = %s",
+        (matricula,),
+    )
+    aluno_id = cur.fetchone()[0]
 
     # Remove disciplinas antigas
-    conn.execute("DELETE FROM disciplinas_cursadas WHERE aluno_id = ?", (aluno_id,))
+    cur.execute(
+        "DELETE FROM disciplinas_cursadas WHERE aluno_id = %s",
+        (aluno_id,),
+    )
 
     # Insere novas
     for m in materias:
-        conn.execute(
+        cur.execute(
             """
             INSERT INTO disciplinas_cursadas
                 (aluno_id, periodo, codigo, nome, creditos, mencao, status)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
-        """,
+            VALUES (%s, %s, %s, %s, %s, %s, %s)
+            """,
             (
                 aluno_id,
                 m.get("periodo"),
@@ -228,19 +130,24 @@ def upload_pdf():
             raise ValueError("Erro: parse_basico retornou vazio.")
 
         conn = get_db()
-        upsert(conn, dados, save_path)
-        conn.close()
+        try:
+            upsert(conn, dados, save_path)
+        finally:
+            conn.close()
 
-        recalcular_tudo(DB_PATH)
+        # Esses scripts também serão migrados para PostgreSQL
+        # (deixamos a assinatura sem DB_PATH; vamos ajustar os .py depois)
+        recalcular_tudo()
+
         from scripts.preencher_estatisticas_disciplinas import (
             preencher_estatisticas_disciplinas,
         )
 
-        preencher_estatisticas_disciplinas(DB_PATH)
+        preencher_estatisticas_disciplinas()
 
         from scripts.gerar_estatisticas_agregadas import gerar_estatisticas_agregadas
 
-        gerar_estatisticas_agregadas(DB_PATH)
+        gerar_estatisticas_agregadas()
 
         return jsonify(dados), 200
 
@@ -266,18 +173,19 @@ def estatisticas_disciplina(codigo):
     - total de alunos analisados
     """
     conn = get_db()
-    cur = conn.cursor()
-
-    row = cur.execute(
-        """
-        SELECT codigo, nome, media, min_integralizacao, max_integralizacao, total_alunos
-        FROM estatisticas_disciplinas_agregadas
-        WHERE codigo = ?
-        """,
-        (codigo,),
-    ).fetchone()
-
-    conn.close()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            """
+            SELECT codigo, nome, media, min_integralizacao, max_integralizacao, total_alunos
+            FROM estatisticas_disciplinas_agregadas
+            WHERE codigo = %s
+            """,
+            (codigo,),
+        )
+        row = cur.fetchone()
+    finally:
+        conn.close()
 
     if not row:
         return jsonify({"error": "Disciplina não encontrada"}), 404
