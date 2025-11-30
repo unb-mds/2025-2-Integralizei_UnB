@@ -26,3 +26,12 @@ exclude = [
     ".git",
     "instance"
 ]
+
+[tool.pytest.ini_options]
+testpaths = [
+    "formulario-flask/tests",
+]
+pythonpath = [
+    "formulario-flask"
+]
+
