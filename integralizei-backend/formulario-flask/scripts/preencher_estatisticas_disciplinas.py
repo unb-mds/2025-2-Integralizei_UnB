@@ -1,6 +1,5 @@
 # scripts/preencher_estatisticas_disciplinas.py
 # -*- coding: utf-8 -*-
-import os
 
 from db import get_pg_conn
 from scripts.calcular_integralizacoes_semestre import calcular_estatisticas_disciplinas

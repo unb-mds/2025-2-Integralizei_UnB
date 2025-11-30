@@ -15,4 +15,3 @@ def get_pg_conn():
         user=DB_USER,
         password=DB_PASSWORD,
     )
-
