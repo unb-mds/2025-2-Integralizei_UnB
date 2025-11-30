@@ -89,8 +89,8 @@ def upsert(conn, dados, arquivo):
         cur.execute(
             """
             INSERT INTO disciplinas_cursadas
-                (aluno_id, periodo, codigo, nome, creditos, mencao, status)
-            VALUES (%s, %s, %s, %s, %s, %s, %s)
+                (aluno_id, periodo, codigo, nome, creditos, mencao, status, professor)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
             """,
             (
                 aluno_id,
@@ -100,6 +100,7 @@ def upsert(conn, dados, arquivo):
                 m.get("creditos") or m.get("ch"),
                 m.get("situacao") or m.get("mencao"),
                 m.get("status"),
+                m.get("professor"),
             ),
         )
 
@@ -135,8 +136,6 @@ def upload_pdf():
         finally:
             conn.close()
 
-        # Esses scripts também serão migrados para PostgreSQL
-        # (deixamos a assinatura sem DB_PATH; vamos ajustar os .py depois)
         recalcular_tudo()
 
         from scripts.preencher_estatisticas_disciplinas import (
@@ -148,6 +147,12 @@ def upload_pdf():
         from scripts.gerar_estatisticas_agregadas import gerar_estatisticas_agregadas
 
         gerar_estatisticas_agregadas()
+
+        from scripts.gerar_estatisticas_agregadas_professor import (
+            gerar_estatisticas_agregadas_professor,
+        )
+
+        gerar_estatisticas_agregadas_professor()
 
         return jsonify(dados), 200
 

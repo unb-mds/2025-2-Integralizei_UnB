@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS disciplinas_cursadas (
     creditos INTEGER,
     mencao TEXT,
     status TEXT,
+    professor TEXT,   
     criado_em TIMESTAMP DEFAULT NOW(),
     FOREIGN KEY (aluno_id) REFERENCES alunos(id) ON DELETE CASCADE
 );
@@ -54,6 +55,18 @@ CREATE TABLE IF NOT EXISTS estatisticas_disciplinas_agregadas (
     atualizado_em TIMESTAMP DEFAULT NOW()
 );
 
+
+CREATE TABLE IF NOT EXISTS estatisticas_disciplinas_professor (
+    id SERIAL PRIMARY KEY,
+    codigo TEXT NOT NULL,
+    nome TEXT,
+    professor TEXT NOT NULL,
+    media_integralizacao REAL,
+    mediana_integralizacao REAL,
+    desvio_padrao REAL,
+    total_alunos INTEGER
+);
+
 CREATE OR REPLACE VIEW disciplinas_com_integralizacao AS
 SELECT
     d.id               AS disciplina_id,
@@ -64,6 +77,7 @@ SELECT
     d.creditos         AS creditos,
     d.mencao           AS mencao,
     d.status           AS status,
+    d.professor        AS professor,   
     d.criado_em        AS criado_em,
     i.ch_acumulada     AS ch_acumulada,
     i.integralizacao   AS integralizacao_no_periodo
