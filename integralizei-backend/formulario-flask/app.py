@@ -213,6 +213,50 @@ def estatisticas_disciplina(codigo):
         200,
     )
 
+@app.route("/api/ranking/<codigo_disciplina>", methods=["GET"])
+def ranking_disciplina(codigo_disciplina):
+    """
+    Retorna a lista de alunos para o ranking de uma disciplina.
+    Ordenação: 
+    1. Integralização no semestre cursado (DESC)
+   
+    """
+    conn = get_db()
+    cur = conn.cursor()
+
+    # busca a integralização historica 
+    
+    query = """
+        SELECT 
+            e.media_integralizacao
+        FROM estatisticas_disciplinas e
+        JOIN alunos a ON e.aluno_id = a.id
+        WHERE e.codigo = ?
+        ORDER BY e.media_integralizacao DESC
+    """
+    
+    try:
+        rows = cur.execute(query, (codigo_disciplina,)).fetchall()
+        
+        ranking = []
+        for idx, row in enumerate(rows):
+            integralizacao = row[0]
+            
+            # Formata os dados para o front
+            ranking.append({
+                "posicao": idx + 1,
+                "integralizacao": f"{integralizacao:.2f}%" if integralizacao else "0%",
+                
+            })
+            
+        return jsonify(ranking), 200
+
+    except Exception as e:
+        print(f"Erro no ranking: {e}")
+        return jsonify({"error": "Erro ao gerar ranking"}), 500
+    finally:
+        conn.close()
+
 
 # ==========================
 # Início do servidor
