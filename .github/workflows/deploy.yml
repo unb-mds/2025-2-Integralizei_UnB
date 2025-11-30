@@ -1,59 +1,31 @@
-name: Deploy Documentation (Hugo)
-
+name: ci 
 on:
   push:
-    branches: [ "main" ]
-  workflow_dispatch:
+    branches:
+      - master 
+      - main
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: true
+  contents: write
 
 jobs:
-  deploy-site:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6
+      - uses: actions/checkout@v4
+      - name: Configure Git Credentials
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+      - uses: actions/setup-python@v5
         with:
-          submodules: recursive
-          fetch-depth: 0
-
-      - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v3
+          python-version: 3.x
+      - run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV 
+      - uses: actions/cache@v4
         with:
-          hugo-version: '0.128.0' 
-          extended: true
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
-
-      - name: Cache Hugo resources
-        uses: actions/cache@v4
-        with:
-          path: resources
-          key: ${{ runner.os }}-hugo-${{ hashFiles('**/go.sum') }}
+          key: mkdocs-material-${{ env.cache_id }}
+          path: .cache
           restore-keys: |
-            ${{ runner.os }}-hugo-
-
-      - name: Build Site
-        run: hugo --minify
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: ./public
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+            mkdocs-material-
+      - run: pip install -r requirements.txt
+      - run: mkdocs gh-deploy --force
