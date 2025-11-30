@@ -31,28 +31,31 @@ export default function TurmaCard({ turma, disciplinaCode, disciplinaName }: Tur
   const [error, setError] = useState("");
 
   const toggleRanking = async () => {
-    // Se estiver fechando, só fecha
     if (expandido) {
       setExpandido(false);
       return;
     }
-
-    // Se estiver abrindo:
     setExpandido(true);
-
-    // Se já temos dados, não precisa buscar de novo (Cache local simples)
     if (ranking.length > 0) return;
 
-    // Busca os dados na API
     setLoading(true);
     setError("");
     
     try {
-      // Ajuste a URL se não estiver usando proxy no next.config.js
-      const res = await fetch(`http://localhost:8000/api/ranking/${disciplinaCode}`);
+      
+      const professorNome = turma.teachers && turma.teachers.length > 0 ? turma.teachers[0] : "";
+      
+      let url = `http://localhost:8000/api/ranking/${disciplinaCode}`;
+      
+      
+      if (professorNome) {
+        
+        url += `?professor=${encodeURIComponent(professorNome)}`;
+      }
+
+      const res = await fetch(url);
       
       if (!res.ok) throw new Error("Erro ao buscar ranking");
-      
       const data = await res.json();
       setRanking(data);
     } catch (err) {
