@@ -100,12 +100,11 @@ def upsert(conn, dados, arquivo):
                 m.get("creditos") or m.get("ch"),
                 m.get("situacao") or m.get("mencao"),
                 m.get("status"),
-                m.get("professor"),   
+                m.get("professor"),
             ),
         )
 
     conn.commit()
-
 
 
 # ==========================
@@ -137,7 +136,6 @@ def upload_pdf():
         finally:
             conn.close()
 
-        
         recalcular_tudo()
 
         from scripts.preencher_estatisticas_disciplinas import (
@@ -151,11 +149,10 @@ def upload_pdf():
         gerar_estatisticas_agregadas()
 
         from scripts.gerar_estatisticas_agregadas_professor import (
-         gerar_estatisticas_agregadas_professor,
+            gerar_estatisticas_agregadas_professor,
         )
-        
-        gerar_estatisticas_agregadas_professor()
 
+        gerar_estatisticas_agregadas_professor()
 
         return jsonify(dados), 200
 

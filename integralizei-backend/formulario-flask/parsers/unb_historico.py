@@ -121,7 +121,7 @@ PROF_NOME_RX = re.compile(
 PROF_LINHA_COMPLETA_RX = re.compile(
     r"""^(?P<titulacao>Dr|Dra|MSc)\.?\s+
         (?P<professor>.+?)\s*
-        \((?P<ch>\d{1,3})h\)   
+        \((?P<ch>\d{1,3})h\)
         \s*
         (?P<turma>(\d{2}|--))\s+
         (?P<status>APR|MATR|CUMP|REP|TR|II|SR|-)\s+
@@ -322,8 +322,8 @@ def extrair_materias(texto: str) -> List[Dict]:
             continue
 
         # —— (b) Linha direta: "2024.1 * FGA0161 ..."
-                # —— (b) Linha direta: "2024.1 * FGA0161 60 02 96,0 MS APR"
-         # —— (b) Linha direta: "2024.1 * FGA0161 60 02 96,0 MS APR"
+        # —— (b) Linha direta: "2024.1 * FGA0161 60 02 96,0 MS APR"
+        # —— (b) Linha direta: "2024.1 * FGA0161 60 02 96,0 MS APR"
         md = DIRECT_RX.match(ln)
         if md:
             periodo = md.group("periodo")
@@ -361,7 +361,7 @@ def extrair_materias(texto: str) -> List[Dict]:
                 "creditos": ch,
                 "nota": None,
                 "situacao": mencao,  # MENÇÃO (SS/MS/MM/…)
-                "professor": prof,   # ✅ agora preenchido
+                "professor": prof,  # ✅ agora preenchido
             }
             flush()
 
@@ -378,7 +378,6 @@ def extrair_materias(texto: str) -> List[Dict]:
             }
             i += 1
             continue
-
 
         # —— (a) L1: "2024.1 NOME …"
         m1 = TERM_INLINE_RX.match(ln)
