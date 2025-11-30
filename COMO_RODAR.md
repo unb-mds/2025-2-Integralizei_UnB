@@ -1,113 +1,179 @@
 # 🚀 Guia de Execução - Integralizei UnB
 
-Este projeto utiliza uma arquitetura de **Microserviços**. Para que o sistema funcione completamente, é necessário rodar **3 terminais** simultaneamente.
-
-## 📋 Pré-requisitos
-Certifique-se de ter instalado:
-- Node.js (v18 ou superior)
-- Python (3.12 recomendado)
-- Git
+Este projeto utiliza uma arquitetura de **Microserviços**. Para que o sistema funcione completamente, é necessário configurar as variáveis de ambiente e rodar **3 terminais** simultaneamente.
 
 ---
 
-## 🛠️ Configuração Inicial (Apenas na 1ª vez)
+## 📋 Pré-requisitos
 
-Se você acabou de clonar o projeto, instale as dependências nesta ordem:
+Certifique-se de ter instalado:
+* **Node.js** (v18 ou superior)
+* **Python** (3.11 ou 3.12 recomendado)
+* **Git**
 
-### 1. Frontend
-No terminal, entre na pasta e instale:
+---
+
+## 🔑 Passo 0: Configuração dos Segredos (.env)
+
+O projeto agora exige **dois arquivos de configuração** para funcionar (Login e Chatbot). Crie-os antes de tudo.
+
+### 1. Backend de Login (Autenticação)
+Crie um arquivo chamado **`.env`** dentro da pasta:
+`integralizei-backend/login-service/.env`
+
+**Conteúdo:**
+```env
+PORT=3001
+SESSION_SECRET="segredo-super-secreto-desenvolvimento"
+# Credenciais do Google Cloud (Para o botão 'Entrar com Google')
+GOOGLE_CLIENT_ID="SUA_CHAVE_DO_GOOGLE_AQUI"
+GOOGLE_CLIENT_SECRET="SEU_SEGREDO_DO_GOOGLE_AQUI"
+```
+
+### 2. Frontend (Chatbot IA)
+
+Crie um arquivo chamado **`.env.local`** dentro da pasta:
+`integralizei-frontend/.env.local`
+
+**Conteúdo:**
+```env
+# Chave da API do Google Gemini para o UnBot
+GEMINI_API_KEY="SUA_CHAVE_GEMINI_AQUI"
+```
+
+---
+
+🛠️ Instalação das Dependências (Apenas na 1ª vez)
+
+Abra o terminal na raiz do projeto e siga os passos para seu sistema operacional.
+
+1. Frontend e Backend (Node.js)
+
+Funciona igual para Windows e Linux.
+
 ```bash
+# Instalar Frontend
 cd integralizei-frontend
 npm install
-```
-### 2. Backend Login (Node.js)
-Entre na pasta, instale e configure o ambiente:
 
-```bash
-cd integralizei-backend/login-service
+# Voltar e Instalar Backend de Login
+cd ../integralizei-backend/login-service
 npm install
 
-# Crie um arquivo .env nesta pasta com o seguinte conteúdo:
-# PORT=3001
-# SESSION_SECRET="segredo-super-secreto"
-# GOOGLE_CLIENT_ID="SUA_CHAVE_AQUI_NAO_COLOQUE_A_REAL_NO_GITHUB"
-# GOOGLE_CLIENT_SECRET="SEU_SEGREDO_AQUI_NAO_COLOQUE_O_REAL_NO_GITHUB"
+# Voltar para a raiz
+cd ../..
 ```
 
-Volte para a raiz do projeto e crie o ambiente virtual unificado:
+2. Backend Python (Processamento)
 
-```bash
-# Estando na raiz do projeto (C:\2025-2-Integralizei_UnB)
-py -3.12 -m venv .venv # nao precisa ter essa especifica versao, desde que seja <= 3.12
+🪟 No Windows (PowerShell)
+
+```powershell
+# Cria o ambiente virtual
+py -3.12 -m venv .venv
+
+# Ativa o ambiente
 .\.venv\Scripts\activate
+
+# Instala as dependências
 pip install -r integralizei-backend/requirements.txt
 ```
-### Parte 3: O Ritual de Execução (Como rodar)
 
-## ▶️ Como Rodar (O Ritual Diário)
+🐧 No Linux / Mac (Bash)
 
-Abra **3 Terminais** no VS Code e siga a ordem:
+```bash
+# Cria o ambiente virtual (garantindo python 3)
+python3 -m venv .venv
 
-### 🟢 Terminal 1: Backend Python (Processamento)
-*Responsável por ler o PDF e gerar os gráficos.*
+# Ativa o ambiente
+source .venv/bin/activate
+
+# Instala as dependências
+pip install -r integralizei-backend/requirements.txt
+```
+
+---
+
+▶️ O Ritual de Execução (Como rodar)
+
+Você precisará de 3 Terminais abertos na raiz do projeto.
+
+🟢 Terminal 1: Backend Python (Processamento de PDF)
+
+Windows:
 ```powershell
-# Na raiz do projeto, ative o Python (se não estiver verde)
 .\.venv\Scripts\activate
-
-# Entre na pasta e rode
 cd integralizei-backend/formulario-flask
 python app.py
 ```
-## ✅ Sucesso: Deve aparecer Running on http://0.0.0.0:8000.
 
----
-## 🔵 Terminal 2: Backend Login (Autenticação)
-Responsável pelo Login e Cadastro.
+Linux:
+```bash
+source .venv/bin/activate
+cd integralizei-backend/formulario-flask
+python3 app.py
+```
 
-```powershell
+✅ Sucesso: Deve aparecer Running on http://0.0.0.0:8000
+
+🔵 Terminal 2: Backend Login (Autenticação)
+
+```bash
 cd integralizei-backend/login-service
 npm run dev
 ```
-## ✅ Sucesso: Deve aparecer Server running on http://localhost:3001.
 
---- 
+✅ Sucesso: Deve aparecer Server running on http://localhost:3001
 
-## 🎨 Terminal 3: Frontend (Interface)
-O site que você vê.
+🎨 Terminal 3: Frontend (Interface & Chatbot)
 
-```powershell
+```bash
 cd integralizei-frontend
 npm run dev
 ```
 
-## ✅ Sucesso: Deve aparecer Ready on http://localhost:3000.
----
-### Parte 4: Acesso e Problemas Comuns
-
-## 🔗 Acessando o Projeto
-
-👉 Abra no navegador: **[http://localhost:3000](http://localhost:3000)**
-
-### 🧪 Logins de Teste
-Você pode criar uma conta nova na hora ou usar:
-- **Email:** `admin@teste.com`
-- **Senha:** `12345678`
+✅ Sucesso: Deve aparecer Ready in ... e rodar em http://localhost:3000
 
 ---
 
-## ⚠️ Problemas Comuns
+🔗 Acessando o Projeto
 
-**1. Erro "No module named..." no Python**
-> Você esqueceu de ativar o ambiente virtual. Rode `.\.venv\Scripts\activate` na raiz antes de rodar o app.py.
+👉 Abra no navegador: http://localhost:3000
 
-**2. Erro de Conexão no Login**
-> Verifique se o Terminal 2 (Porta 3001) está rodando.
+🧪 Logins de Teste (Banco Local)
 
-**3. Erro de Conexão no Upload**
-> Verifique se o Terminal 1 (Porta 8000) está rodando.
+Se não quiser usar o Google, use:
 
+```
+Email: admin@teste.com
+Senha: 12345678
+```
 
-Use Control + Shift + m to toggle the tab key moving focus. Alternatively, use esc then tab to move to the next interactive element on the page.
-Nenhum arquivo escolhido
-Attach files by dragging & dropping, selecting or pasting them.
-List updated, Focused item: Sprint - 02, not selected, 1 of 10 
+---
+
+⚠️ Solução de Problemas
+
+1. Erro "No module named..." no Python
+
+    Você esqueceu de ativar o ambiente virtual.
+
+    Win:
+    ```
+    .\.venv\Scripts\activate
+    ```
+
+    Linux:
+    ```
+    source .venv/bin/activate
+    ```
+
+2. UnBot responde "Erro ao conectar ao servidor"
+
+    Você esqueceu de criar o arquivo `.env.local` na pasta do frontend ou não reiniciou o terminal 3 após criar o arquivo.
+
+3. Erro "redirect_uri_mismatch" no Login com Google
+
+    A URL de callback no Google Cloud Console deve ser exatamente:
+    ```
+    http://localhost:3001/auth/google/callback
+    ```

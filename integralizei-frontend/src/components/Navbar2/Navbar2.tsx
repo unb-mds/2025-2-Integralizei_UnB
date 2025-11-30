@@ -1,10 +1,9 @@
-
 "use client";
 
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./navbar2.module.css";
-import { BarChart3, Calculator, Search, Info, LogIn } from "lucide-react";
+import { BarChart3, Calculator, Search, Info, LogIn, Bot } from "lucide-react";
 
 export default function Navbar() {
   return (
@@ -41,6 +40,12 @@ export default function Navbar() {
         <Link href="/pesquisa" className={`${styles.botao} ${styles.cor_da_UnB}`}>
           <Search size={18} />
           PESQUISA
+        </Link>
+
+        {/* --- NOVO BOTÃO: UNBOT --- */}
+        <Link href="/unbot" className={`${styles.botao} ${styles.cor_da_UnB}`}>
+          <Bot size={18} />
+          UNBOT
         </Link>
 
         <Link href="/sobre" className={`${styles.botao} ${styles.cor_da_UnB}`}>
