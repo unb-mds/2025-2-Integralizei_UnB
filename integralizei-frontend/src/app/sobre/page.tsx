@@ -5,30 +5,28 @@ import Navbar from "../../components/Navbar2/Navbar2";
 
 export default function SobrePage() {
   const criadores = [
-    // Pessoas já cadastradas
+    
     { nome: "Ana Beatriz Souza", img: "/criadores/ana.jpeg" },
     { nome: "Ana Caroline Dantas", img: "/criadores/carol.jpg" },
     { nome: "Caroline Becker", img: "/criadores/carol2jpeg.jpeg" },
 
-    // Novos criadores
     { nome: "Gustavo Fornaciari", img: "/criadores/gustavo.jpeg" },
     { nome: "Enzo Menali", img: "/criadores/enzo.jpg" },
     { nome: "Paulo Vitor Gomes", img: "/criadores/paulo.jpg" },
   ];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white font-[Inter]">
       <Navbar />
 
       <div className="px-6 pt-28 pb-16 flex flex-col items-center">
 
-
-        {/* TÍTULO */}
-        <h1 className="text-4xl font-bold mb-10 text-center">
+        {/* TÍTULO PRINCIPAL - Efeito Degradê no Texto (Igual ao Pesquisa) */}
+        <h1 className="text-5xl font-extrabold mb-10 text-center bg-gradient-to-r from-[#006633] to-[#003366] bg-clip-text text-transparent">
           Sobre o Projeto
         </h1>
 
-        {/* TEXTO DESCRITIVO, CENTRALIZADO E COM LARGURA IDEAL */}
+        {/* TEXTO DESCRITIVO */}
         <div className="max-w-3xl mx-auto text-lg text-center text-gray-700 leading-relaxed mb-20">
           <p className="mb-4">
             O <strong>Integralizei UnB</strong> é um sistema desenvolvido para facilitar a vida acadêmica
@@ -49,8 +47,10 @@ export default function SobrePage() {
           </p>
         </div>
 
-        {/* SUBTÍTULO */}
-        <h2 className="text-3xl font-bold mb-12 text-center">Criadores</h2>
+        {/* SUBTÍTULO - Efeito Degradê no Texto */}
+        <h2 className="text-4xl font-bold mb-12 text-center bg-gradient-to-r from-[#006633] to-[#003366] bg-clip-text text-transparent">
+          Criadores
+        </h2>
 
         {/* GRID COM 6 PESSOAS */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 max-w-6xl place-items-center">
@@ -58,16 +58,16 @@ export default function SobrePage() {
             <div
               key={i}
               className="rounded-3xl p-8 flex flex-col items-center shadow-xl
-                         bg-gradient-to-b from-green-600 to-blue-900 w-80"
+                         bg-gradient-to-b from-[#006633] to-[#003366] w-80 hover:scale-105 transition-transform"
             >
               {/* FOTO */}
-              <div className="w-36 h-36 rounded-full overflow-hidden mb-4 shadow-lg">
+              <div className="w-36 h-36 rounded-full overflow-hidden mb-4 shadow-lg border-4 border-white/20">
                 <Image
                   src={pessoa.img}
                   width={200}
                   height={200}
                   alt={pessoa.nome}
-                  className="object-cover"
+                  className="object-cover w-full h-full"
                 />
               </div>
 
