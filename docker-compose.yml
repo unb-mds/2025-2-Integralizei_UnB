@@ -5,7 +5,7 @@ services:
       dockerfile: Dockerfile
     container_name: integralizei-core
     ports:
-      - "8000:5000"
+      - "8000:8000"
     volumes:
       - ./integralizei-backend:/app
       - ./integralizei-backend/formulario-flask/instance:/app/formulario-flask/instance
