@@ -30,6 +30,4 @@ WORKDIR /app/formulario-flask
 # 8. Expõe a porta 5000
 EXPOSE 5000
 
-# 9. Comando para rodar (simulando o "python app.py")
-# Usamos o python direto ou flask run. Vamos manter o padrão que você usa.
-CMD ["python", "app.py"]
+CMD ["flask", "run", "--host=0.0.0.0"]

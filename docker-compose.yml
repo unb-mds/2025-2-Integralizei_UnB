@@ -8,7 +8,6 @@ services:
       - "8000:8000"
     volumes:
       - ./integralizei-backend:/app
-      - ./integralizei-backend/formulario-flask/instance:/app/formulario-flask/instance
     environment:
       - FLASK_DEBUG=1
       - DB_HOST=${DB_HOST}
@@ -17,7 +16,6 @@ services:
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
       - DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
-      - GEMINI_API_KEY=${GEMINI_API_KEY}
 
     depends_on:
       - db
@@ -51,6 +49,7 @@ services:
       - ./integralizei-frontend:/app
       - /app/node_modules
     environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
       - NEXT_PUBLIC_API_URL=http://localhost:8000 
       - NEXT_PUBLIC_AUTH_URL=http://localhost:3001
       - WATCHPACK_POLLING=true

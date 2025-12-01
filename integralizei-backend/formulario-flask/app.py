@@ -25,7 +25,7 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(os.path.join(BASE_DIR, "instance"), exist_ok=True)
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 
@@ -264,4 +264,4 @@ def ranking_disciplina(codigo_disciplina):
 # Início do servidor
 # ==========================
 if __name__ == "__main__":  # pragma: no cover
-    app.run(debug=True, host="0.0.0.0", port=8000)
+    app.run(debug=True, host='0.0.0.0', port=5000)
