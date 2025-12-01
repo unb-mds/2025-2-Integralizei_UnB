@@ -1,75 +1,32 @@
-import os
-import sqlite3
+# scripts/preencher_estatisticas_disciplinas.py
+# -*- coding: utf-8 -*-
+
+from db import get_pg_conn
+from scripts.calcular_integralizacoes_semestre import calcular_estatisticas_disciplinas
 
 
-def preencher_estatisticas_disciplinas(db_path: str) -> None:
+def preencher_estatisticas_disciplinas(min_n: int = 1) -> None:
     """
-    Preenche a tabela estatisticas_disciplinas associando,
-    para cada disciplina cursada, a integralização que o aluno
-    tinha naquele período.
+    Versão nova: em vez de popular estatisticas_disciplinas usando a view
+    disciplinas_com_integralizacao (uma linha por aluno/disciplina/período),
+    delega o cálculo diretamente para calcular_estatisticas_disciplinas,
+    que já grava a tabela no formato agregado:
+
+        codigo, nome,
+        media_integralizacao,
+        mediana_integralizacao,
+        desvio_padrao,
+        total_alunos
     """
 
-    conn = sqlite3.connect(db_path)
-    conn.execute("PRAGMA foreign_keys = ON;")
-    cur = conn.cursor()
-
-    # 1) Buscar todas as disciplinas com integralização do período
-    cur.execute(
-        """
-        SELECT
-            d.aluno_id,
-            d.codigo,
-            d.nome,
-            d.mencao,
-            d.creditos,
-            d.periodo,
-            v.integralizacao_no_periodo
-        FROM disciplinas_cursadas d
-        JOIN disciplinas_com_integralizacao v
-              ON v.disciplina_id = d.id
-        WHERE v.integralizacao_no_periodo IS NOT NULL
-        """
-    )
-
-    registros = cur.fetchall()
-
-    # 2) Limpar dados antigos (vamos recomputar tudo do zero)
-    cur.execute("DELETE FROM estatisticas_disciplinas")
-
-    # 3) Inserir uma linha por (aluno, disciplina, período)
-    for aluno_id, codigo, nome, mencao, creditos, periodo, integr in registros:
-        cur.execute(
-            """
-            INSERT INTO estatisticas_disciplinas (
-                aluno_id,
-                codigo,
-                nome,
-                mencao,
-                creditos,
-                periodo,
-                media_integralizacao
-            )
-            VALUES (?, ?, ?, ?, ?, ?, ?)
-            """,
-            (
-                aluno_id,
-                codigo,
-                nome,
-                mencao,
-                creditos,
-                periodo,
-                float(integr) if integr is not None else None,
-            ),
-        )
-
-    conn.commit()
-    conn.close()
+    conn = get_pg_conn()
+    try:
+        calcular_estatisticas_disciplinas(conn, min_n=min_n)
+    finally:
+        conn.close()
 
 
-if __name__ == "__main__":
-    # Permite rodar direto: python -m scripts.preencher_estatisticas_disciplinas
-    BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-    DB_PATH = os.path.join(BASE_DIR, "instance", "integralizei.db")
-
-    preencher_estatisticas_disciplinas(DB_PATH)
+if __name__ == "__main__":  # pragma: no cover
+    print("Preenchendo estatisticas_disciplinas (PostgreSQL)...")
+    preencher_estatisticas_disciplinas()
     print("Tabela estatisticas_disciplinas preenchida com sucesso.")

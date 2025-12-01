@@ -111,9 +111,9 @@ app.get('/auth/google',
 );
 
 app.get('/auth/google/callback', 
-  passport.authenticate('google', { failureRedirect: '/index.html?error=google' }),
+  passport.authenticate('google', { failureRedirect: 'http://localhost:3000/login?error=google' }),
   (req, res) => {
-    res.redirect('/dashboard.html');
+    res.redirect('http://localhost:3000/dados');
   }
 );
 

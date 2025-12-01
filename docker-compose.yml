@@ -59,19 +59,31 @@ services:
   # Serviço 4: Banco de Dados (Preparado para Postgres)
   # -------------------------------------------------------
 
+  services:
   db:
-    image: postgres:15-alpine
-    container_name: integralizei-db
-    restart: always
-    ports:
-      - "5432:5432" # Libera a porta para você acessar via DBeaver/PgAdmin
+    image: postgres:16
+    container_name: integralizei_postgres
     environment:
-      - POSTGRES_USER=${POSTGRES_USER}         
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB}
+      POSTGRES_USER: integralizei_usuario
+      POSTGRES_PASSWORD: intgr2501
+      POSTGRES_DB: integralizei_db
+    ports:
+      - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - integralizei_pg_data:/var/lib/postgresql/data
+    restart: unless-stopped
 
-# --- O FINAL DO ARQUIVO ---
+  pgadmin:
+    image: dpage/pgadmin4:8
+    container_name: integralizei_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@meuservidor.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+    restart: unless-stopped
+
 volumes:
-  postgres_data:
+  integralizei_pg_data:

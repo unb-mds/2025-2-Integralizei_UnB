@@ -4,10 +4,8 @@ from typing import Dict, List, Optional, Tuple
 
 # ============== Tentativa de import do extrator do seu projeto ==============
 try:
-    # Se você já tem text_extract.extract_any no seu projeto, ótimo:
     from .text_extract import extract_any  # type: ignore
 except Exception:
-    # Fallback simples usando pdfplumber (texto linear)
     try:
         import pdfplumber  # type: ignore
     except Exception:
@@ -94,12 +92,15 @@ def _clean_name(nome: Optional[str]) -> Optional[str]:
 # Código mais permissivo (FGA0161, CIC0004, LET0331, FGA0146A etc.)
 CODE_RX = r"(?P<codigo>(?:[A-Z]{2,4}[A-Z]?\d{3,4}[A-Z0-9]?))"
 # Período (inline na mesma linha do nome)
-TERM_INLINE_RX = re.compile(r"^(?P<periodo>\d{4}[./-][12])\s+(?P<nome>.+)$")
+# aceita tanto "2024.1 NOME..." quanto "2024.1NOME..."
+TERM_INLINE_RX = re.compile(r"^(?P<periodo>\d{4}[./-][12])\s*(?P<nome>.+)$")
+
 # Linha 3 (colunas):  Turma 09  APRFGA0161  60  96,0  MS*
 LINE3_RX = re.compile(
     r"""^\s*
         (?P<turma>(--|\d{2}))\s+
-        (?P<status>[A-Z]{3,5})                # APR, MATR, CUMP, etc.
+        # status colado no código: APRFGA0161 → status=APR, codigo=FGA0161
+        (?P<status>APR|MATR|CUMP|REP|TR|SR|II|-)\s*
         (?P<codigo>[A-Z]{2,4}[A-Z]?\d{3,4}[A-Z0-9]*)\s+
         (?P<ch>\d{1,3})\s+                    # CH (60, 90...)
         (?P<freq>\d{1,3},\d|--)\s+            # 96,0  ou --
@@ -107,8 +108,30 @@ LINE3_RX = re.compile(
     """,
     re.X,
 )
+
 # Linha 2 (professor): "... (90h)"  → captura CH caso a linha 3 não traga
 PROF_CH_RX = re.compile(r"\((?P<ch>\d{1,3})h\)")
+
+# Nome do professor na linha 2: "Dr. / Dra. / MSc. FULANO ... (90h) ..."
+PROF_NOME_RX = re.compile(
+    r"(?P<professor>(?:Dr|Dra|MSc)\.?\s+[A-ZÁ-Ú][^()]+?)\s*\(\s*\d{1,3}\s*h\s*\)",
+    re.I,
+)
+
+PROF_LINHA_COMPLETA_RX = re.compile(
+    r"""^(?P<titulacao>Dr|Dra|MSc)\.?\s+
+        (?P<professor>.+?)\s*
+        \((?P<ch>\d{1,3})h\)
+        \s*
+        (?P<turma>(\d{2}|--))\s+
+        (?P<status>APR|MATR|CUMP|REP|TR|II|SR|-)\s+
+        (?P<codigo>[A-Z]{2,4}[A-Z]?\d{3,4}[A-Z0-9]?)\s+
+        (?P<ch2>\d{1,3})\s+
+        (?P<nota>\d{1,3},\d)\s+
+        (?P<mencao>[A-Z\-]{1,3})
+        """,
+    re.X,
+)
 
 # Créditos/carga-horária em formatos variados (se necessário em fallbacks)
 CRED_TOKEN_RX = re.compile(
@@ -128,9 +151,10 @@ DIRECT_RX = re.compile(
 
 # Linha de professor/cabeçalho (evitar confundir com nome)
 PROF_LINE_RX = re.compile(
-    r"\b(Dr\.|Dra\.|Prof\.|Profa\.|Professor|([(\[]\s*\d{1,3}\s*h\s*[)\]])|Curr[ií]culo|Componente Curricular)\b",
+    r"(?P<professor>(?:Dr|Dra|MSc)\.?\s+[A-ZÁ-Ú][^()]+?)\s*\(\s*\d{1,3}\s*h\s*\)",
     re.I,
 )
+
 
 # Padrões de menção e status dentro da linha direta
 STATUS_RX = re.compile(r"\b(APR|MATR|CUMP|REP|TR|II|SR|-)\b", re.I)
@@ -213,6 +237,7 @@ def extrair_materias(texto: str) -> List[Dict]:
         "creditos": None,  # CH
         "nota": None,
         "situacao": None,  # menção SS/MS/MM/-
+        "professor": None,  # NOVO
     }
 
     def flush():
@@ -230,9 +255,8 @@ def extrair_materias(texto: str) -> List[Dict]:
                         if cur["nota"]
                         else None
                     ),
-                    "status": cur[
-                        "status"
-                    ],  # mantemos no payload (útil se quiser salvar depois)
+                    "status": cur["status"],  # mantemos no payload
+                    "professor": _clean_name(cur.get("professor")),
                 }
             )
 
@@ -261,16 +285,10 @@ def extrair_materias(texto: str) -> List[Dict]:
           - status (APR|MATR|CUMP|...)
         """
         # menção e status (normalmente ao final)
-        mencao = (
-            (MENCAO_RX.search(resto).group(1).upper())
-            if MENCAO_RX.search(resto)
-            else None
-        )
-        status = (
-            (STATUS_RX.search(resto).group(1).upper())
-            if STATUS_RX.search(resto)
-            else None
-        )
+        mencao_match = MENCAO_RX.search(resto)
+        mencao = mencao_match.group(1).upper() if mencao_match else None
+        status_match = STATUS_RX.search(resto)
+        status = status_match.group(1).upper() if status_match else None
 
         # CH = primeiro inteiro 2-3 dígitos plausível
         ch = None
@@ -304,6 +322,8 @@ def extrair_materias(texto: str) -> List[Dict]:
             continue
 
         # —— (b) Linha direta: "2024.1 * FGA0161 ..."
+        # —— (b) Linha direta: "2024.1 * FGA0161 60 02 96,0 MS APR"
+        # —— (b) Linha direta: "2024.1 * FGA0161 60 02 96,0 MS APR"
         md = DIRECT_RX.match(ln)
         if md:
             periodo = md.group("periodo")
@@ -319,6 +339,20 @@ def extrair_materias(texto: str) -> List[Dict]:
             nome_est, ch, mencao, status = split_resto_direct(resto)
             nome_final = nome_prev or nome_est
 
+            # 🔹 NOVO: tenta pegar professor (e CH) na linha seguinte
+            prof = None
+            if i + 1 < len(linhas):
+                linha_prof = linhas[i + 1]
+
+                # Se a CH não veio clara na linha direta, usa a CH do "(90h)"
+                mprof_ch = PROF_CH_RX.search(linha_prof)
+                if mprof_ch and not ch:
+                    ch = mprof_ch.group("ch")
+
+                mprof_nome = PROF_NOME_RX.search(linha_prof)
+                if mprof_nome:
+                    prof = mprof_nome.group("professor").strip()
+
             cur = {
                 "periodo": periodo.replace(".", "/"),
                 "nome": nome_final,
@@ -326,9 +360,11 @@ def extrair_materias(texto: str) -> List[Dict]:
                 "status": status,
                 "creditos": ch,
                 "nota": None,
-                "situacao": mencao,  # aqui 'situacao' = MENÇÃO (SS/MS/MM/…)
+                "situacao": mencao,  # MENÇÃO (SS/MS/MM/…)
+                "professor": prof,  # ✅ agora preenchido
             }
             flush()
+
             # reseta estado
             cur = {
                 "periodo": None,
@@ -338,6 +374,7 @@ def extrair_materias(texto: str) -> List[Dict]:
                 "creditos": None,
                 "nota": None,
                 "situacao": None,
+                "professor": None,
             }
             i += 1
             continue
@@ -348,35 +385,25 @@ def extrair_materias(texto: str) -> List[Dict]:
             # fecha disciplina anterior (se houver)
             if cur["nome"] or cur["codigo"]:
                 flush()
-            # inicia nova
-            cur = {
-                "periodo": m1.group("periodo"),
-                "nome": m1.group("nome"),
-                "codigo": None,
-                "status": None,
-                "creditos": None,
-                "nota": None,
-                "situacao": None,
-            }
 
-            # L2: professor (tenta CH "(90h)")
+            periodo = m1.group("periodo")
+            nome_disc = m1.group("nome")
+
+            # tenta pegar TUDO na linha seguinte (prof + dados)
+            prof = None
+            codigo = None
+            status = None
+            ch = None
+            nota = None
+            mencao = None
+
             if i + 1 < len(linhas):
-                mprof = PROF_CH_RX.search(linhas[i + 1])
-                if mprof and not cur["creditos"]:
-                    cur["creditos"] = mprof.group("ch")
-
-            # L3: colunas
-            if i + 2 < len(linhas):
-                m3 = LINE3_RX.match(linhas[i + 2])
-                if m3:
-                    status = m3.group("status")
-                    codigo = m3.group("codigo")
-                    ch = m3.group("ch")
-                    mencao_raw = m3.group("mencao") or "-"
-                    mencao = re.sub(r"[^A-Z\-]", "", mencao_raw).upper()
-
-                    # ENADE/NADE/códigos administrativos → ignorar disciplina
-                    if _looks_admin(codigo, cur["nome"]):
+                linha_prof = linhas[i + 1]
+                mfull = PROF_LINHA_COMPLETA_RX.match(linha_prof)
+                if mfull:
+                    codigo = mfull.group("codigo")
+                    # ignora ENADE/administrativo usando o código + nome
+                    if _looks_admin(codigo, nome_disc):
                         cur = {
                             "periodo": None,
                             "nome": None,
@@ -385,16 +412,31 @@ def extrair_materias(texto: str) -> List[Dict]:
                             "creditos": None,
                             "nota": None,
                             "situacao": None,
+                            "professor": None,
                         }
-                        i += 3
+                        i += 2
                         continue
 
-                    cur["status"] = status
-                    cur["codigo"] = codigo
-                    cur["creditos"] = ch or cur["creditos"]
-                    cur["situacao"] = mencao
-                    cur["nota"] = None
+                    titulacao = mfull.group("titulacao")
+                    prof_nome = mfull.group("professor").strip()
+                    prof = f"{titulacao}. {prof_nome}"
 
+                    ch = mfull.group("ch2") or mfull.group("ch")
+                    status = mfull.group("status").upper()
+                    nota = mfull.group("nota")
+                    mencao = (mfull.group("mencao") or "-").upper()
+
+                    # monta e salva direto
+                    cur = {
+                        "periodo": periodo.replace(".", "/"),
+                        "nome": nome_disc,
+                        "codigo": codigo,
+                        "status": status,
+                        "creditos": ch,
+                        "nota": nota,
+                        "situacao": mencao,
+                        "professor": prof,
+                    }
                     flush()
                     cur = {
                         "periodo": None,
@@ -404,11 +446,22 @@ def extrair_materias(texto: str) -> List[Dict]:
                         "creditos": None,
                         "nota": None,
                         "situacao": None,
+                        "professor": None,
                     }
-                    i += 3
+                    i += 2  # consumiu L1 e L2
                     continue
 
-            # Se não houve L3 logo em seguida, tenta continuar montando nos próximos passos
+            # se não casou o layout novo, cai fora e deixa outros blocos tentarem
+            cur = {
+                "periodo": periodo,
+                "nome": nome_disc,
+                "codigo": None,
+                "status": None,
+                "creditos": None,
+                "nota": None,
+                "situacao": None,
+                "professor": None,
+            }
             i += 1
             continue
 
@@ -432,6 +485,7 @@ def extrair_materias(texto: str) -> List[Dict]:
                 "creditos": None,
                 "nota": None,
                 "situacao": None,
+                "professor": None,
             }
             i += 1
             continue
@@ -557,7 +611,7 @@ def parse_basico(pdf_path: str) -> Dict:
 
 
 # ================================ Execução via CLI ================================
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     if len(sys.argv) < 2:
         print("Uso: python parser_hist_unb.py caminho/para/historico.pdf")
         sys.exit(1)
@@ -585,5 +639,6 @@ if __name__ == "__main__":
     for m in curr["materias"]:
         print(
             f" - [{m.get('periodo') or '-'}] {m['codigo']} | {m.get('nome') or '-'} | CH={m.get('creditos') or '-'} | "
-            f"Menção={m.get('situacao') or '-'} | Nota={m.get('nota') if m.get('nota') is not None else '-'} | Status={m.get('status') or '-'}"
+            f"Menção={m.get('situacao') or '-'} | Nota={m.get('nota') if m.get('nota') is not None else '-'} | "
+            f"Status={m.get('status') or '-'} | Prof={m.get('professor') or '-'}"
         )

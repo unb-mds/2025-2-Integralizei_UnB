@@ -1,9 +1,9 @@
 # scripts/calcular_integralizacoes_semestre.py
 # -*- coding: utf-8 -*-
-import os
-import sqlite3
 from statistics import mean, median, pstdev
-from typing import Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple
+
+from db import get_pg_conn
 
 # ---------------------------
 # Configs
@@ -51,21 +51,28 @@ def periodo_anterior(p: str) -> Optional[str]:
 # Cálculo de integralização por semestre
 # ---------------------------
 def calcular_integralizacao_semestre_para_aluno(
-    cur: sqlite3.Cursor, aluno_id: int, ch_exigida: int
+    cur: Any, aluno_id: int, ch_exigida: int
 ):
     """
     Lê disciplinas do aluno, acumula CH aprovada e grava em integralizacoes_semestre
-    um registro por período, com ch_acumulada e %.
+    um registro por período, com ch_acumulada e % NO INÍCIO DO SEMESTRE.
+
+    Ou seja:
+    - 1º período do aluno: ch_acumulada = 0, integralizacao = 0.0
+    - Demais períodos: valor corresponde ao que o aluno tinha ao final do período anterior.
     """
-    rows = cur.execute(
+    cur.execute(
         """
         SELECT periodo, creditos, mencao, status
         FROM disciplinas_cursadas
-        WHERE aluno_id = ?
-        ORDER BY CAST(substr(periodo,1,4) AS INT), CAST(substr(periodo,6,1) AS INT), id
+        WHERE aluno_id = %s
+        ORDER BY CAST(substr(periodo, 1, 4) AS INT),
+                 CAST(substr(periodo, 6, 1) AS INT),
+                 id
         """,
         (aluno_id,),
-    ).fetchall()
+    )
+    rows = cur.fetchall()
 
     # Agrupar por período
     por_periodo: Dict[str, List[Tuple[Optional[int], Optional[str], Optional[str]]]] = (
@@ -77,66 +84,84 @@ def calcular_integralizacao_semestre_para_aluno(
             (ch, (mencao or "").upper(), (status or "").upper())
         )
 
-    total_ch = 0
+    total_ch = 0  # CH acumulada ATÉ o início do período corrente
     inserts = []
+
     for p in sorted(por_periodo.keys(), key=periodo_key):
+        # 1) Primeiro gravamos o estado NO INÍCIO DO PERÍODO p
+        perc_inicio = round(100.0 * total_ch / (ch_exigida or DEFAULT_CH_EXIGIDA), 2)
+        inserts.append((aluno_id, p, total_ch, perc_inicio))
+
+        # 2) Depois somamos a CH aprovada DO PRÓPRIO PERÍODO p,
+        #    para que isso reflita no início do próximo período.
         for ch, mencao, status in por_periodo[p]:
             if (mencao in APR_MENC) or (status in APR_STATUS):
                 total_ch += int(ch or 0)
-        perc = round(100.0 * total_ch / (ch_exigida or DEFAULT_CH_EXIGIDA), 2)
-        inserts.append((aluno_id, p, total_ch, perc))
 
     # limpa antigos e insere novos
-    cur.execute("DELETE FROM integralizacoes_semestre WHERE aluno_id = ?", (aluno_id,))
+    cur.execute(
+        "DELETE FROM integralizacoes_semestre WHERE aluno_id = %s",
+        (aluno_id,),
+    )
     if inserts:
         cur.executemany(
             """
-            INSERT INTO integralizacoes_semestre (aluno_id, periodo, ch_acumulada, integralizacao)
-            VALUES (?, ?, ?, ?)
+            INSERT INTO integralizacoes_semestre
+                (aluno_id, periodo, ch_acumulada, integralizacao)
+            VALUES (%s, %s, %s, %s)
             """,
             inserts,
         )
 
 
-def calcular_integralizacoes_semestre(conn: sqlite3.Connection):
+def calcular_integralizacoes_semestre(conn: Any):
     cur = conn.cursor()
-    alunos = cur.execute(
-        "SELECT id, COALESCE(ch_exigida, ?) FROM alunos", (DEFAULT_CH_EXIGIDA,)
-    ).fetchall()
+    cur.execute(
+        "SELECT id, COALESCE(ch_exigida, %s) FROM alunos",
+        (DEFAULT_CH_EXIGIDA,),
+    )
+    alunos = cur.fetchall()
+
     for aluno_id, ch_exigida in alunos:
         calcular_integralizacao_semestre_para_aluno(cur, aluno_id, int(ch_exigida))
+
     conn.commit()
 
 
 # ---------------------------
-# Estatísticas por disciplina (usando t0 = integralização no INÍCIO do semestre)
+# Estatísticas por disciplina (usando t0 = integralização NO INÍCIO do semestre)
 # ---------------------------
 def integralizacao_t0_do_aluno_no_periodo(
-    cur: sqlite3.Cursor, aluno_id: int, periodo: str
+    cur: Any, aluno_id: int, periodo: str
 ) -> float:
     """
-    t0 = integralização no período anterior (se existir), senão 0.0
-    Ex.: para disciplina em 2024/2, usamos integralização registrada em 2024/1.
-    Para 2024/1, usamos 2023/2 (se houver).
+    t0 = integralização NO INÍCIO do próprio período.
+    Como a tabela integralizacoes_semestre agora guarda o estado inicial,
+    basta ler o registro daquele período. Se não existir, assume 0.0.
     """
-    p_prev = periodo_anterior(periodo)
-    if p_prev:
-        row = cur.execute(
-            """
-            SELECT integralizacao
-            FROM integralizacoes_semestre
-            WHERE aluno_id = ? AND periodo = ?
-            """,
-            (aluno_id, p_prev),
-        ).fetchone()
-        if row and row[0] is not None:
-            return float(row[0])
+    p_norm = norm_periodo(periodo)
+    if not p_norm:
+        return 0.0
+
+    cur.execute(
+        """
+        SELECT integralizacao
+        FROM integralizacoes_semestre
+        WHERE aluno_id = %s AND periodo = %s
+        """,
+        (aluno_id, p_norm),
+    )
+    row = cur.fetchone()
+
+    if row and row[0] is not None:
+        return float(row[0])
     return 0.0
 
 
-def calcular_estatisticas_disciplinas(conn: sqlite3.Connection, min_n: int = 3):
+def calcular_estatisticas_disciplinas(conn: Any, min_n: int = 1):
     """
-    Para cada (disciplina), coletar a integralização t0 dos alunos que a cursaram.
+    Para cada disciplina, coleta a integralização t0 dos alunos que a cursaram
+    (t0 = percentual de integralização NO INÍCIO do semestre da disciplina).
     Grava média, mediana, desvio e N em estatisticas_disciplinas.
     - min_n: limiar mínimo de amostras para gravar (evita ruído).
     """
@@ -144,12 +169,16 @@ def calcular_estatisticas_disciplinas(conn: sqlite3.Connection, min_n: int = 3):
     cur.execute("DELETE FROM estatisticas_disciplinas")
 
     # Pega (disciplina, aluno, periodo) para calcular t0
-    rows = cur.execute(
+    cur.execute(
         """
-        SELECT d.codigo, COALESCE(d.nome, d.codigo) AS nome, d.aluno_id, d.periodo
+        SELECT d.codigo,
+               COALESCE(d.nome, d.codigo) AS nome,
+               d.aluno_id,
+               d.periodo
         FROM disciplinas_cursadas d
         """
-    ).fetchall()
+    )
+    rows = cur.fetchall()
 
     buckets: Dict[Tuple[str, str], List[float]] = {}
     for codigo, nome, aluno_id, periodo in rows:
@@ -170,27 +199,29 @@ def calcular_estatisticas_disciplinas(conn: sqlite3.Connection, min_n: int = 3):
         inserts.append((codigo, nome, m, med, dp, n))
 
     if inserts:
-        inserts_with_id = [(aluno_id, *row) for row in inserts]
         cur.executemany(
             """
-        INSERT INTO estatisticas_disciplinas
-        (aluno_id, codigo, nome, media_integralizacao, mediana_integralizacao, desvio_padrao, total_alunos)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
-        """,
-            inserts_with_id,
+            INSERT INTO estatisticas_disciplinas
+                (codigo, nome,
+                 media_integralizacao,
+                 mediana_integralizacao,
+                 desvio_padrao,
+                 total_alunos)
+            VALUES (%s, %s, %s, %s, %s, %s)
+            """,
+            inserts,
         )
 
     conn.commit()
 
 
-# ---------------------------
-# Função de orquestração (chame essa do app.py se quiser)
-# ---------------------------
-def recalcular_tudo(db_path: str, min_n: int = 3):
-    conn = sqlite3.connect(db_path)
+def recalcular_tudo(min_n: int = 1):
+    """
+    Recalcula integralizações por semestre e estatísticas de disciplinas
+    usando o PostgreSQL (conexão via get_pg_conn).
+    """
+    conn = get_pg_conn()
     try:
-        conn.execute("PRAGMA foreign_keys=ON;")
-        conn.execute("PRAGMA journal_mode=WAL;")
         calcular_integralizacoes_semestre(conn)
         calcular_estatisticas_disciplinas(conn, min_n=min_n)
     finally:
@@ -200,11 +231,7 @@ def recalcular_tudo(db_path: str, min_n: int = 3):
 # ---------------------------
 # Execução direta via CLI
 # ---------------------------
-if __name__ == "__main__":
-    # Detecta DB em ./instance/integralizei.db por padrão
-    BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-    DB_DEFAULT = os.path.join(os.path.dirname(BASE_DIR), "instance", "integralizei.db")
-    db = os.environ.get("DB_PATH", DB_DEFAULT)
-    print(f"[Integralizei] Recalculando integralizações e estatísticas em: {db}")
-    recalcular_tudo(db)
+if __name__ == "__main__":  # pragma: no cover
+    print("[Integralizei] Recalculando integralizações e estatísticas (PostgreSQL)...")
+    recalcular_tudo()
     print("[Integralizei] OK.")

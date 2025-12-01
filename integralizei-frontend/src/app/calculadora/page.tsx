@@ -6,13 +6,11 @@ import styles from "./calculadora.module.css";
 import { Search, Plus, Trash2, User, BookOpen } from "lucide-react";
 import jsPDF from "jspdf";
 
-// --- DICIONÁRIO DE FALLBACK ---
 const CREDITOS_FIXOS: Record<string, number> = {
   "CIC0201": 4, 
   "MAT0025": 6, "MAT0026": 6, "MAT0027": 6,
 };
 
-// --- TIPAGEM ---
 interface Turma {
   _class: string;
   teachers: string[];
@@ -37,7 +35,6 @@ interface Materia {
   turma: string;
 }
 
-// --- COMPONENTE DE NÚMERO ---
 function AnimatedNumber({ value, isPercentage = false }: { value: number, isPercentage?: boolean }) {
   const [displayValue, setDisplayValue] = useState(value);
   const previousValue = useRef(value);
@@ -229,8 +226,6 @@ export default function CalculadoraPage() {
         setSelecionadas(prev => [...prev, materia]);
       } else {
         setSelecionadas(prev => prev.filter(m => m.uid !== materia.uid));
-        // Opcional: Se quiser que volte para a busca, descomente abaixo
-        // setResultadosBusca(prev => [...prev, materia]);
       }
       setExitingIds(prev => {
         const novo = new Set(prev);
@@ -374,8 +369,13 @@ export default function CalculadoraPage() {
       <div className={styles.pageContainer}>
         
         <div className={styles.headerSection}>
-          <h1 className={styles.title}>Calculadora</h1>
-          <p className={styles.subtitle}>Busque matérias reais da UnB e simule seu semestre</p>
+          {/* TÍTULO PADRONIZADO: 5xl + Gradiente Institucional */}
+          <h1 className="text-5xl font-extrabold text-center bg-gradient-to-r from-[#006633] to-[#003366] bg-clip-text text-transparent pb-2">
+            Calculadora
+          </h1>
+          <p className={styles.subtitle}>
+            Busque matérias reais da UnB e simule sua integralização do próximo semestre
+          </p>
         </div>
 
         <div className={styles.mainWrapper}>
@@ -385,6 +385,7 @@ export default function CalculadoraPage() {
             <p className={styles.containerSubtitle}>{year}.{period}</p>
 
             <form className={styles.searchForm} onSubmit={realizarBusca}>
+              {/* (O restante do formulário permanece igual) */}
               <div className={styles.searchContainer}>
                 <input 
                   type="text" 
@@ -394,7 +395,6 @@ export default function CalculadoraPage() {
                   onChange={(e) => setBuscaMateria(e.target.value)}
                   required 
                 />
-                {/* AQUI: Adicionado aria-label */}
                 <button 
                   type="submit" 
                   className={styles.searchIcon} 
@@ -459,7 +459,6 @@ export default function CalculadoraPage() {
                       </div>
                       <span className={styles.tagCreditos}>{m.creditos} créditos</span>
                     </div>
-                    {/* AQUI: Adicionado aria-label */}
                     <button 
                       onClick={() => moverMateria(m, 'adicionar')} 
                       className={`${styles.actionBtn} ${styles.btnAdd}`}
@@ -515,7 +514,6 @@ export default function CalculadoraPage() {
                       </div>
                       <span className={styles.tagCreditos}>{m.creditos} créditos</span>
                     </div>
-                    {/* AQUI: Adicionado aria-label */}
                     <button 
                       onClick={() => moverMateria(m, 'remover')} 
                       className={`${styles.actionBtn} ${styles.btnRemove}`}

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Navbar2 from "../../components/Navbar2/Navbar2";
 import styles from "./pesquisa.module.css";
+import TurmaCard from "../../components/TurmaCard/TurmaCard"; 
 
 // =========================
 // Tipagens auxiliares
@@ -171,37 +172,18 @@ export default function PesquisaPage() {
               <div key={disciplina.id} style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
                 
                 {disciplina.classes && disciplina.classes.length > 0 ? (
-                  <>
-                    {disciplina.classes.map((turma, index) => (
-                      <div key={index} className={styles.materiaCard}>
-                        <div className={styles.materiaInfo}>
-                          <p className={styles.titulo}>
-                            {disciplina.code} - {disciplina.name}
-                          </p>
-                          <p className={styles.subtitulo}>
-                            Professores: {turma.teachers.join(", ")}
-                          </p>
-                          <p className={styles.subtitulo}>Turma: {turma._class}</p>
-                          <p className={styles.subtitulo} style={{fontSize: "0.9rem", opacity: 0.8}}>
-                             {turma.schedule} | {turma.days.join(", ")}
-                          </p>
-                        </div>
-
-                        <div className={styles.materiaActions}>
-                          <button
-                            className={`${styles.favoriteBtn} ${turma.favorited ? styles.favorited : ""}`}
-                            onClick={() => console.log(`Favoritou turma ${turma._class}`)}
-                          >
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                            </svg>
-                            <span>{turma.favorited ? "Salvo" : "Favoritar"}</span>
-                          </button>
-                        </div>
-                      </div>
-                    ))}
-                  </>
-                ) : null}
+                    <>
+                      {disciplina.classes.map((turma, index) => (
+                        
+                        <TurmaCard 
+                          key={index}
+                          turma={turma}
+                          disciplinaCode={disciplina.code}
+                          disciplinaName={disciplina.name}
+                        />
+                      ))}
+                    </>
+                  ) : null}
               </div>
             ))
           )}
