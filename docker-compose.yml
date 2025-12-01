@@ -1,7 +1,4 @@
 services:
-  # -------------------------------------------------------
-  # Serviço 1: API Python (Core) - Porta 5000
-  # -------------------------------------------------------
   backend-python:
     build: 
       context: ./integralizei-backend
@@ -14,10 +11,15 @@ services:
       - ./integralizei-backend/formulario-flask/instance:/app/formulario-flask/instance
     environment:
       - FLASK_DEBUG=1
-      - DB_PATH=/app/formulario-flask/instance/integralizei.db
-  # -------------------------------------------------------
-  # Serviço 2: API Login (Node) - Porta 3001
-  # -------------------------------------------------------
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
+    depends_on:
+      - db
+
   backend-login:
     build:
       context: ./integralizei-backend/login-service
@@ -34,12 +36,11 @@ services:
       - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
       - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
       - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
-      - DATABASE_URL=file:/app/db-shared/integralizei.db
-      
+      # Correção aqui também
+      - DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
+    depends_on:
+      - db
 
-  # -------------------------------------------------------
-  # Serviço 3: Frontend (Next.js) - Porta 3000
-  # -------------------------------------------------------
   frontend:
     build: ./integralizei-frontend
     container_name: integralizei-front
@@ -55,18 +56,13 @@ services:
       - backend-python
       - backend-login
 
-  # -------------------------------------------------------
-  # Serviço 4: Banco de Dados (Preparado para Postgres)
-  # -------------------------------------------------------
-
-  services:
   db:
-    image: postgres:16
+    image: postgres:15-alpine
     container_name: integralizei_postgres
     environment:
-      POSTGRES_USER: integralizei_usuario
-      POSTGRES_PASSWORD: intgr2501
-      POSTGRES_DB: integralizei_db
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
     ports:
       - "5432:5432"
     volumes:
@@ -77,8 +73,8 @@ services:
     image: dpage/pgadmin4:8
     container_name: integralizei_pgadmin
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@meuservidor.com
-      PGADMIN_DEFAULT_PASSWORD: admin123
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
     ports:
       - "5050:80"
     depends_on:
