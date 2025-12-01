@@ -1,4 +1,4 @@
-import pytest
+
 from unittest.mock import patch
 from parsers.unb_historico import parse_basico
 

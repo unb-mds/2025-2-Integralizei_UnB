@@ -121,7 +121,7 @@ def create_tables():
             d.creditos         AS creditos,
             d.mencao           AS mencao,
             d.status           AS status,
-            d.professor        AS professor,   
+            d.professor        AS professor,
             d.criado_em        AS criado_em,
             i.ch_acumulada     AS ch_acumulada,
             i.integralizacao   AS integralizacao_no_periodo
