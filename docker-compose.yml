@@ -8,7 +8,6 @@ services:
       - "8000:5000"
     volumes:
       - ./integralizei-backend:/app
-      - ./integralizei-backend/formulario-flask/instance:/app/formulario-flask/instance
     environment:
       - FLASK_DEBUG=1
       - DB_HOST=${DB_HOST}
