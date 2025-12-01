@@ -82,6 +82,19 @@ SELECT
     i.ch_acumulada     AS ch_acumulada,
     i.integralizacao   AS integralizacao_no_periodo
 
+CREATE TABLE IF NOT EXISTS estatisticas_agregadas_professor (
+    id SERIAL PRIMARY KEY,
+    codigo TEXT NOT NULL,
+    nome_disciplina TEXT,
+    professor TEXT NOT NULL,
+    media_integralizacao REAL,
+    min_integralizacao REAL,
+    max_integralizacao REAL,
+    total_alunos INTEGER,
+    atualizado_em TIMESTAMP DEFAULT NOW()
+);
+
+
 FROM disciplinas_cursadas d
 JOIN integralizacoes_semestre i
     ON i.aluno_id = d.aluno_id
