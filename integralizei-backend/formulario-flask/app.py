@@ -94,7 +94,7 @@ def upsert(conn, dados, arquivo):
                 m.get("creditos") or m.get("ch"),
                 m.get("situacao") or m.get("mencao"),
                 m.get("status"),
-                m.get("professor"), 
+                m.get("professor"),
             ),
         )
 
@@ -207,10 +207,11 @@ def estatisticas_disciplina(codigo):
         200,
     )
 
+
 @app.route("/api/ranking/<codigo_disciplina>", methods=["GET"])
 def ranking_disciplina(codigo_disciplina):
-    professor_alvo = request.args.get('professor')
-    
+    professor_alvo = request.args.get("professor")
+
     conn = get_db()
     cur = conn.cursor()
 
@@ -231,21 +232,23 @@ def ranking_disciplina(codigo_disciplina):
         params.append(f"%{professor_alvo}%")
 
     sql += " ORDER BY integralizacao_no_periodo DESC"
-    
+
     try:
         cur.execute(sql, tuple(params))
         rows = cur.fetchall()
-        
+
         ranking = []
         for idx, row in enumerate(rows):
             integralizacao = row[0]
             val_float = float(integralizacao) if integralizacao is not None else 0.0
-            
-            ranking.append({
-                "posicao": idx + 1,
-                "integralizacao": f"{val_float:.2f}%",
-            })
-            
+
+            ranking.append(
+                {
+                    "posicao": idx + 1,
+                    "integralizacao": f"{val_float:.2f}%",
+                }
+            )
+
         return jsonify(ranking), 200
 
     except Exception as e:

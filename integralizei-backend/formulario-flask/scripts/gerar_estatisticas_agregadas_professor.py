@@ -2,10 +2,11 @@
 
 from db import get_pg_conn
 
+
 def gerar_estatisticas_agregadas_professor():
     """
     Gera estatísticas de integralização por disciplina + professor.
-    
+
     CORREÇÃO: Nome da tabela ajustado para estatisticas_disciplinas_professor
     """
     conn = get_pg_conn()
@@ -43,6 +44,7 @@ def gerar_estatisticas_agregadas_professor():
     conn.commit()
     cur.close()
     conn.close()
+
 
 if __name__ == "__main__":
     gerar_estatisticas_agregadas_professor()
