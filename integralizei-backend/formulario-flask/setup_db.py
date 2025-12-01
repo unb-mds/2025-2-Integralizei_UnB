@@ -1,4 +1,4 @@
-import psycopg2
+
 from db import get_pg_conn
 
 

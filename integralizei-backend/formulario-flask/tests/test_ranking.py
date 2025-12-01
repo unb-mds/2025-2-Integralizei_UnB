@@ -1,8 +1,7 @@
-import pytest
-from unittest.mock import MagicMock, patch
 import os
-import pytest
 from unittest.mock import MagicMock, patch
+import pytest
+
 
 os.environ.setdefault("DB_HOST", "localhost")
 os.environ.setdefault("DB_PORT", "5432")
@@ -10,7 +9,8 @@ os.environ.setdefault("DB_NAME", "teste_db")
 os.environ.setdefault("DB_USER", "teste_user")
 os.environ.setdefault("DB_PASSWORD", "teste_pass")
 
-from app import app
+# O # noqa: E402 desativa o erro de "import não está no topo"
+from app import app  # noqa: E402
 
 
 @pytest.fixture
