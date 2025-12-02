@@ -30,10 +30,115 @@ app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
+# ==========================
+# DEFINIÇÃO COMPLETA DO BANCO (FIXADO NO CÓDIGO)
+# ==========================
+FULL_SCHEMA_SQL = """
+BEGIN;
+
+CREATE TABLE IF NOT EXISTS alunos (
+    id SERIAL PRIMARY KEY,
+    matricula TEXT UNIQUE NOT NULL,
+    nome TEXT,
+    curso TEXT,
+    ch_exigida INTEGER DEFAULT 3480,
+    ira REAL,
+    mp REAL,
+    criado_em TIMESTAMP DEFAULT NOW(),
+    atualizado_em TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS disciplinas_cursadas (
+    id SERIAL PRIMARY KEY,
+    aluno_id INTEGER NOT NULL,
+    periodo TEXT,
+    codigo TEXT,
+    nome TEXT,
+    creditos INTEGER,
+    mencao TEXT,
+    status TEXT,
+    professor TEXT,
+    criado_em TIMESTAMP DEFAULT NOW(),
+    FOREIGN KEY (aluno_id) REFERENCES alunos(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS integralizacoes_semestre (
+    id SERIAL PRIMARY KEY,
+    aluno_id INTEGER NOT NULL,
+    periodo TEXT NOT NULL,
+    ch_acumulada INTEGER,
+    integralizacao REAL,
+    FOREIGN KEY (aluno_id) REFERENCES alunos(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS estatisticas_disciplinas (
+    id SERIAL PRIMARY KEY,
+    codigo TEXT NOT NULL,
+    nome TEXT,
+    media_integralizacao REAL,
+    mediana_integralizacao REAL,
+    desvio_padrao REAL,
+    total_alunos INTEGER
+);
+
+CREATE TABLE IF NOT EXISTS estatisticas_disciplinas_agregadas (
+    codigo TEXT PRIMARY KEY,
+    nome TEXT,
+    media REAL,
+    min_integralizacao REAL,
+    max_integralizacao REAL,
+    total_alunos INTEGER,
+    atualizado_em TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS estatisticas_disciplinas_professor (
+    id SERIAL PRIMARY KEY,
+    codigo TEXT NOT NULL,
+    nome TEXT,
+    professor TEXT,
+    media_integralizacao REAL,
+    mediana_integralizacao REAL,
+    desvio_padrao REAL,
+    total_alunos INTEGER
+);
+
+CREATE TABLE IF NOT EXISTS estatisticas_agregadas_professor (
+    id SERIAL PRIMARY KEY,
+    codigo TEXT NOT NULL,
+    nome_disciplina TEXT,
+    professor TEXT NOT NULL,
+    media_integralizacao REAL,
+    min_integralizacao REAL,
+    max_integralizacao REAL,
+    total_alunos INTEGER,
+    atualizado_em TIMESTAMP DEFAULT NOW()
+);
+
+CREATE OR REPLACE VIEW disciplinas_com_integralizacao AS
+SELECT
+    d.id             AS disciplina_id,
+    d.aluno_id       AS aluno_id,
+    d.periodo        AS periodo,
+    d.codigo         AS codigo,
+    d.nome           AS nome,
+    d.creditos       AS creditos,
+    d.mencao         AS mencao,
+    d.status         AS status,
+    d.professor      AS professor,
+    d.criado_em      AS criado_em,
+    i.ch_acumulada   AS ch_acumulada,
+    i.integralizacao AS integralizacao_no_periodo
+FROM disciplinas_cursadas d
+JOIN integralizacoes_semestre i
+    ON i.aluno_id = d.aluno_id
+   AND i.periodo = d.periodo;
+
+COMMIT;
+"""
+
 def wait_for_db_and_init():
     """
-    Tenta conectar ao banco em loop até conseguir.
-    Isso resolve o problema de 'Race Condition' no Docker.
+    Tenta conectar ao banco e garante que TODAS as tabelas existam.
     """
     retries = 30
     while retries > 0:
@@ -42,46 +147,22 @@ def wait_for_db_and_init():
             conn = get_pg_conn()
             cur = conn.cursor()
             
-            # Verifica se a tabela existe
-            cur.execute("SELECT EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'alunos');")
+            # Verifica se a tabela 'disciplinas_cursadas' existe
+            cur.execute("SELECT EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'disciplinas_cursadas');")
             row = cur.fetchone()
             
-            # Lógica robusta para detectar se veio Dicionário ou Tupla
             if isinstance(row, dict):
                 exists = row['exists']
             else:
                 exists = row[0]
             
             if not exists:
-                print("--- TABELA 'ALUNOS' NÃO ENCONTRADA. EXECUTANDO SQL DE FALLBACK... ---")
-                # Caminho para o init.sql relativo ao app.py
-                init_sql_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'db', 'init.sql')
-                
-                if os.path.exists(init_sql_path):
-                    with open(init_sql_path, 'r') as f:
-                        sql_script = f.read()
-                        cur.execute(sql_script)
-                        conn.commit()
-                        print("--- TABELAS CRIADAS VIA PYTHON ---")
-                else:
-                    print(f"--- AVISO: ARQUIVO {init_sql_path} NÃO ENCONTRADO. CRIANDO TABELAS BÁSICAS... ---")
-                    # Fallback de emergência se o arquivo não for achado
-                    cur.execute("""
-                        CREATE TABLE IF NOT EXISTS alunos (
-                            id SERIAL PRIMARY KEY,
-                            matricula TEXT UNIQUE NOT NULL,
-                            nome TEXT,
-                            curso TEXT,
-                            ch_exigida INTEGER DEFAULT 3480,
-                            ira REAL,
-                            mp REAL,
-                            criado_em TIMESTAMP DEFAULT NOW(),
-                            atualizado_em TIMESTAMP DEFAULT NOW()
-                        );
-                    """)
-                    conn.commit()
+                print("--- TABELAS FALTANDO. EXECUTANDO SCHEMA COMPLETO... ---")
+                cur.execute(FULL_SCHEMA_SQL)
+                conn.commit()
+                print("--- TODAS AS TABELAS FORAM CRIADAS COM SUCESSO ---")
             else:
-                print("--- CONEXÃO BEM SUCEDIDA E TABELAS ENCONTRADAS ---")
+                print("--- CONEXÃO BEM SUCEDIDA E ESTRUTURA OK ---")
             
             cur.close()
             conn.close()
@@ -99,20 +180,11 @@ def wait_for_db_and_init():
     print("!!! FALHA CRÍTICA: NÃO FOI POSSÍVEL CONECTAR AO BANCO APÓS VÁRIAS TENTATIVAS !!!")
     return False
 
-# Executa a espera pelo banco ANTES de rodar o servidor
 wait_for_db_and_init()
 
-
-# ==========================
-# Banco de dados Helper
-# ==========================
 def get_db():
     return get_pg_conn()
 
-
-# ==========================
-# Inserção/atualização de dados
-# ==========================
 def upsert(conn, dados, arquivo):
     aluno_data = dados.get("aluno", {})
     indices = dados.get("indices", {})
@@ -131,7 +203,6 @@ def upsert(conn, dados, arquivo):
     cur = conn.cursor()
 
     try:
-        # Upsert Aluno
         cur.execute(
             """
             INSERT INTO alunos (matricula, nome, curso, ira, mp)
@@ -148,14 +219,12 @@ def upsert(conn, dados, arquivo):
         )
         row = cur.fetchone()
         
-        # Tratamento seguro Dict vs Tupla
         if row:
             if isinstance(row, dict):
                 aluno_id = row['id']
             else:
                 aluno_id = row[0]
         else:
-            # Fallback
             cur.execute("SELECT id FROM alunos WHERE matricula = %s", (matricula,))
             row = cur.fetchone()
             if isinstance(row, dict):
@@ -163,10 +232,8 @@ def upsert(conn, dados, arquivo):
             else:
                 aluno_id = row[0]
 
-        # Limpa disciplinas antigas
         cur.execute("DELETE FROM disciplinas_cursadas WHERE aluno_id = %s", (aluno_id,))
 
-        # Insere novas disciplinas
         for m in materias:
             cur.execute(
                 """
@@ -192,10 +259,6 @@ def upsert(conn, dados, arquivo):
         print(f"Erro no UPSERT: {e}")
         raise e
 
-
-# ==========================
-# Rota principal
-# ==========================
 @app.route("/upload", methods=["POST"])
 def upload_pdf():
     f = request.files.get("file")
@@ -222,25 +285,16 @@ def upload_pdf():
         finally:
             conn.close()
 
-        # Recalculos
         try:
             recalcular_tudo()
-            
-            from scripts.preencher_estatisticas_disciplinas import (
-                preencher_estatisticas_disciplinas,
-            )
+            from scripts.preencher_estatisticas_disciplinas import preencher_estatisticas_disciplinas
             preencher_estatisticas_disciplinas()
-
             from scripts.gerar_estatisticas_agregadas import gerar_estatisticas_agregadas
             gerar_estatisticas_agregadas()
-
-            from scripts.gerar_estatisticas_agregadas_professor import (
-                gerar_estatisticas_agregadas_professor,
-            )
+            from scripts.gerar_estatisticas_agregadas_professor import gerar_estatisticas_agregadas_professor
             gerar_estatisticas_agregadas_professor()
-            
         except Exception as e_scripts:
-            print(f"Aviso: Erro ao gerar estatísticas, mas o upload foi salvo. Erro: {e_scripts}")
+            print(f"Aviso: Erro ao gerar estatísticas: {e_scripts}")
             traceback.print_exc()
 
         return jsonify(dados), 200
@@ -249,14 +303,9 @@ def upload_pdf():
         print("ERRO AO PROCESSAR PDF:", traceback.format_exc())
         return jsonify({"error": f"Falha ao processar o PDF: {str(e)}"}), 500
 
-
-# ==========================
-# Página de teste local
-# ==========================
 @app.route("/", methods=["GET"])
 def home():
     return render_template("index.html", status="ok")
-
 
 @app.route("/api/estatisticas/<codigo>", methods=["GET"])
 def estatisticas_disciplina(codigo):
@@ -264,11 +313,7 @@ def estatisticas_disciplina(codigo):
     try:
         cur = conn.cursor()
         cur.execute(
-            """
-            SELECT codigo, nome, media, min_integralizacao, max_integralizacao, total_alunos
-            FROM estatisticas_disciplinas_agregadas
-            WHERE codigo = %s
-            """,
+            "SELECT codigo, nome, media, min_integralizacao, max_integralizacao, total_alunos FROM estatisticas_disciplinas_agregadas WHERE codigo = %s",
             (codigo,),
         )
         row = cur.fetchone()
@@ -278,7 +323,6 @@ def estatisticas_disciplina(codigo):
     if not row:
         return jsonify({"error": "Disciplina não encontrada"}), 404
 
-    # Tratamento para DictCursor ou Tupla
     if isinstance(row, dict):
          codigo = row['codigo']
          nome = row['nome']
@@ -305,19 +349,12 @@ def estatisticas_disciplina(codigo):
         200,
     )
 
-
 @app.route("/api/ranking/<codigo_disciplina>", methods=["GET"])
 def ranking_disciplina(codigo_disciplina):
     professor_alvo = request.args.get("professor")
-
     conn = get_db()
     cur = conn.cursor()
-
-    sql = """
-        SELECT integralizacao_no_periodo
-        FROM disciplinas_com_integralizacao
-        WHERE codigo = %s
-    """
+    sql = "SELECT integralizacao_no_periodo FROM disciplinas_com_integralizacao WHERE codigo = %s"
     params = [codigo_disciplina]
 
     if professor_alvo:
@@ -329,34 +366,21 @@ def ranking_disciplina(codigo_disciplina):
     try:
         cur.execute(sql, tuple(params))
         rows = cur.fetchall()
-
         ranking = []
         for idx, row in enumerate(rows):
-            # Tratamento DictCursor vs Tupla
             if isinstance(row, dict):
                 val = row['integralizacao_no_periodo']
             else:
                 val = row[0]
-                
             val_float = float(val) if val is not None else 0.0
-
-            ranking.append(
-                {
-                    "posicao": idx + 1,
-                    "integralizacao": f"{val_float:.2f}%",
-                }
-            )
-
+            ranking.append({"posicao": idx + 1, "integralizacao": f"{val_float:.2f}%"})
         return jsonify(ranking), 200
-
     except Exception as e:
         print(f"Erro no ranking: {e}")
-        traceback.print_exc()
         return jsonify({"error": "Erro ao gerar ranking"}), 500
     finally:
         cur.close()
         conn.close()
-
 
 if __name__ == "__main__":
     debug_mode = os.environ.get("FLASK_DEBUG") == "1"
