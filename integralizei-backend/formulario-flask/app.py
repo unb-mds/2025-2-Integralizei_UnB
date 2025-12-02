@@ -3,6 +3,7 @@ import sys
 import time
 import traceback
 from datetime import datetime
+import logging
 
 from flask import Flask, jsonify, render_template, request
 from flask_cors import CORS
@@ -15,12 +16,8 @@ from parsers.unb_historico import parse_basico
 from scripts.calcular_integralizacoes_semestre import recalcular_tudo
 from db import get_pg_conn
 
-# Ajuste de path
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
-# ==========================
-# Configuração inicial
-# ==========================
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 UPLOAD_FOLDER = os.path.join(BASE_DIR, "uploads")
 
@@ -31,12 +28,10 @@ app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
-# ==========================
-# DEFINIÇÃO COMPLETA DO BANCO
-# ==========================
+print("--- APP SEGURO CARREGADO (DEBUG OFF) ---", flush=True)
+
 FULL_SCHEMA_SQL = """
 BEGIN;
-
 CREATE TABLE IF NOT EXISTS alunos (
     id SERIAL PRIMARY KEY,
     matricula TEXT UNIQUE NOT NULL,
@@ -49,7 +44,6 @@ CREATE TABLE IF NOT EXISTS alunos (
     criado_em TIMESTAMP DEFAULT NOW(),
     atualizado_em TIMESTAMP DEFAULT NOW()
 );
-
 CREATE TABLE IF NOT EXISTS disciplinas_cursadas (
     id SERIAL PRIMARY KEY,
     aluno_id INTEGER NOT NULL,
@@ -63,7 +57,6 @@ CREATE TABLE IF NOT EXISTS disciplinas_cursadas (
     criado_em TIMESTAMP DEFAULT NOW(),
     FOREIGN KEY (aluno_id) REFERENCES alunos(id) ON DELETE CASCADE
 );
-
 CREATE TABLE IF NOT EXISTS integralizacoes_semestre (
     id SERIAL PRIMARY KEY,
     aluno_id INTEGER NOT NULL,
@@ -72,7 +65,6 @@ CREATE TABLE IF NOT EXISTS integralizacoes_semestre (
     integralizacao REAL,
     FOREIGN KEY (aluno_id) REFERENCES alunos(id) ON DELETE CASCADE
 );
-
 CREATE TABLE IF NOT EXISTS estatisticas_disciplinas (
     id SERIAL PRIMARY KEY,
     codigo TEXT NOT NULL,
@@ -82,7 +74,6 @@ CREATE TABLE IF NOT EXISTS estatisticas_disciplinas (
     desvio_padrao REAL,
     total_alunos INTEGER
 );
-
 CREATE TABLE IF NOT EXISTS estatisticas_disciplinas_agregadas (
     codigo TEXT PRIMARY KEY,
     nome TEXT,
@@ -92,7 +83,6 @@ CREATE TABLE IF NOT EXISTS estatisticas_disciplinas_agregadas (
     total_alunos INTEGER,
     atualizado_em TIMESTAMP DEFAULT NOW()
 );
-
 CREATE TABLE IF NOT EXISTS estatisticas_disciplinas_professor (
     id SERIAL PRIMARY KEY,
     codigo TEXT NOT NULL,
@@ -103,7 +93,6 @@ CREATE TABLE IF NOT EXISTS estatisticas_disciplinas_professor (
     desvio_padrao REAL,
     total_alunos INTEGER
 );
-
 CREATE TABLE IF NOT EXISTS estatisticas_agregadas_professor (
     id SERIAL PRIMARY KEY,
     codigo TEXT NOT NULL,
@@ -115,7 +104,6 @@ CREATE TABLE IF NOT EXISTS estatisticas_agregadas_professor (
     total_alunos INTEGER,
     atualizado_em TIMESTAMP DEFAULT NOW()
 );
-
 CREATE OR REPLACE VIEW disciplinas_com_integralizacao AS
 SELECT
     d.id             AS disciplina_id,
@@ -134,7 +122,6 @@ FROM disciplinas_cursadas d
 JOIN integralizacoes_semestre i
     ON i.aluno_id = d.aluno_id
    AND i.periodo = d.periodo;
-
 COMMIT;
 """
 
@@ -142,49 +129,35 @@ def wait_for_db_and_init():
     retries = 30
     while retries > 0:
         try:
-            print(f"--- TENTANDO CONECTAR AO BANCO ({retries} tentativas restantes) ---")
+            print(f"--- TENTANDO CONECTAR AO BANCO ({retries} tentativas) ---")
             conn = get_pg_conn()
             cur = conn.cursor()
             
-            # Verifica se 'email' existe na tabela 'alunos' (para migração automática)
-            cur.execute("""
-                SELECT column_name 
-                FROM information_schema.columns 
-                WHERE table_name='alunos' AND column_name='email';
-            """)
+            cur.execute("SELECT column_name FROM information_schema.columns WHERE table_name='alunos' AND column_name='email';")
             col_exists = cur.fetchone()
 
             cur.execute("SELECT EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'disciplinas_cursadas');")
-            table_exists_row = cur.fetchone()
-            table_exists = table_exists_row['exists'] if isinstance(table_exists_row, dict) else table_exists_row[0]
+            row = cur.fetchone()
+            if isinstance(row, dict): exists = row['exists']
+            else: exists = row[0]
             
-            if not table_exists:
-                print("--- TABELAS FALTANDO. EXECUTANDO SCHEMA COMPLETO... ---")
+            if not exists:
+                print("--- RECRIANDO TABELAS... ---")
                 cur.execute(FULL_SCHEMA_SQL)
                 conn.commit()
-                print("--- TODAS AS TABELAS FORAM CRIADAS COM SUCESSO ---")
             elif not col_exists:
-                print("--- COLUNA EMAIL FALTANDO. ADICIONANDO... ---")
+                print("--- ADICIONANDO COLUNA EMAIL... ---")
                 cur.execute("ALTER TABLE alunos ADD COLUMN IF NOT EXISTS email TEXT;")
                 conn.commit()
-                print("--- COLUNA EMAIL ADICIONADA ---")
             else:
-                print("--- CONEXÃO BEM SUCEDIDA E ESTRUTURA OK ---")
+                print("--- BANCO PRONTO ---")
             
-            cur.close()
-            conn.close()
+            cur.close(); conn.close()
             return True
-        except psycopg2.OperationalError as e:
-            print(f"Banco ainda indisponível... aguardando. Erro: {e}")
-            time.sleep(2)
-            retries -= 1
         except Exception as e:
-            print(f"Erro inesperado ao inicializar banco: {e}")
-            traceback.print_exc()
+            print(f"Aguardando banco... {e}")
             time.sleep(2)
             retries -= 1
-            
-    print("!!! FALHA CRÍTICA: NÃO FOI POSSÍVEL CONECTAR AO BANCO APÓS VÁRIAS TENTATIVAS !!!")
     return False
 
 wait_for_db_and_init()
@@ -197,252 +170,139 @@ def upsert(conn, dados, arquivo, email_usuario=None):
     indices = dados.get("indices", {})
     curr = dados.get("curriculo", {})
     materias = curr.get("materias", [])
-
     matricula = aluno_data.get("matricula")
-    nome = aluno_data.get("nome")
-    curso = aluno_data.get("curso")
-    ira = indices.get("ira")
-    mp = indices.get("mp")
     
-    if not matricula:
-        raise ValueError("Não foi possível identificar a matrícula no PDF.")
+    if not matricula: raise ValueError("Matrícula não encontrada.")
 
     cur = conn.cursor()
-
     try:
-        # Tenta atualizar o aluno existente ou criar novo
-        # Se vier email_usuario, atualizamos o email também
-        sql_insert = """
+        sql = """
             INSERT INTO alunos (matricula, nome, curso, ira, mp, email)
             VALUES (%s, %s, %s, %s, %s, %s)
             ON CONFLICT (matricula) DO UPDATE SET
-                nome = EXCLUDED.nome,
-                curso = EXCLUDED.curso,
-                ira = EXCLUDED.ira,
-                mp = EXCLUDED.mp,
-                atualizado_em = NOW()
+                nome = EXCLUDED.nome, curso = EXCLUDED.curso, ira = EXCLUDED.ira, mp = EXCLUDED.mp, atualizado_em = NOW()
         """
-        params = [matricula, nome, curso, ira, mp, email_usuario]
+        params = [matricula, aluno_data.get("nome"), aluno_data.get("curso"), indices.get("ira"), indices.get("mp"), email_usuario]
+        if email_usuario: sql += ", email = EXCLUDED.email"
+        sql += " RETURNING id"
         
-        # Se temos um e-mail novo para vincular, atualizamos ele no conflito
-        if email_usuario:
-            sql_insert += ", email = EXCLUDED.email"
-            
-        sql_insert += " RETURNING id"
-
-        cur.execute(sql_insert, tuple(params))
+        cur.execute(sql, tuple(params))
         row = cur.fetchone()
-        
-        if row:
-            aluno_id = row['id'] if isinstance(row, dict) else row[0]
+        if row: aid = row['id'] if isinstance(row, dict) else row[0]
         else:
-            cur.execute("SELECT id FROM alunos WHERE matricula = %s", (matricula,))
+            cur.execute("SELECT id FROM alunos WHERE matricula=%s", (matricula,))
             row = cur.fetchone()
-            aluno_id = row['id'] if isinstance(row, dict) else row[0]
+            aid = row['id'] if isinstance(row, dict) else row[0]
 
-        cur.execute("DELETE FROM disciplinas_cursadas WHERE aluno_id = %s", (aluno_id,))
-
+        cur.execute("DELETE FROM disciplinas_cursadas WHERE aluno_id = %s", (aid,))
         for m in materias:
-            cur.execute(
-                """
-                INSERT INTO disciplinas_cursadas
-                    (aluno_id, periodo, codigo, nome, creditos, mencao, status, professor)
+            cur.execute("""
+                INSERT INTO disciplinas_cursadas (aluno_id, periodo, codigo, nome, creditos, mencao, status, professor)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-                """,
-                (
-                    aluno_id,
-                    m.get("periodo"),
-                    m.get("codigo"),
-                    m.get("nome"),
-                    m.get("creditos") or m.get("ch"),
-                    m.get("situacao") or m.get("mencao"),
-                    m.get("status"),
-                    m.get("professor"),
-                ),
-            )
-
+            """, (aid, m.get("periodo"), m.get("codigo"), m.get("nome"), m.get("creditos") or m.get("ch"), m.get("situacao") or m.get("mencao"), m.get("status"), m.get("professor")))
         conn.commit()
     except Exception as e:
         conn.rollback()
-        print(f"Erro no UPSERT: {e}")
         raise e
 
-# --- Rota para Buscar Dados do Aluno Logado ---
 @app.route("/api/aluno", methods=["GET"])
 def get_aluno_data():
     email = request.args.get("email")
-    if not email:
-        return jsonify({"error": "E-mail não fornecido"}), 400
-
-    conn = get_db()
-    cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    if not email: return jsonify({"error": "Email required"}), 400
     
+    conn = get_db()
     try:
-        # 1. Buscar Aluno
+        cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         cur.execute("SELECT * FROM alunos WHERE email = %s", (email,))
         aluno = cur.fetchone()
+        if not aluno: return jsonify({"error": "Aluno not found"}), 404
         
-        if not aluno:
-            return jsonify({"error": "Aluno não encontrado para este e-mail"}), 404
-
-        # 2. Buscar Disciplinas
-        cur.execute("""
-            SELECT periodo, codigo, nome, creditos, mencao as situacao, status, professor 
-            FROM disciplinas_cursadas 
-            WHERE aluno_id = %s 
-            ORDER BY periodo DESC
-        """, (aluno['id'],))
+        cur.execute("SELECT periodo, codigo, nome, creditos, mencao as situacao, status, professor FROM disciplinas_cursadas WHERE aluno_id = %s ORDER BY periodo DESC", (aluno['id'],))
         materias = cur.fetchall()
-
-        # 3. Buscar Última Integralização (Opcional, pega a maior do histórico)
-        cur.execute("""
-            SELECT integralizacao, ch_acumulada 
-            FROM integralizacoes_semestre 
-            WHERE aluno_id = %s 
-            ORDER BY periodo DESC LIMIT 1
-        """, (aluno['id'],))
-        integ = cur.fetchone() or {}
-
-        # 4. Montar JSON no formato que o Frontend espera
-        response = {
-            "aluno": {
-                "nome": aluno['nome'],
-                "matricula": aluno['matricula'],
-                "curso": aluno['curso']
-            },
-            "indices": {
-                "ira": aluno['ira'],
-                "mp": aluno['mp']
-            },
-            "curriculo": {
-                "materias": materias,
-                "integralizacao": integ.get('integralizacao', 0),
-                "ch_integralizada": integ.get('ch_acumulada', 0),
-                "ch_exigida": aluno['ch_exigida']
-            }
-        }
         
-        return jsonify(response), 200
-
-    except Exception as e:
-        print(f"Erro ao buscar aluno: {e}")
-        return jsonify({"error": "Erro interno"}), 500
+        cur.execute("SELECT integralizacao, ch_acumulada FROM integralizacoes_semestre WHERE aluno_id = %s ORDER BY periodo DESC LIMIT 1", (aluno['id'],))
+        integ = cur.fetchone() or {}
+        
+        return jsonify({
+            "aluno": {"nome": aluno['nome'], "matricula": aluno['matricula'], "curso": aluno['curso']},
+            "indices": {"ira": aluno['ira'], "mp": aluno['mp']},
+            "curriculo": {"materias": materias, "integralizacao": integ.get('integralizacao', 0), "ch_integralizada": integ.get('ch_acumulada', 0), "ch_exigida": aluno['ch_exigida']}
+        })
     finally:
         conn.close()
-
 
 @app.route("/upload", methods=["POST"])
 def upload_pdf():
     f = request.files.get("file")
-    email_usuario = request.form.get("email") # Recebe o email do frontend
-
-    if not f or not f.filename.lower().endswith(".pdf"):
-        return jsonify({"error": "Envie um arquivo PDF válido."}), 400
-
+    email = request.form.get("email")
+    if not f: return jsonify({"error": "No file"}), 400
+    
     fname = secure_filename(f.filename)
-    base, ext = os.path.splitext(fname)
-
-    unique = f"{base}_{datetime.now().strftime('%Y%m%d_%H%M%S')}{ext}"
-    save_path = os.path.join(app.config["UPLOAD_FOLDER"], unique)
+    save_path = os.path.join(app.config["UPLOAD_FOLDER"], f"{os.path.splitext(fname)[0]}_{datetime.now().strftime('%Y%m%d%H%M%S')}.pdf")
     f.save(save_path)
-
+    
     try:
         dados = parse_basico(save_path)
-
-        if not dados:
-            raise ValueError("Erro: parse_basico retornou vazio.")
-
         conn = get_db()
-        try:
-            upsert(conn, dados, save_path, email_usuario)
-        finally:
-            conn.close()
-
+        upsert(conn, dados, save_path, email)
+        conn.close()
+        
         try:
             recalcular_tudo()
-            from scripts.preencher_estatisticas_disciplinas import preencher_estatisticas_disciplinas
-            preencher_estatisticas_disciplinas()
-            from scripts.gerar_estatisticas_agregadas import gerar_estatisticas_agregadas
-            gerar_estatisticas_agregadas()
-            from scripts.gerar_estatisticas_agregadas_professor import gerar_estatisticas_agregadas_professor
-            gerar_estatisticas_agregadas_professor()
-        except Exception as e_scripts:
-            print(f"Aviso: Erro ao gerar estatísticas: {e_scripts}")
-            traceback.print_exc()
-
-        return jsonify(dados), 200
-
+            from scripts.preencher_estatisticas_disciplinas import preencher_estatisticas_disciplinas; preencher_estatisticas_disciplinas()
+            from scripts.gerar_estatisticas_agregadas import gerar_estatisticas_agregadas; gerar_estatisticas_agregadas()
+            from scripts.gerar_estatisticas_agregadas_professor import gerar_estatisticas_agregadas_professor; gerar_estatisticas_agregadas_professor()
+        except: traceback.print_exc()
+        
+        return jsonify(dados)
     except Exception as e:
-        print("ERRO AO PROCESSAR PDF:", traceback.format_exc())
-        return jsonify({"error": f"Falha ao processar o PDF: {str(e)}"}), 500
+        # LOG SEGURO
+        logging.error(f"Erro processamento PDF: {traceback.format_exc()}")
+        return jsonify({"error": "Falha ao processar o PDF."}), 500
 
 @app.route("/", methods=["GET"])
-def home():
-    return render_template("index.html", status="ok")
+def home(): return render_template("index.html", status="ok")
 
 @app.route("/api/estatisticas/<codigo>", methods=["GET"])
-def estatisticas_disciplina(codigo):
-    conn = get_db()
-    try:
-        cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-        cur.execute(
-            "SELECT codigo, nome, media, min_integralizacao, max_integralizacao, total_alunos FROM estatisticas_disciplinas_agregadas WHERE codigo = %s",
-            (codigo,),
-        )
-        row = cur.fetchone()
-    finally:
-        conn.close()
-
-    if not row:
-        return jsonify({"error": "Disciplina não encontrada"}), 404
-
-    # Tratamento para DictCursor
-    return (
-        jsonify(
-            {
-                "codigo": row['codigo'],
-                "nome": row['nome'],
-                "media_integralizacao": round(row['media'], 2) if row['media'] else None,
-                "faixa_integralizacao": {
-                    "min": round(row['min_integralizacao'], 2) if row['min_integralizacao'] else None,
-                    "max": round(row['max_integralizacao'], 2) if row['max_integralizacao'] else None,
-                },
-                "total_alunos": row['total_alunos'],
-            }
-        ),
-        200,
-    )
-
-@app.route("/api/ranking/<codigo_disciplina>", methods=["GET"])
-def ranking_disciplina(codigo_disciplina):
-    professor_alvo = request.args.get("professor")
+def estatisticas(codigo):
     conn = get_db()
     cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-    sql = "SELECT integralizacao_no_periodo FROM disciplinas_com_integralizacao WHERE codigo = %s"
-    params = [codigo_disciplina]
+    cur.execute("SELECT * FROM estatisticas_disciplinas_agregadas WHERE codigo=%s", (codigo,))
+    row = cur.fetchone()
+    conn.close()
+    if not row: return jsonify({"error": "Not found"}), 404
+    return jsonify({"codigo": row['codigo'], "nome": row['nome'], "media_integralizacao": row['media'], "total_alunos": row['total_alunos']})
 
-    if professor_alvo:
+@app.route("/api/ranking/<codigo>", methods=["GET"])
+def ranking(codigo):
+    prof = request.args.get("professor")
+    conn = get_db()
+    cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    sql = "SELECT integralizacao_no_periodo FROM disciplinas_com_integralizacao WHERE codigo=%s"
+    params = [codigo]
+    if prof: 
         sql += " AND professor ILIKE %s"
-        params.append(f"%{professor_alvo}%")
-
+        params.append(f"%{prof}%")
     sql += " ORDER BY integralizacao_no_periodo DESC"
+    cur.execute(sql, tuple(params))
+    rows = cur.fetchall()
+    conn.close()
+    return jsonify([{"posicao": i+1, "integralizacao": f"{float(r['integralizacao_no_periodo'] or 0):.2f}%"} for i, r in enumerate(rows)])
 
+@app.route("/api/chat", methods=["POST"])
+def chat_unbot():
     try:
-        cur.execute(sql, tuple(params))
-        rows = cur.fetchall()
-        ranking = []
-        for idx, row in enumerate(rows):
-            val = row['integralizacao_no_periodo']
-            val_float = float(val) if val is not None else 0.0
-            ranking.append({"posicao": idx + 1, "integralizacao": f"{val_float:.2f}%"})
-        return jsonify(ranking), 200
+        data = request.json
+        history = data.get("history", [])
+        last_user_msg = history[-1]["parts"][0]["text"] if history else ""
+        resposta = "Desculpe, ainda estou aprendendo sobre a UnB."
+        if "IRA" in last_user_msg.upper(): resposta = "O IRA é a média ponderada das notas."
+        elif "INTEGRALIZAÇÃO" in last_user_msg.upper(): resposta = "A integralização é o percentual do curso concluído."
+        elif "FATO" in last_user_msg.upper(): resposta = "A UnB foi inaugurada em 1962."
+        return jsonify({"text": resposta})
     except Exception as e:
-        print(f"Erro no ranking: {e}")
-        return jsonify({"error": "Erro ao gerar ranking"}), 500
-    finally:
-        cur.close()
-        conn.close()
+        return jsonify({"error": "Erro interno"}), 500
 
 if __name__ == "__main__":
-    debug_mode = os.environ.get("FLASK_DEBUG") == "1"
-    app.run(debug=debug_mode, host="0.0.0.0", port=5000)
+    # --- CORREÇÃO DE SEGURANÇA: FORCE DEBUG=FALSE ---
+    app.run(host="0.0.0.0", port=5000, debug=False)

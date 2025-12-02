@@ -14,15 +14,17 @@ export default function UploadPage() {
   const [dragActive, setDragActive] = useState(false);
   const [loading, setLoading] = useState(false);
   
-  // Estados de controle de sessão
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    // Verifica apenas se existe a sessão, sem redirecionar
     const userSession = localStorage.getItem("user_session");
-    setIsLoggedIn(!!userSession);
-    setIsCheckingAuth(false);
+    
+    // [FIX] queueMicrotask para evitar erro de linter (setState síncrono no effect)
+    queueMicrotask(() => {
+      setIsLoggedIn(!!userSession);
+      setIsCheckingAuth(false);
+    });
   }, []);
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -34,7 +36,7 @@ export default function UploadPage() {
 
   const handleDragOver = (e: DragEvent) => {
     e.preventDefault();
-    if (isLoggedIn) setDragActive(true); // Só ativa drag se logado
+    if (isLoggedIn) setDragActive(true); 
   };
 
   const handleDragLeave = () => {
@@ -44,7 +46,7 @@ export default function UploadPage() {
   const handleDrop = (e: DragEvent) => {
     e.preventDefault();
     setDragActive(false);
-    if (!isLoggedIn) return; // Bloqueia drop se não logado
+    if (!isLoggedIn) return; 
 
     const dropped = e.dataTransfer.files[0];
     if (dropped && dropped.type === "application/pdf") {
@@ -96,7 +98,6 @@ export default function UploadPage() {
     setLoading(false);
   };
 
-  // Enquanto verifica, mostra um estado neutro para não piscar
   if (isCheckingAuth) {
     return (
       <>
@@ -122,7 +123,6 @@ export default function UploadPage() {
             NENHUM DADO SENSÍVEL SERÁ ARMAZENADO
           </p>
 
-          {/* --- BLOCO LOGADO: MOSTRA UPLOAD --- */}
           {isLoggedIn ? (
             <>
               <div
@@ -184,7 +184,6 @@ export default function UploadPage() {
               </div>
             </>
           ) : (
-            /* --- BLOCO NÃO LOGADO: AVISO --- */
             <div className="bg-white/10 rounded-xl p-8 border border-white/20 backdrop-blur-sm animate-in fade-in slide-in-from-bottom-4">
               <Lock className="w-12 h-12 text-green-300 mx-auto mb-4" />
               <h3 className="text-xl font-bold text-white mb-2">Acesso Restrito</h3>

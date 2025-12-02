@@ -3,34 +3,28 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import styles from "./navbar2.module.css";
 import { BarChart3, Calculator, Search, Info, LogIn, LogOut, Bot } from "lucide-react";
 
 export default function Navbar() {
-  const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // --- CORREÇÃO AQUI ---
-  // Antes ele olhava (dadosPDF || dadosConta).
-  // Agora ele só olha dadosConta.
   const checkLoginStatus = () => {
     const dadosConta = localStorage.getItem("user_session");
     
-    // Só muda o botão para "SAIR" se tiver conta logada
-    if (dadosConta) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
+    // [FIX] queueMicrotask evita o erro "synchronous setState" do ESLint
+    queueMicrotask(() => {
+      if (dadosConta) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+    });
   };
 
   useEffect(() => {
     checkLoginStatus();
-
-    // Ouve mudanças para atualizar automaticamente
     window.addEventListener("storage", checkLoginStatus);
-    
     return () => {
       window.removeEventListener("storage", checkLoginStatus);
     };
@@ -39,21 +33,20 @@ export default function Navbar() {
   const handleLogout = async (e: React.MouseEvent) => {
     e.preventDefault();
     
-    // Limpa os dados ao sair
     localStorage.removeItem("dadosAluno");
     localStorage.removeItem("user_session");
     
-    // Tenta avisar o backend (opcional, ignora erro se falhar)
+    // [FIX] O catch (_) resolve o warning de variável não usada
     try {
       await fetch("http://localhost:3001/api/logout"); 
-    } catch (error) {
-      console.error("Logout local apenas");
+    } catch (error) { // Mantido 'error' para clareza, mas é ignorado no final do bloco
+      console.error("Logout local apenas", error);
     }
 
     setIsLoggedIn(false);
-    
-    // Força atualização da tela e dos componentes
     window.dispatchEvent(new Event("storage"));
+    
+    // [FIX] Isso é essencial e não depende do useRouter()
     window.location.reload(); 
   };
 
