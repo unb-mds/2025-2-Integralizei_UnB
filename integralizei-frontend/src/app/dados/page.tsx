@@ -64,18 +64,28 @@ export default function DadosPage() {
     };
 
     const fetchMateriaInfo = async (codigo: string, anoBase: string, periodoBase: string): Promise<string | null> => {
-      const tryFetch = async (a: string, p: string) => {
-        try {
-          const res = await fetch(`/api/courses?search=${codigo}&year=${a}&period=${p}`);
-          if (res.ok) {
-            const data = await res.json();
-            if (Array.isArray(data) && data.length > 0) {
-              return data[0].name;
-            }
-          }
-        } catch { return null; }
-        return null;
-      };
+const tryFetch = async (a: string, p: string) => {
+  const url = `/api/courses?search=${codigo}&year=${a}&period=${p}`;
+  
+  try {
+    const res = await fetch(url);
+    
+    if (!res.ok) {
+      console.warn(`[API ERRO] Falha ao buscar matéria ${codigo}: Status ${res.status}`);
+    }
+
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 0) {
+        return data[0].name;
+      }
+    }
+  } catch (error) {
+    console.error(`[REDE ERRO] Falha crítica ao conectar no backend para ${codigo}. URL: ${url}`, error);
+    return null;
+  }
+  return null;
+};
 
       let nome = await tryFetch(anoBase, periodoBase);
       if (nome) return nome;
