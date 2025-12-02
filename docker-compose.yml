@@ -1,0 +1,87 @@
+services:
+  backend-python:
+    build: 
+      context: ./integralizei-backend
+      dockerfile: Dockerfile
+    container_name: integralizei-core
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./integralizei-backend:/app
+    environment:
+      - FLASK_DEBUG=1
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
+
+    depends_on:
+      - db
+
+  backend-login:
+    build:
+      context: ./integralizei-backend/login-service
+      dockerfile: Dockerfile
+    container_name: integralizei-auth
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./integralizei-backend/login-service:/app
+      - /app/node_modules
+      - ./integralizei-backend/formulario-flask/instance:/app/db-shared
+    environment:
+      - PORT=3001
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+      - DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
+    depends_on:
+      - db
+
+  frontend:
+    build: ./integralizei-frontend
+    container_name: integralizei-front
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./integralizei-frontend:/app
+      - /app/node_modules
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - NEXT_PUBLIC_API_URL=http://localhost:5000 
+      - NEXT_PUBLIC_AUTH_URL=http://localhost:3001
+      - WATCHPACK_POLLING=true
+    depends_on:
+      - backend-python
+      - backend-login
+
+  db:
+    image: postgres:15-alpine
+    container_name: integralizei_postgres
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5432:5432"
+    volumes:
+      - integralizei_pg_data:/var/lib/postgresql/data
+      - ./integralizei-backend/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: unless-stopped
+
+  pgadmin:
+    image: dpage/pgadmin4:8
+    container_name: integralizei_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+    restart: unless-stopped
+
+volumes:
+  integralizei_pg_data:

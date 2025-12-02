@@ -25,7 +25,7 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(os.path.join(BASE_DIR, "instance"), exist_ok=True)
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 
@@ -57,7 +57,7 @@ def upsert(conn, dados, arquivo):
 
     cur = conn.cursor()
 
-    # Inserção ou atualização do aluno
+    # Upsert Aluno
     cur.execute(
         """
         INSERT INTO alunos (matricula, nome, curso, ira, mp)
@@ -68,29 +68,23 @@ def upsert(conn, dados, arquivo):
             ira = EXCLUDED.ira,
             mp = EXCLUDED.mp,
             atualizado_em = NOW()
+        RETURNING id
         """,
         (matricula, nome, curso, ira, mp),
     )
-
-    cur.execute(
-        "SELECT id FROM alunos WHERE matricula = %s",
-        (matricula,),
-    )
+    # Pega o ID (seguro tanto para insert quanto update)
     aluno_id = cur.fetchone()[0]
 
-    # Remove disciplinas antigas
-    cur.execute(
-        "DELETE FROM disciplinas_cursadas WHERE aluno_id = %s",
-        (aluno_id,),
-    )
+    # Limpa disciplinas antigas desse aluno para inserir as novas
+    cur.execute("DELETE FROM disciplinas_cursadas WHERE aluno_id = %s", (aluno_id,))
 
-    # Insere novas
+    # Insere novas disciplinas COM PROFESSOR
     for m in materias:
         cur.execute(
             """
             INSERT INTO disciplinas_cursadas
-                (aluno_id, periodo, codigo, nome, creditos, mencao, status)
-            VALUES (%s, %s, %s, %s, %s, %s, %s)
+                (aluno_id, periodo, codigo, nome, creditos, mencao, status, professor)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
             """,
             (
                 aluno_id,
@@ -100,6 +94,7 @@ def upsert(conn, dados, arquivo):
                 m.get("creditos") or m.get("ch"),
                 m.get("situacao") or m.get("mencao"),
                 m.get("status"),
+                m.get("professor"),
             ),
         )
 
@@ -135,8 +130,6 @@ def upload_pdf():
         finally:
             conn.close()
 
-        # Esses scripts também serão migrados para PostgreSQL
-        # (deixamos a assinatura sem DB_PATH; vamos ajustar os .py depois)
         recalcular_tudo()
 
         from scripts.preencher_estatisticas_disciplinas import (
@@ -148,6 +141,12 @@ def upload_pdf():
         from scripts.gerar_estatisticas_agregadas import gerar_estatisticas_agregadas
 
         gerar_estatisticas_agregadas()
+
+        from scripts.gerar_estatisticas_agregadas_professor import (
+            gerar_estatisticas_agregadas_professor,
+        )
+
+        gerar_estatisticas_agregadas_professor()
 
         return jsonify(dados), 200
 
@@ -209,8 +208,62 @@ def estatisticas_disciplina(codigo):
     )
 
 
+@app.route("/api/ranking/<codigo_disciplina>", methods=["GET"])
+def ranking_disciplina(codigo_disciplina):
+    professor_alvo = request.args.get("professor")
+
+    conn = get_db()
+    cur = conn.cursor()
+
+    # Query base na VIEW
+    sql = """
+        SELECT integralizacao_no_periodo
+        FROM disciplinas_com_integralizacao
+        WHERE codigo = %s
+    """
+    params = [codigo_disciplina]
+
+    if professor_alvo:
+        # TRUQUE DE MESTRE: ILIKE com % busca partes do nome
+        # Ex: Busca '%Luiza%' encontra 'Dra. Luiza Yoko'
+        sql += " AND professor ILIKE %s"
+        # Pega só o primeiro nome para aumentar a chance de match, ou usa o nome todo
+        # Vamos tentar usar o nome todo cercado de %
+        params.append(f"%{professor_alvo}%")
+
+    sql += " ORDER BY integralizacao_no_periodo DESC"
+
+    try:
+        cur.execute(sql, tuple(params))
+        rows = cur.fetchall()
+
+        ranking = []
+        for idx, row in enumerate(rows):
+            integralizacao = row[0]
+            val_float = float(integralizacao) if integralizacao is not None else 0.0
+
+            ranking.append(
+                {
+                    "posicao": idx + 1,
+                    "integralizacao": f"{val_float:.2f}%",
+                }
+            )
+
+        return jsonify(ranking), 200
+
+    except Exception as e:
+        print(f"Erro no ranking: {e}")
+        traceback.print_exc()
+        return jsonify({"error": "Erro ao gerar ranking"}), 500
+    finally:
+        cur.close()
+        conn.close()
+
+
 # ==========================
 # Início do servidor
 # ==========================
 if __name__ == "__main__":  # pragma: no cover
-    app.run(debug=True, host="0.0.0.0", port=8000)
+    # Enable debug mode only if FLASK_DEBUG env var is set to "1"
+    debug_mode = os.environ.get("FLASK_DEBUG") == "1"
+    app.run(debug=debug_mode, host="0.0.0.0", port=5000)

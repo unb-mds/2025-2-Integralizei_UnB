@@ -12,7 +12,7 @@ export default function HeroSection() {
         {/* Texto */}
         <div className="max-w-xl text-center md:text-left">
           <h1 className="text-4xl md:text-5xl font-extrabold leading-tight bg-gradient-to-r from-green-700 to-blue-800 bg-clip-text text-transparent">
-            Planeje sua integralização com dados reais da UnB
+            Planeje sua integralização com dados reais da UnB 
           </h1>
           <p className="text-gray-700 mt-6 text-lg">
             Envie seu histórico acadêmico e descubra sua chance de vaga, seu

@@ -55,8 +55,10 @@ export default function UploadPage() {
     formData.append("file", file);
 
     try {
-      // Conecta no backend Python (formulario-flask)
-      const response = await fetch("http://127.0.0.1:8000/upload", {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      console.log("API URL =>", apiUrl);
+           
+      const response = await fetch(`${apiUrl}/upload`, {
         method: "POST",
         body: formData,
       });
