@@ -30,41 +30,39 @@ export default function TurmaCard({ turma, disciplinaCode, disciplinaName }: Tur
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-const toggleRanking = async () => {
-const toggleRanking = async () => {
-    if (expandido) {
-      setExpandido(false);
-      return;
-    }
-    setExpandido(true);
-    if (ranking.length > 0) return;
+  const toggleRanking = async () => {
+    if (expandido) {
+      setExpandido(false);
+      return;
+    }
+    setExpandido(true);
+    if (ranking.length > 0) return;
 
-    setLoading(true);
-    setError("");
-    
-    try {
-      const professorNome = turma.teachers && turma.teachers.length > 0 ? turma.teachers[0] : "";
-      
+    setLoading(true);
+    setError("");
+    
+    try {
+      const professorNome = turma.teachers && turma.teachers.length > 0 ? turma.teachers[0] : "";
+      
       const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
-      let url = `${baseUrl}/api/ranking/${disciplinaCode}`;
-      // ---------------------
-      
-      if (professorNome) {
-        url += `?professor=${encodeURIComponent(professorNome)}`;
-      }
+      let url = `${baseUrl}/api/ranking/${disciplinaCode}`;
+      
+      if (professorNome) {
+        url += `?professor=${encodeURIComponent(professorNome)}`;
+      }
 
-      const res = await fetch(url);
-      
-      if (!res.ok) throw new Error("Erro ao buscar ranking");
-      const data = await res.json();
-      setRanking(data);
-    } catch (err) {
-      console.error(err);
-      setError("Não foi possível carregar o ranking.");
-    } finally {
-      setLoading(false);
-   }
- };
+      const res = await fetch(url);
+      
+      if (!res.ok) throw new Error("Erro ao buscar ranking");
+      const data = await res.json();
+      setRanking(data);
+    } catch (err) {
+      console.error(err);
+      setError("Não foi possível carregar o ranking.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", marginBottom: "20px" }}>
