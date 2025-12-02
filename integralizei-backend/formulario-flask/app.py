@@ -8,6 +8,7 @@ from flask import Flask, jsonify, render_template, request
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
 import psycopg2
+import psycopg2.extras
 
 # Importações internas
 from parsers.unb_historico import parse_basico
@@ -31,7 +32,7 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 # ==========================
-# DEFINIÇÃO COMPLETA DO BANCO (FIXADO NO CÓDIGO)
+# DEFINIÇÃO COMPLETA DO BANCO
 # ==========================
 FULL_SCHEMA_SQL = """
 BEGIN;
@@ -41,6 +42,7 @@ CREATE TABLE IF NOT EXISTS alunos (
     matricula TEXT UNIQUE NOT NULL,
     nome TEXT,
     curso TEXT,
+    email TEXT,
     ch_exigida INTEGER DEFAULT 3480,
     ira REAL,
     mp REAL,
@@ -137,9 +139,6 @@ COMMIT;
 """
 
 def wait_for_db_and_init():
-    """
-    Tenta conectar ao banco e garante que TODAS as tabelas existam.
-    """
     retries = 30
     while retries > 0:
         try:
@@ -147,20 +146,28 @@ def wait_for_db_and_init():
             conn = get_pg_conn()
             cur = conn.cursor()
             
-            # Verifica se a tabela 'disciplinas_cursadas' existe
+            # Verifica se 'email' existe na tabela 'alunos' (para migração automática)
+            cur.execute("""
+                SELECT column_name 
+                FROM information_schema.columns 
+                WHERE table_name='alunos' AND column_name='email';
+            """)
+            col_exists = cur.fetchone()
+
             cur.execute("SELECT EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'disciplinas_cursadas');")
-            row = cur.fetchone()
+            table_exists_row = cur.fetchone()
+            table_exists = table_exists_row['exists'] if isinstance(table_exists_row, dict) else table_exists_row[0]
             
-            if isinstance(row, dict):
-                exists = row['exists']
-            else:
-                exists = row[0]
-            
-            if not exists:
+            if not table_exists:
                 print("--- TABELAS FALTANDO. EXECUTANDO SCHEMA COMPLETO... ---")
                 cur.execute(FULL_SCHEMA_SQL)
                 conn.commit()
                 print("--- TODAS AS TABELAS FORAM CRIADAS COM SUCESSO ---")
+            elif not col_exists:
+                print("--- COLUNA EMAIL FALTANDO. ADICIONANDO... ---")
+                cur.execute("ALTER TABLE alunos ADD COLUMN IF NOT EXISTS email TEXT;")
+                conn.commit()
+                print("--- COLUNA EMAIL ADICIONADA ---")
             else:
                 print("--- CONEXÃO BEM SUCEDIDA E ESTRUTURA OK ---")
             
@@ -185,7 +192,7 @@ wait_for_db_and_init()
 def get_db():
     return get_pg_conn()
 
-def upsert(conn, dados, arquivo):
+def upsert(conn, dados, arquivo, email_usuario=None):
     aluno_data = dados.get("aluno", {})
     indices = dados.get("indices", {})
     curr = dados.get("curriculo", {})
@@ -203,34 +210,35 @@ def upsert(conn, dados, arquivo):
     cur = conn.cursor()
 
     try:
-        cur.execute(
-            """
-            INSERT INTO alunos (matricula, nome, curso, ira, mp)
-            VALUES (%s, %s, %s, %s, %s)
+        # Tenta atualizar o aluno existente ou criar novo
+        # Se vier email_usuario, atualizamos o email também
+        sql_insert = """
+            INSERT INTO alunos (matricula, nome, curso, ira, mp, email)
+            VALUES (%s, %s, %s, %s, %s, %s)
             ON CONFLICT (matricula) DO UPDATE SET
                 nome = EXCLUDED.nome,
                 curso = EXCLUDED.curso,
                 ira = EXCLUDED.ira,
                 mp = EXCLUDED.mp,
                 atualizado_em = NOW()
-            RETURNING id
-            """,
-            (matricula, nome, curso, ira, mp),
-        )
+        """
+        params = [matricula, nome, curso, ira, mp, email_usuario]
+        
+        # Se temos um e-mail novo para vincular, atualizamos ele no conflito
+        if email_usuario:
+            sql_insert += ", email = EXCLUDED.email"
+            
+        sql_insert += " RETURNING id"
+
+        cur.execute(sql_insert, tuple(params))
         row = cur.fetchone()
         
         if row:
-            if isinstance(row, dict):
-                aluno_id = row['id']
-            else:
-                aluno_id = row[0]
+            aluno_id = row['id'] if isinstance(row, dict) else row[0]
         else:
             cur.execute("SELECT id FROM alunos WHERE matricula = %s", (matricula,))
             row = cur.fetchone()
-            if isinstance(row, dict):
-                aluno_id = row['id']
-            else:
-                aluno_id = row[0]
+            aluno_id = row['id'] if isinstance(row, dict) else row[0]
 
         cur.execute("DELETE FROM disciplinas_cursadas WHERE aluno_id = %s", (aluno_id,))
 
@@ -259,9 +267,74 @@ def upsert(conn, dados, arquivo):
         print(f"Erro no UPSERT: {e}")
         raise e
 
+# --- Rota para Buscar Dados do Aluno Logado ---
+@app.route("/api/aluno", methods=["GET"])
+def get_aluno_data():
+    email = request.args.get("email")
+    if not email:
+        return jsonify({"error": "E-mail não fornecido"}), 400
+
+    conn = get_db()
+    cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    
+    try:
+        # 1. Buscar Aluno
+        cur.execute("SELECT * FROM alunos WHERE email = %s", (email,))
+        aluno = cur.fetchone()
+        
+        if not aluno:
+            return jsonify({"error": "Aluno não encontrado para este e-mail"}), 404
+
+        # 2. Buscar Disciplinas
+        cur.execute("""
+            SELECT periodo, codigo, nome, creditos, mencao as situacao, status, professor 
+            FROM disciplinas_cursadas 
+            WHERE aluno_id = %s 
+            ORDER BY periodo DESC
+        """, (aluno['id'],))
+        materias = cur.fetchall()
+
+        # 3. Buscar Última Integralização (Opcional, pega a maior do histórico)
+        cur.execute("""
+            SELECT integralizacao, ch_acumulada 
+            FROM integralizacoes_semestre 
+            WHERE aluno_id = %s 
+            ORDER BY periodo DESC LIMIT 1
+        """, (aluno['id'],))
+        integ = cur.fetchone() or {}
+
+        # 4. Montar JSON no formato que o Frontend espera
+        response = {
+            "aluno": {
+                "nome": aluno['nome'],
+                "matricula": aluno['matricula'],
+                "curso": aluno['curso']
+            },
+            "indices": {
+                "ira": aluno['ira'],
+                "mp": aluno['mp']
+            },
+            "curriculo": {
+                "materias": materias,
+                "integralizacao": integ.get('integralizacao', 0),
+                "ch_integralizada": integ.get('ch_acumulada', 0),
+                "ch_exigida": aluno['ch_exigida']
+            }
+        }
+        
+        return jsonify(response), 200
+
+    except Exception as e:
+        print(f"Erro ao buscar aluno: {e}")
+        return jsonify({"error": "Erro interno"}), 500
+    finally:
+        conn.close()
+
+
 @app.route("/upload", methods=["POST"])
 def upload_pdf():
     f = request.files.get("file")
+    email_usuario = request.form.get("email") # Recebe o email do frontend
 
     if not f or not f.filename.lower().endswith(".pdf"):
         return jsonify({"error": "Envie um arquivo PDF válido."}), 400
@@ -281,7 +354,7 @@ def upload_pdf():
 
         conn = get_db()
         try:
-            upsert(conn, dados, save_path)
+            upsert(conn, dados, save_path, email_usuario)
         finally:
             conn.close()
 
@@ -311,7 +384,7 @@ def home():
 def estatisticas_disciplina(codigo):
     conn = get_db()
     try:
-        cur = conn.cursor()
+        cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         cur.execute(
             "SELECT codigo, nome, media, min_integralizacao, max_integralizacao, total_alunos FROM estatisticas_disciplinas_agregadas WHERE codigo = %s",
             (codigo,),
@@ -323,27 +396,18 @@ def estatisticas_disciplina(codigo):
     if not row:
         return jsonify({"error": "Disciplina não encontrada"}), 404
 
-    if isinstance(row, dict):
-         codigo = row['codigo']
-         nome = row['nome']
-         media = row['media']
-         min_v = row['min_integralizacao']
-         max_v = row['max_integralizacao']
-         total = row['total_alunos']
-    else:
-         codigo, nome, media, min_v, max_v, total = row
-
+    # Tratamento para DictCursor
     return (
         jsonify(
             {
-                "codigo": codigo,
-                "nome": nome,
-                "media_integralizacao": round(media, 2) if media is not None else None,
+                "codigo": row['codigo'],
+                "nome": row['nome'],
+                "media_integralizacao": round(row['media'], 2) if row['media'] else None,
                 "faixa_integralizacao": {
-                    "min": round(min_v, 2) if min_v is not None else None,
-                    "max": round(max_v, 2) if max_v is not None else None,
+                    "min": round(row['min_integralizacao'], 2) if row['min_integralizacao'] else None,
+                    "max": round(row['max_integralizacao'], 2) if row['max_integralizacao'] else None,
                 },
-                "total_alunos": total,
+                "total_alunos": row['total_alunos'],
             }
         ),
         200,
@@ -353,7 +417,7 @@ def estatisticas_disciplina(codigo):
 def ranking_disciplina(codigo_disciplina):
     professor_alvo = request.args.get("professor")
     conn = get_db()
-    cur = conn.cursor()
+    cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     sql = "SELECT integralizacao_no_periodo FROM disciplinas_com_integralizacao WHERE codigo = %s"
     params = [codigo_disciplina]
 
@@ -368,10 +432,7 @@ def ranking_disciplina(codigo_disciplina):
         rows = cur.fetchall()
         ranking = []
         for idx, row in enumerate(rows):
-            if isinstance(row, dict):
-                val = row['integralizacao_no_periodo']
-            else:
-                val = row[0]
+            val = row['integralizacao_no_periodo']
             val_float = float(val) if val is not None else 0.0
             ranking.append({"posicao": idx + 1, "integralizacao": f"{val_float:.2f}%"})
         return jsonify(ranking), 200

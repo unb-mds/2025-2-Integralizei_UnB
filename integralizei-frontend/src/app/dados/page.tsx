@@ -64,28 +64,22 @@ export default function DadosPage() {
     };
 
     const fetchMateriaInfo = async (codigo: string, anoBase: string, periodoBase: string): Promise<string | null> => {
-const tryFetch = async (a: string, p: string) => {
-  const url = `/api/courses?search=${codigo}&year=${a}&period=${p}`;
-  
-  try {
-    const res = await fetch(url);
-    
-    if (!res.ok) {
-      console.warn(`[API ERRO] Falha ao buscar matéria ${codigo}: Status ${res.status}`);
-    }
-
-    if (res.ok) {
-      const data = await res.json();
-      if (Array.isArray(data) && data.length > 0) {
-        return data[0].name;
-      }
-    }
-  } catch (error) {
-    console.error(`[REDE ERRO] Falha crítica ao conectar no backend para ${codigo}. URL: ${url}`, error);
-    return null;
-  }
-  return null;
-};
+        const tryFetch = async (a: string, p: string) => {
+          const url = `/api/courses?search=${codigo}&year=${a}&period=${p}`;
+          try {
+            const res = await fetch(url);
+            if (res.ok) {
+              const data = await res.json();
+              if (Array.isArray(data) && data.length > 0) {
+                return data[0].name;
+              }
+            }
+          } catch (error) {
+            console.error(`[REDE ERRO] Falha ao buscar ${codigo}`, error);
+            return null;
+          }
+          return null;
+        };
 
       let nome = await tryFetch(anoBase, periodoBase);
       if (nome) return nome;
@@ -164,27 +158,45 @@ const tryFetch = async (a: string, p: string) => {
       setLoadingRecomendacoes(false);
     };
 
-    // --- LÓGICA PRINCIPAL ---
-    const init = async () => {
-      const dadosSalvos = localStorage.getItem("dadosAluno");
-      if (!dadosSalvos) {
-        setLoading(false);
-        return;
+    // --- LÓGICA PRINCIPAL DE CARREGAMENTO ---
+    const carregarDados = async () => {
+      let dadosFinal: DadosAluno | null = null;
+
+      // 1. Tenta pegar do LocalStorage
+      const dadosLocais = localStorage.getItem("dadosAluno");
+      if (dadosLocais) {
+        try {
+          dadosFinal = JSON.parse(dadosLocais);
+        } catch (e) {
+          console.error("Erro parse local:", e);
+        }
       }
 
-      let dadosParsed: DadosAluno | null = null;
-      try {
-        dadosParsed = JSON.parse(dadosSalvos) as DadosAluno;
-        setDados(dadosParsed);
-      } catch (e) {
-        console.error("Erro ao ler dados:", e);
-        setLoading(false);
-        return;
+      // 2. Se não tiver local, tenta buscar no servidor se estiver logado
+      if (!dadosFinal) {
+        const userSession = localStorage.getItem("user_session");
+        if (userSession) {
+          try {
+            const { email } = JSON.parse(userSession);
+            if (email) {
+              const res = await fetch(`http://localhost:5000/api/aluno?email=${email}`);
+              if (res.ok) {
+                dadosFinal = await res.json();
+                // Salva localmente para agilizar próximos loads
+                localStorage.setItem("dadosAluno", JSON.stringify(dadosFinal));
+              }
+            }
+          } catch (e) {
+            console.error("Erro ao buscar dados remotos:", e);
+          }
+        }
       }
 
+      setDados(dadosFinal);
       setLoading(false);
 
-      if (dadosParsed?.aluno?.curso && dadosParsed?.curriculo?.materias) {
+      // 3. Se carregou dados, inicia recomendações
+      if (dadosFinal?.aluno?.curso && dadosFinal?.curriculo?.materias) {
         setLoadingRecomendacoes(true);
         try {
           const resPeriod = await fetch("/api/year-period");
@@ -202,8 +214,8 @@ const tryFetch = async (a: string, p: string) => {
           }
 
           await processarRecomendacoes(
-            dadosParsed.aluno.curso, 
-            dadosParsed.curriculo.materias,
+            dadosFinal.aluno.curso, 
+            dadosFinal.curriculo.materias,
             ano,
             periodo
           );
@@ -215,7 +227,7 @@ const tryFetch = async (a: string, p: string) => {
       }
     };
 
-    init();
+    carregarDados();
   }, []);
 
   if (loading) return <div className="flex h-screen items-center justify-center font-[Inter]">Carregando...</div>;

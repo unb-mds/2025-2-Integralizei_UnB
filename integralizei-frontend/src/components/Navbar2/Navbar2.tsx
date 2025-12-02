@@ -11,13 +11,13 @@ export default function Navbar() {
   const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // Função que verifica se existe algum dado de login (PDF ou Conta)
+  // Função que verifica se existe SESSÃO DE USUÁRIO (Conta)
   const checkLoginStatus = () => {
-    const dadosPDF = localStorage.getItem("dadosAluno");
+    // CORREÇÃO: Não olhamos mais para 'dadosAluno' para definir se está logado na conta.
+    // Olhamos apenas para 'user_session'.
     const dadosConta = localStorage.getItem("user_session");
     
-    // Se tiver qualquer um dos dois, considera logado
-    if (dadosPDF || dadosConta) {
+    if (dadosConta) {
       setIsLoggedIn(true);
     } else {
       setIsLoggedIn(false);
@@ -27,7 +27,7 @@ export default function Navbar() {
   useEffect(() => {
     checkLoginStatus();
 
-    // Adiciona um ouvinte para atualizar a Navbar automaticamente se o localStorage mudar
+    // Ouve mudanças no localStorage para atualizar o botão em tempo real
     window.addEventListener("storage", checkLoginStatus);
     
     return () => {
@@ -38,20 +38,24 @@ export default function Navbar() {
   const handleLogout = async (e: React.MouseEvent) => {
     e.preventDefault();
     
-    // 1. Limpa TODOS os dados locais
+    // 1. Limpa TODOS os dados locais ao sair
     localStorage.removeItem("dadosAluno");
     localStorage.removeItem("user_session");
     
-    // 2. Chama a API de logout
+    // 2. Chama a API de logout (opcional, mas boa prática)
     try {
-      await fetch("http://localhost:3001/api/logout"); 
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+      await fetch(`${apiUrl}/api/logout`); 
     } catch (error) {
       console.error("Erro logout:", error);
     }
 
-    // 3. Atualiza estado e redireciona
+    // 3. Atualiza estado visual e redireciona
     setIsLoggedIn(false);
-    window.dispatchEvent(new Event("storage")); // Avisa outros componentes
+    
+    // Força atualização de outros componentes que ouvem o storage
+    window.dispatchEvent(new Event("storage")); 
+    
     router.push("/login");
   };
 
@@ -86,7 +90,7 @@ export default function Navbar() {
           CALCULADORA
         </Link>
 
-        <Link href="/pesquisa" className={`${styles.botao} ${styles.cor_da_UnB}`}>
+        <Link href="/pesquisa" className={`${styles.botao} ${styles.cor_da_UnB}`} prefetch={false}>
           <Search size={18} />
           PESQUISA
         </Link>
@@ -102,7 +106,7 @@ export default function Navbar() {
           SOBRE
         </Link>
 
-        {/* --- LÓGICA DE TROCA DO BOTÃO ENTRAR/SAIR --- */}
+        {/* --- BOTÃO DE LOGIN/LOGOUT --- */}
         {isLoggedIn ? (
           <button 
             onClick={handleLogout} 

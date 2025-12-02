@@ -13,7 +13,6 @@ export default function UploadPage() {
   const [dragActive, setDragActive] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // --- Lógica de Seleção de Arquivo ---
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       setFile(event.target.files[0]);
@@ -21,7 +20,6 @@ export default function UploadPage() {
     }
   };
 
-  // --- Lógica de Drag & Drop ---
   const handleDragOver = (e: DragEvent) => {
     e.preventDefault();
     setDragActive(true);
@@ -43,7 +41,6 @@ export default function UploadPage() {
     }
   };
 
-  // --- Envio para o Backend Python (Porta 8000) ---
   const handleUpload = async () => {
     if (!file) {
       setStatus("Selecione ou arraste um PDF primeiro.");
@@ -54,10 +51,21 @@ export default function UploadPage() {
     const formData = new FormData();
     formData.append("file", file);
 
+    // --- NOVO: Se estiver logado, anexa o email ---
+    const userSession = localStorage.getItem("user_session");
+    if (userSession) {
+      try {
+        const { email } = JSON.parse(userSession);
+        if (email) formData.append("email", email);
+      } catch (e) {
+        console.error("Erro ao ler sessão do usuário:", e);
+      }
+    }
+    // ---------------------------------------------
+
     try {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
-      console.log("API URL =>", apiUrl);
-           
+      
       const response = await fetch(`${apiUrl}/upload`, {
         method: "POST",
         body: formData,
@@ -66,17 +74,16 @@ export default function UploadPage() {
       const data = await response.json();
 
       if (response.ok) {
-        // Salva o resultado no navegador para a página de Dados usar
         localStorage.setItem("dadosAluno", JSON.stringify(data));
+        window.dispatchEvent(new Event("storage")); // Atualiza Navbar
         setStatus("Histórico enviado com sucesso!");
-        
         setTimeout(() => router.push("/dados"), 1000);
       } else {
         setStatus(data.error || "Erro ao processar o PDF.");
       }
     } catch (error) {
       console.error(error);
-      setStatus("Erro ao conectar ao servidor (Porta 8000).");
+      setStatus("Erro ao conectar ao servidor (Porta 5000).");
     }
     setLoading(false);
   };
@@ -84,11 +91,8 @@ export default function UploadPage() {
   return (
     <>
       <Navbar2 />
-
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 px-6 pt-20 font-[Inter]">
-        {/* Card com degradê (Seu visual original) */}
         <div className="bg-gradient-to-b from-green-700 to-blue-800 text-white rounded-3xl p-10 w-full max-w-2xl shadow-xl text-center">
-          
           <h1 className="text-3xl font-bold mb-2">Integralizei UnB</h1>
           <h2 className="text-xl font-semibold mb-1 opacity-90">
             Envie seu histórico acadêmico em PDF
@@ -97,7 +101,6 @@ export default function UploadPage() {
             NENHUM DADO SENSÍVEL SERÁ ARMAZENADO
           </p>
 
-          {/* Área de upload Interativa */}
           <div
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
@@ -137,13 +140,11 @@ export default function UploadPage() {
               className="hidden"
               onChange={handleFileChange}
             />
-            {/* Label invisível para clique em toda a área */}
             {!file && (
               <label htmlFor="fileInput" className="absolute inset-0 cursor-pointer" />
             )}
           </div>
 
-          {/* Botão de Ação */}
           <div className="mt-8">
             <button
               onClick={handleUpload}
@@ -158,7 +159,6 @@ export default function UploadPage() {
             </button>
           </div>
 
-          {/* Mensagens de Status */}
           {status && (
             <div className={`mt-6 p-3 rounded-lg text-sm font-medium ${status.includes("sucesso") ? "bg-green-500/20 text-green-100" : "bg-red-500/20 text-red-100"}`}>
               {status}
