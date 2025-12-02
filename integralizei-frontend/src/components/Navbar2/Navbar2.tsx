@@ -11,12 +11,13 @@ export default function Navbar() {
   const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // Função que verifica se existe SESSÃO DE USUÁRIO (Conta)
+  // --- CORREÇÃO AQUI ---
+  // Antes ele olhava (dadosPDF || dadosConta).
+  // Agora ele só olha dadosConta.
   const checkLoginStatus = () => {
-    // CORREÇÃO: Não olhamos mais para 'dadosAluno' para definir se está logado na conta.
-    // Olhamos apenas para 'user_session'.
     const dadosConta = localStorage.getItem("user_session");
     
+    // Só muda o botão para "SAIR" se tiver conta logada
     if (dadosConta) {
       setIsLoggedIn(true);
     } else {
@@ -27,7 +28,7 @@ export default function Navbar() {
   useEffect(() => {
     checkLoginStatus();
 
-    // Ouve mudanças no localStorage para atualizar o botão em tempo real
+    // Ouve mudanças para atualizar automaticamente
     window.addEventListener("storage", checkLoginStatus);
     
     return () => {
@@ -38,30 +39,26 @@ export default function Navbar() {
   const handleLogout = async (e: React.MouseEvent) => {
     e.preventDefault();
     
-    // 1. Limpa TODOS os dados locais ao sair
+    // Limpa os dados ao sair
     localStorage.removeItem("dadosAluno");
     localStorage.removeItem("user_session");
     
-    // 2. Chama a API de logout (opcional, mas boa prática)
+    // Tenta avisar o backend (opcional, ignora erro se falhar)
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
-      await fetch(`${apiUrl}/api/logout`); 
+      await fetch("http://localhost:3001/api/logout"); 
     } catch (error) {
-      console.error("Erro logout:", error);
+      console.error("Logout local apenas");
     }
 
-    // 3. Atualiza estado visual e redireciona
     setIsLoggedIn(false);
     
-    // Força atualização de outros componentes que ouvem o storage
-    window.dispatchEvent(new Event("storage")); 
-    
-    router.push("/login");
+    // Força atualização da tela e dos componentes
+    window.dispatchEvent(new Event("storage"));
+    window.location.reload(); 
   };
 
   return (
     <header className={styles.navbarContainer}>
-      {/* Logo e nome */}
       <Link href="/" className={styles.logoContainer}>
         <Image
           src="/logo-unb.png"
@@ -75,7 +72,6 @@ export default function Navbar() {
         <span className={styles.logoText}>Integralizei UnB</span>
       </Link>
 
-      {/* Botões de navegação */}
       <nav className={styles.navLinks}>
         <Link href="/dados" className={`${styles.botao} ${styles.cor_da_UnB}`}>
           <BarChart3 size={18} />
@@ -95,7 +91,6 @@ export default function Navbar() {
           PESQUISA
         </Link>
 
-        {/* --- UNBOT --- */}
         <Link href="/unbot" className={`${styles.botao} ${styles.cor_da_UnB}`}>
           <Bot size={18} />
           UNBOT
@@ -106,7 +101,6 @@ export default function Navbar() {
           SOBRE
         </Link>
 
-        {/* --- BOTÃO DE LOGIN/LOGOUT --- */}
         {isLoggedIn ? (
           <button 
             onClick={handleLogout} 
