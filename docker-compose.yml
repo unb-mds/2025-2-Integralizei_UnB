@@ -5,7 +5,7 @@ services:
       dockerfile: Dockerfile
     container_name: integralizei-core
     ports:
-      - "5000:8000"
+      - "5000:5000"
     volumes:
       - ./integralizei-backend:/app
     environment:
@@ -50,7 +50,7 @@ services:
       - /app/node_modules
     environment:
       - GEMINI_API_KEY=${GEMINI_API_KEY}
-      - NEXT_PUBLIC_API_URL=http://localhost:8000 
+      - NEXT_PUBLIC_API_URL=http://localhost:5000 
       - NEXT_PUBLIC_AUTH_URL=http://localhost:3001
       - WATCHPACK_POLLING=true
     depends_on:
@@ -68,6 +68,7 @@ services:
       - "5432:5432"
     volumes:
       - integralizei_pg_data:/var/lib/postgresql/data
+      - ./integralizei-backend/db/init.sql:/docker-entrypoint-initdb.d/init.sql
     restart: unless-stopped
 
   pgadmin:

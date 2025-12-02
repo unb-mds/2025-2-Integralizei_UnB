@@ -55,7 +55,8 @@ export default function UploadPage() {
     formData.append("file", file);
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      console.log("API URL =>", apiUrl);
            
       const response = await fetch(`${apiUrl}/upload`, {
         method: "POST",
