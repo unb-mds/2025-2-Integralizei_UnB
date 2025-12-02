@@ -36,6 +36,7 @@ venv/
 
 # Bytecode & Cache
 __pycache__/
+.pytest_cache
 *.pyc
 *.pyo
 *.pyd
@@ -61,7 +62,7 @@ uploads/
 # 🔐 Environment & Secrets (CRITICAL)
 # =========================
 .env
-.env*
+.env
 *.pem
 
 # =========================

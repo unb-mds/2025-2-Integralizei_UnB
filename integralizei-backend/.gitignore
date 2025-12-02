@@ -1,19 +1,2 @@
-venv/
-.venv/
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-*.db
-instance/
-.env
-.DS_Store
-*.log
-*.tmp
-*.bak
-.vscode/
-.idea/
-uploads/
-dist/
-build/
-*.egg-info/
+# Created by venv; see https://docs.python.org/3/library/venv.html
+*

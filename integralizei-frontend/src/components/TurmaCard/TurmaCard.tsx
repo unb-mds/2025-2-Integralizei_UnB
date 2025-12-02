@@ -42,14 +42,12 @@ export default function TurmaCard({ turma, disciplinaCode, disciplinaName }: Tur
     setError("");
     
     try {
-      
       const professorNome = turma.teachers && turma.teachers.length > 0 ? turma.teachers[0] : "";
       
-      let url = `http://localhost:8000/api/ranking/${disciplinaCode}`;
-      
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+      let url = `${baseUrl}/api/ranking/${disciplinaCode}`;
       
       if (professorNome) {
-        
         url += `?professor=${encodeURIComponent(professorNome)}`;
       }
 
