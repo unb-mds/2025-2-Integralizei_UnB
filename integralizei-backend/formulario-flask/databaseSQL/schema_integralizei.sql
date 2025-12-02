@@ -35,15 +35,14 @@ CREATE TABLE IF NOT EXISTS integralizacoes_semestre (
 
 CREATE TABLE IF NOT EXISTS estatisticas_disciplinas (
     id SERIAL PRIMARY KEY,
-    aluno_id INTEGER NOT NULL,
-    codigo TEXT,
+    codigo TEXT NOT NULL,
     nome TEXT,
-    mencao TEXT,
-    creditos INTEGER,
-    periodo TEXT,
     media_integralizacao REAL,
-    FOREIGN KEY (aluno_id) REFERENCES alunos(id) ON DELETE CASCADE
+    mediana_integralizacao REAL,
+    desvio_padrao REAL,
+    total_alunos INTEGER
 );
+
 
 CREATE TABLE IF NOT EXISTS estatisticas_disciplinas_agregadas (
     codigo TEXT PRIMARY KEY,
@@ -60,12 +59,13 @@ CREATE TABLE IF NOT EXISTS estatisticas_disciplinas_professor (
     id SERIAL PRIMARY KEY,
     codigo TEXT NOT NULL,
     nome TEXT,
-    professor TEXT NOT NULL,
+    professor TEXT,
     media_integralizacao REAL,
     mediana_integralizacao REAL,
     desvio_padrao REAL,
     total_alunos INTEGER
 );
+
 
 CREATE OR REPLACE VIEW disciplinas_com_integralizacao AS
 SELECT
