@@ -1,11 +1,13 @@
 import os
 import sys
+import time
 import traceback
 from datetime import datetime
 
 from flask import Flask, jsonify, render_template, request
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
+import psycopg2
 
 # Importações internas
 from parsers.unb_historico import parse_basico
@@ -28,15 +30,83 @@ app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
+def wait_for_db_and_init():
+    """
+    Tenta conectar ao banco em loop até conseguir.
+    Isso resolve o problema de 'Race Condition' no Docker.
+    """
+    retries = 30
+    while retries > 0:
+        try:
+            print(f"--- TENTANDO CONECTAR AO BANCO ({retries} tentativas restantes) ---")
+            conn = get_pg_conn()
+            cur = conn.cursor()
+            
+            # Verifica se a tabela existe
+            cur.execute("SELECT EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'alunos');")
+            row = cur.fetchone()
+            
+            # Lógica robusta para detectar se veio Dicionário ou Tupla
+            if isinstance(row, dict):
+                exists = row['exists']
+            else:
+                exists = row[0]
+            
+            if not exists:
+                print("--- TABELA 'ALUNOS' NÃO ENCONTRADA. EXECUTANDO SQL DE FALLBACK... ---")
+                # Caminho para o init.sql relativo ao app.py
+                init_sql_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'db', 'init.sql')
+                
+                if os.path.exists(init_sql_path):
+                    with open(init_sql_path, 'r') as f:
+                        sql_script = f.read()
+                        cur.execute(sql_script)
+                        conn.commit()
+                        print("--- TABELAS CRIADAS VIA PYTHON ---")
+                else:
+                    print(f"--- AVISO: ARQUIVO {init_sql_path} NÃO ENCONTRADO. CRIANDO TABELAS BÁSICAS... ---")
+                    # Fallback de emergência se o arquivo não for achado
+                    cur.execute("""
+                        CREATE TABLE IF NOT EXISTS alunos (
+                            id SERIAL PRIMARY KEY,
+                            matricula TEXT UNIQUE NOT NULL,
+                            nome TEXT,
+                            curso TEXT,
+                            ch_exigida INTEGER DEFAULT 3480,
+                            ira REAL,
+                            mp REAL,
+                            criado_em TIMESTAMP DEFAULT NOW(),
+                            atualizado_em TIMESTAMP DEFAULT NOW()
+                        );
+                    """)
+                    conn.commit()
+            else:
+                print("--- CONEXÃO BEM SUCEDIDA E TABELAS ENCONTRADAS ---")
+            
+            cur.close()
+            conn.close()
+            return True
+        except psycopg2.OperationalError as e:
+            print(f"Banco ainda indisponível... aguardando. Erro: {e}")
+            time.sleep(2)
+            retries -= 1
+        except Exception as e:
+            print(f"Erro inesperado ao inicializar banco: {e}")
+            traceback.print_exc()
+            time.sleep(2)
+            retries -= 1
+            
+    print("!!! FALHA CRÍTICA: NÃO FOI POSSÍVEL CONECTAR AO BANCO APÓS VÁRIAS TENTATIVAS !!!")
+    return False
+
+# Executa a espera pelo banco ANTES de rodar o servidor
+wait_for_db_and_init()
+
 
 # ==========================
-# Banco de dados
+# Banco de dados Helper
 # ==========================
 def get_db():
-    """
-    Abre conexão com o PostgreSQL usando o helper centralizado.
-    A criação de tabelas e migrações agora deve ser feita em scripts separados.
-    """
     return get_pg_conn()
 
 
@@ -54,51 +124,73 @@ def upsert(conn, dados, arquivo):
     curso = aluno_data.get("curso")
     ira = indices.get("ira")
     mp = indices.get("mp")
+    
+    if not matricula:
+        raise ValueError("Não foi possível identificar a matrícula no PDF.")
 
     cur = conn.cursor()
 
-    # Upsert Aluno
-    cur.execute(
-        """
-        INSERT INTO alunos (matricula, nome, curso, ira, mp)
-        VALUES (%s, %s, %s, %s, %s)
-        ON CONFLICT (matricula) DO UPDATE SET
-            nome = EXCLUDED.nome,
-            curso = EXCLUDED.curso,
-            ira = EXCLUDED.ira,
-            mp = EXCLUDED.mp,
-            atualizado_em = NOW()
-        RETURNING id
-        """,
-        (matricula, nome, curso, ira, mp),
-    )
-    # Pega o ID (seguro tanto para insert quanto update)
-    aluno_id = cur.fetchone()[0]
-
-    # Limpa disciplinas antigas desse aluno para inserir as novas
-    cur.execute("DELETE FROM disciplinas_cursadas WHERE aluno_id = %s", (aluno_id,))
-
-    # Insere novas disciplinas COM PROFESSOR
-    for m in materias:
+    try:
+        # Upsert Aluno
         cur.execute(
             """
-            INSERT INTO disciplinas_cursadas
-                (aluno_id, periodo, codigo, nome, creditos, mencao, status, professor)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            INSERT INTO alunos (matricula, nome, curso, ira, mp)
+            VALUES (%s, %s, %s, %s, %s)
+            ON CONFLICT (matricula) DO UPDATE SET
+                nome = EXCLUDED.nome,
+                curso = EXCLUDED.curso,
+                ira = EXCLUDED.ira,
+                mp = EXCLUDED.mp,
+                atualizado_em = NOW()
+            RETURNING id
             """,
-            (
-                aluno_id,
-                m.get("periodo"),
-                m.get("codigo"),
-                m.get("nome"),
-                m.get("creditos") or m.get("ch"),
-                m.get("situacao") or m.get("mencao"),
-                m.get("status"),
-                m.get("professor"),
-            ),
+            (matricula, nome, curso, ira, mp),
         )
+        row = cur.fetchone()
+        
+        # Tratamento seguro Dict vs Tupla
+        if row:
+            if isinstance(row, dict):
+                aluno_id = row['id']
+            else:
+                aluno_id = row[0]
+        else:
+            # Fallback
+            cur.execute("SELECT id FROM alunos WHERE matricula = %s", (matricula,))
+            row = cur.fetchone()
+            if isinstance(row, dict):
+                aluno_id = row['id']
+            else:
+                aluno_id = row[0]
 
-    conn.commit()
+        # Limpa disciplinas antigas
+        cur.execute("DELETE FROM disciplinas_cursadas WHERE aluno_id = %s", (aluno_id,))
+
+        # Insere novas disciplinas
+        for m in materias:
+            cur.execute(
+                """
+                INSERT INTO disciplinas_cursadas
+                    (aluno_id, periodo, codigo, nome, creditos, mencao, status, professor)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                """,
+                (
+                    aluno_id,
+                    m.get("periodo"),
+                    m.get("codigo"),
+                    m.get("nome"),
+                    m.get("creditos") or m.get("ch"),
+                    m.get("situacao") or m.get("mencao"),
+                    m.get("status"),
+                    m.get("professor"),
+                ),
+            )
+
+        conn.commit()
+    except Exception as e:
+        conn.rollback()
+        print(f"Erro no UPSERT: {e}")
+        raise e
 
 
 # ==========================
@@ -130,29 +222,32 @@ def upload_pdf():
         finally:
             conn.close()
 
-        recalcular_tudo()
+        # Recalculos
+        try:
+            recalcular_tudo()
+            
+            from scripts.preencher_estatisticas_disciplinas import (
+                preencher_estatisticas_disciplinas,
+            )
+            preencher_estatisticas_disciplinas()
 
-        from scripts.preencher_estatisticas_disciplinas import (
-            preencher_estatisticas_disciplinas,
-        )
+            from scripts.gerar_estatisticas_agregadas import gerar_estatisticas_agregadas
+            gerar_estatisticas_agregadas()
 
-        preencher_estatisticas_disciplinas()
-
-        from scripts.gerar_estatisticas_agregadas import gerar_estatisticas_agregadas
-
-        gerar_estatisticas_agregadas()
-
-        from scripts.gerar_estatisticas_agregadas_professor import (
-            gerar_estatisticas_agregadas_professor,
-        )
-
-        gerar_estatisticas_agregadas_professor()
+            from scripts.gerar_estatisticas_agregadas_professor import (
+                gerar_estatisticas_agregadas_professor,
+            )
+            gerar_estatisticas_agregadas_professor()
+            
+        except Exception as e_scripts:
+            print(f"Aviso: Erro ao gerar estatísticas, mas o upload foi salvo. Erro: {e_scripts}")
+            traceback.print_exc()
 
         return jsonify(dados), 200
 
-    except Exception:
+    except Exception as e:
         print("ERRO AO PROCESSAR PDF:", traceback.format_exc())
-        return jsonify({"error": "Falha ao processar o PDF."}), 500
+        return jsonify({"error": f"Falha ao processar o PDF: {str(e)}"}), 500
 
 
 # ==========================
@@ -165,12 +260,6 @@ def home():
 
 @app.route("/api/estatisticas/<codigo>", methods=["GET"])
 def estatisticas_disciplina(codigo):
-    """
-    Retorna as estatísticas agregadas de uma disciplina:
-    - média de integralização
-    - faixa (min e max)
-    - total de alunos analisados
-    """
     conn = get_db()
     try:
         cur = conn.cursor()
@@ -189,7 +278,16 @@ def estatisticas_disciplina(codigo):
     if not row:
         return jsonify({"error": "Disciplina não encontrada"}), 404
 
-    codigo, nome, media, min_v, max_v, total = row
+    # Tratamento para DictCursor ou Tupla
+    if isinstance(row, dict):
+         codigo = row['codigo']
+         nome = row['nome']
+         media = row['media']
+         min_v = row['min_integralizacao']
+         max_v = row['max_integralizacao']
+         total = row['total_alunos']
+    else:
+         codigo, nome, media, min_v, max_v, total = row
 
     return (
         jsonify(
@@ -215,7 +313,6 @@ def ranking_disciplina(codigo_disciplina):
     conn = get_db()
     cur = conn.cursor()
 
-    # Query base na VIEW
     sql = """
         SELECT integralizacao_no_periodo
         FROM disciplinas_com_integralizacao
@@ -224,11 +321,7 @@ def ranking_disciplina(codigo_disciplina):
     params = [codigo_disciplina]
 
     if professor_alvo:
-        # TRUQUE DE MESTRE: ILIKE com % busca partes do nome
-        # Ex: Busca '%Luiza%' encontra 'Dra. Luiza Yoko'
         sql += " AND professor ILIKE %s"
-        # Pega só o primeiro nome para aumentar a chance de match, ou usa o nome todo
-        # Vamos tentar usar o nome todo cercado de %
         params.append(f"%{professor_alvo}%")
 
     sql += " ORDER BY integralizacao_no_periodo DESC"
@@ -239,8 +332,13 @@ def ranking_disciplina(codigo_disciplina):
 
         ranking = []
         for idx, row in enumerate(rows):
-            integralizacao = row[0]
-            val_float = float(integralizacao) if integralizacao is not None else 0.0
+            # Tratamento DictCursor vs Tupla
+            if isinstance(row, dict):
+                val = row['integralizacao_no_periodo']
+            else:
+                val = row[0]
+                
+            val_float = float(val) if val is not None else 0.0
 
             ranking.append(
                 {
@@ -260,10 +358,6 @@ def ranking_disciplina(codigo_disciplina):
         conn.close()
 
 
-# ==========================
-# Início do servidor
-# ==========================
-if __name__ == "__main__":  # pragma: no cover
-    # Enable debug mode only if FLASK_DEBUG env var is set to "1"
+if __name__ == "__main__":
     debug_mode = os.environ.get("FLASK_DEBUG") == "1"
     app.run(debug=debug_mode, host="0.0.0.0", port=5000)

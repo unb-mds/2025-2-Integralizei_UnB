@@ -1,11 +1,60 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import styles from "./navbar2.module.css";
-import { BarChart3, Calculator, Search, Info, LogIn, Bot } from "lucide-react";
+import { BarChart3, Calculator, Search, Info, LogIn, LogOut, Bot } from "lucide-react";
 
 export default function Navbar() {
+  const router = useRouter();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Função que verifica se existe algum dado de login (PDF ou Conta)
+  const checkLoginStatus = () => {
+    const dadosPDF = localStorage.getItem("dadosAluno");
+    const dadosConta = localStorage.getItem("user_session");
+    
+    // Se tiver qualquer um dos dois, considera logado
+    if (dadosPDF || dadosConta) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  };
+
+  useEffect(() => {
+    checkLoginStatus();
+
+    // Adiciona um ouvinte para atualizar a Navbar automaticamente se o localStorage mudar
+    window.addEventListener("storage", checkLoginStatus);
+    
+    return () => {
+      window.removeEventListener("storage", checkLoginStatus);
+    };
+  }, []);
+
+  const handleLogout = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    
+    // 1. Limpa TODOS os dados locais
+    localStorage.removeItem("dadosAluno");
+    localStorage.removeItem("user_session");
+    
+    // 2. Chama a API de logout
+    try {
+      await fetch("http://localhost:3001/api/logout"); 
+    } catch (error) {
+      console.error("Erro logout:", error);
+    }
+
+    // 3. Atualiza estado e redireciona
+    setIsLoggedIn(false);
+    window.dispatchEvent(new Event("storage")); // Avisa outros componentes
+    router.push("/login");
+  };
+
   return (
     <header className={styles.navbarContainer}>
       {/* Logo e nome */}
@@ -42,7 +91,7 @@ export default function Navbar() {
           PESQUISA
         </Link>
 
-        {/* --- NOVO BOTÃO: UNBOT --- */}
+        {/* --- UNBOT --- */}
         <Link href="/unbot" className={`${styles.botao} ${styles.cor_da_UnB}`}>
           <Bot size={18} />
           UNBOT
@@ -53,10 +102,22 @@ export default function Navbar() {
           SOBRE
         </Link>
 
-        <Link href="/login" className={`${styles.botao} ${styles.cor_da_UnB}`}>
-          <LogIn size={18} />
-          ENTRAR
-        </Link>
+        {/* --- LÓGICA DE TROCA DO BOTÃO ENTRAR/SAIR --- */}
+        {isLoggedIn ? (
+          <button 
+            onClick={handleLogout} 
+            className={`${styles.botao} ${styles.cor_da_UnB}`}
+            style={{ backgroundColor: "#dc2626", borderColor: "#dc2626" }} 
+          >
+            <LogOut size={18} />
+            SAIR
+          </button>
+        ) : (
+          <Link href="/login" className={`${styles.botao} ${styles.cor_da_UnB}`}>
+            <LogIn size={18} />
+            ENTRAR
+          </Link>
+        )}
       </nav>
     </header>
   );

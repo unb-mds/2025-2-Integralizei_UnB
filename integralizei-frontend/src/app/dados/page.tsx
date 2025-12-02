@@ -53,7 +53,7 @@ export default function DadosPage() {
   const [loadingRecomendacoes, setLoadingRecomendacoes] = useState(false);
 
   useEffect(() => {
-    // --- FUNÇÕES AUXILIARES DENTRO DO EFFECT (Evita erro de declaração) ---
+    // --- FUNÇÕES AUXILIARES ---
     const shuffleArray = (array: string[]) => {
       const newArray = [...array];
       for (let i = newArray.length - 1; i > 0; i--) {
@@ -63,7 +63,7 @@ export default function DadosPage() {
       return newArray;
     };
 
-    const fetchMateriaInfo = async (codigo: string, anoBase: string, periodoBase: string): Promise<string> => {
+    const fetchMateriaInfo = async (codigo: string, anoBase: string, periodoBase: string): Promise<string | null> => {
       const tryFetch = async (a: string, p: string) => {
         try {
           const res = await fetch(`/api/courses?search=${codigo}&year=${a}&period=${p}`);
@@ -105,7 +105,7 @@ export default function DadosPage() {
           lote.map(async (codigo) => {
               const nome = await fetchMateriaInfo(codigo, ano, periodo);
               const valido = nome && nome !== codigo && nome !== "Disciplina UnB";
-              return { codigo, nome, valido };
+              return { codigo, nome: nome || codigo, valido };
           })
       );
 
@@ -154,7 +154,7 @@ export default function DadosPage() {
       setLoadingRecomendacoes(false);
     };
 
-    // --- LÓGICA PRINCIPAL DO EFFECT ---
+    // --- LÓGICA PRINCIPAL ---
     const init = async () => {
       const dadosSalvos = localStorage.getItem("dadosAluno");
       if (!dadosSalvos) {

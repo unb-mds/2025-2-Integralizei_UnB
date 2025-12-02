@@ -30,7 +30,7 @@ export default function LoginPage() {
 
     try {
       setMensagem("Entrando...");
-      // Conecta na porta 3001
+      // Conecta na porta 3001 (Backend de Login)
       const BACKEND_URL = "http://localhost:3001";
       const API_ROUTE = "/api/login";
 
@@ -50,10 +50,22 @@ export default function LoginPage() {
         return;
       }
 
+      // --- AQUI ESTÁ A CORREÇÃO ---
+      // Salvamos um sinal de que o usuário está logado
+      localStorage.setItem("user_session", JSON.stringify({ 
+        name: data.name, 
+        email: formData.email,
+        loggedAt: new Date().toISOString() 
+      }));
+      
+      // Força um evento para a Navbar atualizar na hora (se estiver na mesma janela)
+      window.dispatchEvent(new Event("storage"));
+      // ----------------------------
+
       setMensagem("Login efetuado com sucesso! Redirecionando...");
-      // Redireciona para a Home (ou Dashboard se preferir)
+      
       setTimeout(() => {
-        router.push("/"); 
+        router.push("/dados"); // Redireciona para os dados
       }, 1000);
 
     } catch (error) {
@@ -64,6 +76,8 @@ export default function LoginPage() {
 
   const handleGoogleLogin = () => {
     setMensagem("Redirecionando para o Google...");
+    // A rota do Google também precisa setar o cookie/session, 
+    // mas o redirecionamento acontece no backend.
     window.location.href = "http://localhost:3001/auth/google";
   };
 
