@@ -6,7 +6,7 @@ repo_name: Integralizei UnB
 theme:
   name: material
   language: pt-BR
-  logo: assets/logo.png # Se não tiver logo, pode comentar esta linha
+  # logo: assets/logo.png # Descomente quando tiver a logo na pasta assets
   favicon: assets/favicon.ico
   features:
     - navigation.tabs
@@ -15,7 +15,7 @@ theme:
     - search.suggest
     - search.highlight
     - content.code.copy
-  palette: 
+  palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
       primary: indigo
@@ -46,25 +46,34 @@ markdown_extensions:
       emoji_index: !!python/name:materialx.emoji.twemoji
       emoji_generator: !!python/name:materialx.emoji.to_svg
 
-
+# Estrutura de Navegação Atualizada
 nav:
   - Home: index.md
-  
-  - Requisitos: 
+
+  - Planejamento e Gestão:
+      - Visão Geral: planejamento/index.md
+      - Roadmap e Story Map: planejamento/roadmap.md 
+      - Organização do Trabalho: planejamento/organizacao.md 
+      - Story Map Visual: story-map/index.md
+      - Protótipo: prototipo/index.md
+      - Atas de Reunião: ata-de-reunioes/index.md
+
+  - Requisitos:
       - Visão Geral: requisitos/index.md
       # - Casos de Uso: requisitos/casos-de-uso.md
-  
+
   - Arquitetura:
       - Visão Geral: arquitetura/index.md
       - Coleta de Dados: arquitetura/coleta-de-dados.md
-      - Extração com IA: arquitetura/extracao-com-ia.md
       - Armazenamento: arquitetura/armazenamento.md
       - Lógica de Análise: arquitetura/logica-de-analise.md
+
+  - DevOps e Infra:
+      - Visão Geral: DevOps/index.md 
+
+  - Execução (Sprints):
+      - Visão Geral: sprints/index.md
+
   
-  - Sprints: sprints/index.md
-  
-  - Planejamento & Gestão:
-      - Visão Geral: planejamento/index.md
-      - Story Map: story-map/index.md
-      - Protótipo: prototipo/index.md
-      - Atas de Reunião: ata-de-reunioes/index.md
+  - Encerramento:
+      - Conclusões: conclusões/index.md 
