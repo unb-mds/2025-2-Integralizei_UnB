@@ -176,6 +176,10 @@ def get_db():
     return get_pg_conn()
 
 
+def create_app():
+    return app
+
+
 def upsert(conn, dados, arquivo, email_usuario=None):
     aluno_data = dados.get("aluno", {})
     indices = dados.get("indices", {})
