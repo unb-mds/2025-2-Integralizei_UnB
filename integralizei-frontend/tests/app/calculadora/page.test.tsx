@@ -1,17 +1,27 @@
 import { render, screen, fireEvent, waitFor, act } from "@testing-library/react";
 import CalculadoraPage from "../../../src/app/calculadora/page";
 import "@testing-library/jest-dom";
+import React from "react";
 
 // --- MOCKS ---
 
-// 1. Mock do Navbar
+// Mock do Navbar
 jest.mock("@/components/Navbar2/Navbar2", () => {
   return function DummyNavbar() {
     return <div data-testid="navbar">Navbar Mock</div>;
   };
 });
 
-// 2. Mock do jsPDF para não quebrar ao tentar gerar binário no teste
+// Mock do useRouter (Garante que o componente Navbar funcione)
+jest.mock("next/navigation", () => ({
+  useRouter: () => ({
+    push: jest.fn(),
+    refresh: jest.fn(),
+  }),
+}));
+
+
+// 1. Mock do jsPDF
 const mockSave = jest.fn();
 jest.mock("jspdf", () => {
   return jest.fn().mockImplementation(() => ({
@@ -28,7 +38,7 @@ jest.mock("jspdf", () => {
   }));
 });
 
-// 3. Mock do LocalStorage (igual aos outros testes)
+// 2. Mock do LocalStorage
 const localStorageMock = (function () {
   let store: Record<string, string> = {};
   return {
@@ -48,9 +58,8 @@ Object.defineProperty(window, "localStorage", {
   value: localStorageMock,
 });
 
-// 4. Mock do Fetch (API)
+// 3. Mock do Fetch (API)
 global.fetch = jest.fn((url: string) => {
-  // Mock da API de Período
   if (url.includes("year-period")) {
     return Promise.resolve({
       ok: true,
@@ -58,7 +67,6 @@ global.fetch = jest.fn((url: string) => {
     });
   }
 
-  // Mock da API de Cursos (Busca)
   if (url.includes("courses")) {
     return Promise.resolve({
       ok: true,
@@ -77,7 +85,7 @@ global.fetch = jest.fn((url: string) => {
           code: "MAT0025",
           name: "Cálculo 1",
           credits: 6,
-          classes: JSON.stringify([ // Testando caso venha como string
+          classes: JSON.stringify([
             { _class: "B", teachers: ["Professor Calc"], schedule: "24M34", days: ["Seg", "Qua", "Sex"] }
           ])
         }
@@ -87,6 +95,40 @@ global.fetch = jest.fn((url: string) => {
 
   return Promise.reject(new Error("URL desconhecida no teste"));
 }) as jest.Mock;
+
+// --- CORREÇÃO MOCK CANVAS COMPLETO (Resolve TypeErrors e 'Not Implemented') ---
+beforeAll(() => {
+  // Define o mock de getContext
+  const mockContext = {
+    createLinearGradient: jest.fn(() => ({ addColorStop: jest.fn() })),
+    createRadialGradient: jest.fn(() => ({ addColorStop: jest.fn() })),
+    fillRect: jest.fn(),
+    scale: jest.fn(),
+    beginPath: jest.fn(),
+    arc: jest.fn(),
+    fill: jest.fn(),
+    clearRect: jest.fn(),
+    quadraticCurveTo: jest.fn(), // Essencial para o desenho da calculadora
+    lineTo: jest.fn(),
+    moveTo: jest.fn(),
+    closePath: jest.fn(),
+    fillText: jest.fn(),
+    measureText: jest.fn(() => ({ width: 10 })),
+    stroke: jest.fn(),
+    bezierCurveTo: jest.fn(),
+  };
+
+  // 1. Mock do getContext
+  global.HTMLCanvasElement.prototype.getContext = jest.fn(() => mockContext) as jest.Mock;
+
+  // 2. Mock do toDataURL
+  global.HTMLCanvasElement.prototype.toDataURL = jest.fn(() => 'data:image/png;base64,mocked_data_url') as jest.Mock;
+
+  // 3. Mock das propriedades de tamanho (para o código da calculadora usar)
+  Object.defineProperty(global.HTMLCanvasElement.prototype, 'width', { writable: true, configurable: true, value: 300 });
+  Object.defineProperty(global.HTMLCanvasElement.prototype, 'height', { writable: true, configurable: true, value: 300 });
+});
+// --------------------------------------------------------------------------
 
 
 // --- SUÍTE DE TESTES ---
@@ -98,7 +140,6 @@ describe("Página de Calculadora", () => {
   });
 
   it("deve carregar corretamente e ler dados do aluno do localStorage", async () => {
-    // Simula um aluno com 50% de integralização base
     const dadosMock = {
       curriculo: { integralizacao: 50.00, ch_exigida: 3000 }
     };
@@ -108,12 +149,9 @@ describe("Página de Calculadora", () => {
       render(<CalculadoraPage />);
     });
 
-    // Verifica título
     expect(screen.getByText("Calculadora")).toBeInTheDocument();
     
-    // Verifica se carregou a porcentagem base (pode demorar pela animação, mas o texto deve aparecer)
     await waitFor(() => {
-      // O AnimatedNumber pode renderizar 50 ou 50.00, usamos regex flexível
       const porcentagemElements = screen.getAllByText(/50/); 
       expect(porcentagemElements.length).toBeGreaterThan(0);
     });
@@ -144,14 +182,12 @@ describe("Página de Calculadora", () => {
       render(<CalculadoraPage />);
     });
 
-    // 1. Faz a busca
     const inputBusca = screen.getByPlaceholderText(/Matéria \(Ex: Cálculo 1\)/i);
     fireEvent.change(inputBusca, { target: { value: "Algoritmos" } });
     await act(async () => {
       fireEvent.click(screen.getByLabelText("Buscar"));
     });
 
-    // 2. Espera aparecer e clica no botão de adicionar (+)
     await waitFor(() => {
         expect(screen.getByText("Algoritmos e Programação de Computadores")).toBeInTheDocument();
     });
@@ -159,29 +195,28 @@ describe("Página de Calculadora", () => {
     const btnAdd = screen.getByLabelText("Adicionar Algoritmos e Programação de Computadores");
     fireEvent.click(btnAdd);
 
-    // 3. Verifica se foi para a coluna "Sua Simulação"
-    // O item sai da lista de busca e vai para selecionadas.
-    // Verificamos se o botão de remover (lixeira) apareceu para esse item
     await waitFor(() => {
         const btnRemove = screen.getByLabelText("Remover Algoritmos e Programação de Computadores");
         expect(btnRemove).toBeInTheDocument();
     });
 
-    // 4. Verifica se atualizou créditos (APC tem 4 créditos)
-    // O AnimatedNumber demora um pouco, então usamos waitFor
     await waitFor(() => {
-        // Procura pelo número 4 nos stats
         const creditosExtras = screen.getByText("4"); 
         expect(creditosExtras).toBeInTheDocument();
     });
   });
 
   it("deve gerar o PDF ao clicar no botão salvar", async () => {
+    // Simula a adição da matéria para que o PDF tenha conteúdo
+    const dadosMock = {
+        curriculo: { integralizacao: 50.00, ch_exigida: 3000 }
+    };
+    window.localStorage.setItem("dadosAluno", JSON.stringify(dadosMock));
+
     await act(async () => {
       render(<CalculadoraPage />);
     });
 
-    // Precisamos adicionar uma matéria primeiro, senão o botão alerta e não salva
     const inputBusca = screen.getByPlaceholderText(/Matéria \(Ex: Cálculo 1\)/i);
     fireEvent.change(inputBusca, { target: { value: "Algoritmos" } });
     await act(async () => {
@@ -192,16 +227,13 @@ describe("Página de Calculadora", () => {
     
     fireEvent.click(screen.getByLabelText("Adicionar Algoritmos e Programação de Computadores"));
 
-    // Espera adicionar
     await waitFor(() => expect(screen.getByLabelText("Remover Algoritmos e Programação de Computadores")).toBeInTheDocument());
 
-    // Clica em Salvar PDF
     const btnSalvar = screen.getByText("Salvar Simulação (PDF)");
     fireEvent.click(btnSalvar);
 
-    // Verifica se o mock do jsPDF foi chamado
     await waitFor(() => {
-        expect(mockSave).toHaveBeenCalledWith("Planejamento_UnB.pdf");
+      expect(mockSave).toHaveBeenCalledWith("Planejamento_UnB.pdf");
     });
   });
 });

@@ -1,57 +1,132 @@
-# Integralizei UNB
+# 🎓 Integralizei UnB
 
-Tema proposto pelo squad 9 
+**Visualização, planejamento e inteligência para sua trajetória acadêmica na Universidade de Brasília.**
 
-A época de matrícula é um momento de grande expectativa e, muitas vezes, de angústia e decepção. Aquele professor incrível, cujas aulas são sempre disputadas, gera inúmeras dúvidas na cabeça dos alunos:
+---
 
-> *"Será que eu consigo com ele?"*
-> 
+## 1. 📌 Visão Geral
 
-> *"E se eu não passar e ficar sem a vaga?"*
-> 
+Projeto desenvolvido na disciplina de **Métodos de Desenvolvimento de Software (MDS - 2025/2)** – Engenharia de Software (FGA/UnB).
 
-> *"Acho que vou tentar um professor mais fácil, só para garantir..."*
-> 
+O **Integralizei UnB** é uma plataforma que simplifica a vida do estudante, permitindo o upload do histórico escolar (PDF) para gerar automaticamente métricas de desempenho, calcular integralização e oferecer recomendações de matrícula, tudo isso com segurança e persistência de dados.
 
-Nós conhecemos de perto esse sentimento. Já sentimos o nervosismo de atualizar a página do SIGAA, torcendo por um resultado positivo. Foi exatamente dessa experiência que nasceu a ideia do **INTEGRALIZEI UNB**: uma ferramenta pensada para acabar com o "achismo" no momento mais crucial do semestre.
+### 🚀 Propósito
 
-Com apenas o seu histórico, nossa plataforma analisará e prevêrá qual a sua chance aproximada de garantir a vaga com o professor que você tanto quer. Como? Utilizando uma base de dados com informações de alunos que já cursaram essa mesma disciplina. Assim, em vez de ansiedade, você terá o poder dos dados para planejar seu semestre com mais confiança e tranquilidade.
+A aplicação resolve a dificuldade dos alunos em visualizar seu progresso real no curso e planejar os próximos semestres. Com o Integralizei, o usuário pode:
 
-## Funcionamento do backend
+- 📊 **Acompanhar Métricas:** Visualizar IRA, créditos cursados e percentual de conclusão de forma gráfica.
+- 📂 **Processamento Automático:** Extração de dados direto do PDF do histórico oficial (SIGAA).
+- 🤖 **UnBot:** Tirar dúvidas sobre regras acadêmicas (IRA, menções, matrícula) com um assistente virtual.
+- 🔒 **Segurança:** Dados vinculados à conta do usuário com autenticação robusta.
 
-Para criar o **INTEGRALIZEI UNB**, nosso backend será construído com quatro conceitos fundamentais.
+---
 
-### 1 - Coleta de dados
+## 2. 🧩 Links Importantes
 
-O sucesso da nossa análise depende da qualidade e quantidade de dados. Nossa estratégia de coleta será dividida em duas fases:
+- 🎨 **[Protótipo de Alta Fidelidade](https://www.figma.com/design/O0hfvabbozN0wcHUb9xal0/Integralizei-UnB-Prototipo--c%C3%B3pia-?node-id=2-5057&p=f&t=us5kKhKGEUbQWBEo-0)**
+- 🎨 **[Protótipo de Alta Fidelidade](https://www.figma.com/design/O0hfvabbozN0wcHUb9xal0/Integralizei-UnB-Prototipo--c%C3%B3pia-?node-id=274-782&p=f&t=us5kKhKGEUbQWBEo-0)**
+- 🗺️ **[Story Map](https://www.figma.com/board/iYClmkeuO6PYRTE8YbSFgY/Integralizei-UnB?node-id=0-1&p=f&t=eaMuHT7w1QAbSRtX-0)**
+- 📚 **[Documentação Completa](https://unb-mds.github.io/2025-2-Integralizei_UnB/)**
+  
+---
 
-- **Fase 1 (Pré-lançamento):** Iniciaremos com uma base de dados menor, coletada através de envios voluntários. Isso nos permitirá treinar nossos modelos e garantir que a plataforma já seja útil desde o primeiro dia.
-- **Fase 2 (Site ativo):** Com o site no ar, os próprios usuários poderão fazer o upload de seus históricos. Este processo será simples, rápido e seguro.
+## 3. 📌 Funcionalidades
 
-O tratamento dos dados é de extrema importância, dados sensíveis como nome, CPF e matrícula são **imediatamente descartados** e nunca armazenados.
+### ✅ Implementadas
 
-### 2 - Extração de dados
+- **Upload e Parser de Histórico:** Leitura inteligente de PDFs acadêmicos da UnB, identificando disciplinas, notas e menções.
+- **Dashboard do Aluno:** Visualização clara de IRA, MP (Média Ponderada) e horas integralizadas vs. exigidas.
+- **Autenticação Híbrida:**
+  - Login tradicional (E-mail/Senha).
+  - Login social via **Google OAuth**.
+- **Persistência de Dados:** Seus dados ficam salvos na nuvem (PostgreSQL) e acessíveis de qualquer dispositivo.
+- **UnBot (Chatbot):** Assistente para responder dúvidas frequentes sobre a vida acadêmica.
+- **Calculadora de Fluxo:** Simulação de matérias futuras e impacto na integralização.
+- **Segurança de Upload:** O sistema exige autenticação para processar e salvar históricos, garantindo a privacidade.
 
-A fase de extração de informações é a mais crítica, já que os históricos em PDF possuem estruturas inconsistentes que dificultam a leitura por um software comum. Para resolver esse problema, utilizaremos um agente de Inteligência Artificial. Ele será capaz de analisar o PDF e facilmente nos devolver os dados que precisamos no formato necessário.
+---
 
-### 3 - Armazenamento de dados
+## 4. 🏗️ Arquitetura e Tecnologias
 
-Os dados extraídos precisam ser organizados em um banco de dados para que possam ser consultados de forma eficiente. Um banco de dados relacional (SQL), ainda estamos vendo quais bancos usaremos.
+O projeto utiliza uma arquitetura de **Microsserviços** containerizada, separando responsabilidades para maior escalabilidade.
 
-### 4 - Logica de Análise
+| Serviço          | Tecnologia                   | Responsabilidade                                                             |
+| ---------------- | ---------------------------- | ---------------------------------------------------------------------------- |
+| **Frontend**     | Next.js (React) + Tailwind   | Interface do usuário, responsividade e interações dinâmicas.                 |
+| **Backend Core** | Python (Flask)               | Processamento de PDF, cálculos estatísticos e lógica de negócios acadêmicos. |
+| **Auth Service** | Node.js (Express + Passport) | Gerenciamento de usuários, sessões e autenticação Google OAuth.              |
+| **Database**     | PostgreSQL                   | Armazenamento relacional robusto de alunos, disciplinas e estatísticas.      |
+| **Infra**        | Docker & Docker Compose      | Orquestração de todo o ambiente de desenvolvimento e produção.               |
 
-Para comparar os dados dos usuários utilizaremos o sistema oficial de “ranqueamento” da UNB:
+**Destaque Técnico:**
 
-![image.png](https://github.com/unb-mds/2025-2-Squad-09/blob/460ee869d35a064a00ce6381d3639f9493a3b7c1/doc/Fotos/Readme%20fotos/image.png)
+- O sistema possui um mecanismo de **Auto-Schema**: ao iniciar, o Backend verifica e cria automaticamente as tabelas necessárias no PostgreSQL, garantindo que o ambiente funcione imediatamente após o clone.
 
-[Protótipo Figma Alta Fidelidade](https://www.figma.com/proto/aZz3Z42XS3ukfA1dmO4CSy/Integralizei-UnB-Prototipo?page-id=2%3A5057&node-id=86-738&viewport=430%2C484%2C0.16&t=4WOKKrP3IuPDyc7T-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=20%3A2016&hide-ui=1)
+---
 
-[Protótipo Figma Baixa Fidelidade](https://www.figma.com/design/aZz3Z42XS3ukfA1dmO4CSy/Integralizei-UnB-Prototipo?node-id=274-782&p=f&t=iHei4xLPFjjhZMzQ-0)
+## 5. 🚀 Como Rodar o Projeto
 
-[Teamplate Figma](https://www.figma.com/board/iYClmkeuO6PYRTE8YbSFgY/Integralizei-UnB?node-id=0-1&p=f&t=sJNDJnBSvUTxPIw6-0)
+Siga os passos abaixo para executar a aplicação localmente. O projeto é totalmente "dockerizado", facilitando a configuração.
 
-[Documentação da Arquitetura](https://github.com/unb-mds/2025-2-Integralizei_UnB/blob/c7bc131d6d4e7f049eca74789768dd40ea1634e6/doc/arquitetura/DocumentoDeArquitetura.md)
+### Pré-requisitos
 
+- [Docker](https://www.docker.com/) e Docker Compose instalados.
+- [Git](https://git-scm.com/) instalado.
 
+### Passo a Passo
 
+1. **Clone o repositório:**
+
+   ```bash
+   git clone https://github.com/unb-mds/2025-2-Integralizei_UnB.git
+   cd 2025-2-Integralizei_UnB
+   ```
+
+2. **Configure as Variáveis de Ambiente (Opcional):**
+
+   - O projeto já possui configurações padrão para desenvolvimento local no `docker-compose.yml`.
+   - Caso precise configurar chaves do Google ou Banco, crie um arquivo `.env` na raiz baseado no `.env.exemplo`.
+
+3. **Execute com Docker Compose:**
+   Este comando irá construir as imagens (Frontend, Python Core, Node Auth e Postgres) e iniciar o sistema.
+
+   ```bash
+   docker-compose up --build
+   ```
+
+4. **Acesse a Aplicação:**
+
+   - **Frontend:** [http://localhost:3000](http://localhost:3000) <-- Entre nesse localhost
+   - **API Core:** [http://localhost:5000](http://localhost:5000)
+   - **Auth Service:** [http://localhost:3001](http://localhost:3001)
+
+### 🧪 Reiniciando o Programa
+
+**Devido ao uso do Docker, caso tente reiniciar a programação sem apagar totalmente a database, o codigo falhara, coloque o seguinte codigo para reinicar a aplicação corrertamente:**
+
+```bash
+docker-compose down -v 
+docker builder prune --all --force
+docker-compose up --build
+```
+
+---
+<div align="center">
+
+## 6. 👥 Equipe
+
+**Squad 09 – MDS 2025/2 – FGA/UnB**
+
+| | | |
+|:---:|:---:|:---:|
+| <a href="https://github.com/GUGOFO"><img src="https://github.com/GUGOFO.png" width="200"></a><br>**Gustavo (GUGOFO)** | <a href="https://github.com/gpaulovit"><img src="https://github.com/gpaulovit.png" width="200"></a><br>**Paulo Vitor** | <a href="https://github.com/menali17"><img src="https://github.com/menali17.png" width="200"></a><br>**Enzo Menali** |
+| <a href="https://github.com/AnnaBeatrizAraujo"><img src="https://github.com/AnnaBeatrizAraujo.png" width="200"></a><br>**Anna Beatriz** | <a href="https://github.com/iicaroll"><img src="https://github.com/iicaroll.png" width="200"></a><br>**Carol** | <a href="https://github.com/carolinabecker"><img src="https://github.com/carolinabecker.png" width="200"></a><br>**Carolina Becker** |
+
+</div>
+
+---
+
+## 7. 📜 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
 

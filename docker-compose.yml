@@ -68,7 +68,6 @@ services:
       - "5432:5432"
     volumes:
       - integralizei_pg_data:/var/lib/postgresql/data
-      - ./integralizei-backend/db/init.sql:/docker-entrypoint-initdb.d/init.sql
     restart: unless-stopped
 
   pgadmin:
