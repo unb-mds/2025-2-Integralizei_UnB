@@ -78,3 +78,10 @@ uploads/
 *.log
 *.tmp
 *.bak
+
+**/Lib/
+**/Scripts/
+**/Include/
+__pycache__/
+*.pyc
+pyvenv.cfg
