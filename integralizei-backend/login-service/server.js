@@ -1,6 +1,6 @@
 import express from "express";
 import session from "express-session";
-import cors from "cors";
+import cors from "cors"; 
 import bcrypt from "bcryptjs";
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
@@ -19,19 +19,27 @@ const PORT = process.env.PORT || 3001;
 
 const app = express();
 
-
 app.set('trust proxy', 1);
 
 
+app.use(express.json()); 
+app.use(express.urlencoded({ extended: true }));
+
+
+app.use(cors({
+  origin: "http://localhost:3000", 
+  credentials: true, 
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+}));
+
 const resetPasswordLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutos
-  max: 5, // Bloqueia após 5 tentativas
+  windowMs: 15 * 60 * 1000, 
+  max: 5, 
   standardHeaders: true, 
   legacyHeaders: false,
   message: { message: "Muitas tentativas. Tente novamente em 15 minutos." }
 });
 
-// Opcional: Limitador global para API
 const globalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
@@ -39,19 +47,13 @@ const globalLimiter = rateLimit({
 });
 app.use("/api/", globalLimiter);
 
-
-app.use(cors({
-  origin: "http://localhost:3000",
-  credentials: true
-}));
-
-app.use(express.json());
-
 app.use(session({
   secret: process.env.SESSION_SECRET || "dev-secret-change-in-prod",
   resave: false,
   saveUninitialized: false,
   cookie: {
+    secure: process.env.NODE_ENV === 'production', 
+    httpOnly: true, 
     maxAge: 1000 * 60 * 60 * 24 
   }
 }));
@@ -124,13 +126,14 @@ app.get('/auth/google',
 app.get('/auth/google/callback', 
   passport.authenticate('google', { failureRedirect: 'http://localhost:3000/login?error=google' }),
   (req, res) => {
+    // Redireciona para o front com sucesso
     res.redirect('http://localhost:3000/login?google_success=true');
   }
 );
 
 app.post("/api/register", async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password } = req.body; // REQUER app.use(express.json())
     if (
         typeof name !== 'string' || 
         typeof email !== 'string' || 
@@ -202,7 +205,7 @@ app.post("/api/forgot-password", async (req, res) => {
       await db.query("UPDATE users SET reset_token = $1, reset_token_expires = $2, updated_at = NOW() WHERE id = $3", [token, expires, user.id]);
       
       const resetLink = `http://localhost:${PORT}/redefinir-senha.html?token=${token}`;
-      console.log(`[SIMULAÇÃO] Link gerado: ${resetLink}`); // Log seguro
+      console.log(`[SIMULAÇÃO] Link gerado: ${resetLink}`); 
       return res.json({ message: "Link gerado (simulação).", simulatedResetLink: resetLink });
     }
     return res.json({ message: "Se existe, enviamos." });
@@ -224,4 +227,7 @@ app.post("/api/reset-password", resetPasswordLimiter, async (req, res) => {
   } catch (err) { console.error(err); return res.status(500).json({ message: "Erro interno." }); }
 });
 
-app.listen(PORT, () => console.log("Server running on http://localhost:" + PORT));
+
+app.listen(PORT, '0.0.0.0', () => 
+  console.log("Server running on http://0.0.0.0:" + PORT)
+);
