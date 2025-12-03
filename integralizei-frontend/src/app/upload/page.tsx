@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
 import { useState, ChangeEvent, DragEvent, useEffect } from "react";
@@ -18,14 +19,11 @@ export default function UploadPage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    const userSession = localStorage.getItem("user_session");
-    
-    // [FIX] queueMicrotask para evitar erro de linter (setState síncrono no effect)
-    queueMicrotask(() => {
-      setIsLoggedIn(!!userSession);
-      setIsCheckingAuth(false);
-    });
+  const userSession = localStorage.getItem("user_session");
+  setIsLoggedIn(!!userSession);
+  setIsCheckingAuth(false);
   }, []);
+
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -159,6 +157,7 @@ export default function UploadPage() {
 
                 <input
                   id="fileInput"
+                  data-testid="file-input"
                   type="file"
                   accept="application/pdf"
                   className="hidden"

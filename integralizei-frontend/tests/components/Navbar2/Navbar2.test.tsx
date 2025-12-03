@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { render, screen, waitFor } from "@testing-library/react";
 import Navbar from "@/components/Navbar2/Navbar2";
 import "@testing-library/jest-dom";
