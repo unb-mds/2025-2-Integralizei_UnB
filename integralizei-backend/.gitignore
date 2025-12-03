@@ -1,2 +1,7 @@
-# Created by venv; see https://docs.python.org/3/library/venv.html
-*
+__pycache__/
+*.py[cod]
+venv/
+.env
+.DS_Store
+__pycache__/
+*.pyc

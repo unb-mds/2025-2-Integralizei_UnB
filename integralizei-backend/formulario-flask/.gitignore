@@ -18,3 +18,13 @@ dist/
 build/
 *.egg-info/
 .env
+
+__pycache__/
+*.py[cod]
+Lib/
+Scripts/
+pyvenv.cfg
+.env
+
+.vscode/
+.idea/
