@@ -11,7 +11,3 @@
 - Uso de *TypeScript* para tipagem estática.  
 - Linters configurados para padronização do código.  
 - Testes unitários e integração contínua para garantir robustez.
-
-> Inserir prints de testes, logs de CI/CD ou relatórios de cobertura aqui  
-> ![Teste Unitário](caminho/para/teste.png)  
-> ![Pipeline CI](caminho/para/pipeline.png)

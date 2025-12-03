@@ -25,15 +25,12 @@ A solução segue uma arquitetura modular baseada em componentes, garantindo *fa
 *Diagramas da arquitetura*  
 
 1. *Diagrama 1 – Contexto do Sistema*  
-> Inserir diagrama aqui  
 > ![Diagrama de Contexto](../../doc/Fotos/Diagramas/Diagrama1.png)
 
-2. *Diagrama 2 – Containers*  
-> Inserir diagrama aqui  
+2. *Diagrama 2 – Containers*    
 > ![Diagrama de Containers](../../doc/Fotos/Diagramas/Diagrama2.png)
 
 3. *Diagrama 3 – Componentes / Nível 3 (C4)*  
-> Inserir diagrama aqui  
 > ![Diagrama de Componentes](../../doc/Fotos/Diagramas/Diagrama3.png)
 
 *Camadas implementadas*  
@@ -54,12 +51,5 @@ A solução segue uma arquitetura modular baseada em componentes, garantindo *fa
 - Estimativa de chance de matrícula em disciplinas futuras.  
 - Chatbot de suporte 24/7 (UnBot).  
 - Interface interativa (SPA) para visualização de progresso e simulações de integralização.
-
-*Prints, fluxos ou GIFs demonstrativos*  
-
-> Inserir prints do código, telas da aplicação e fluxos aqui  
-> ![Print do Frontend](caminho/para/print_frontend.png)  
-> ![Print do Backend](caminho/para/print_backend.png)  
-> ![Fluxo de Usuário](caminho/para/fluxo.gif)
 
 ---
