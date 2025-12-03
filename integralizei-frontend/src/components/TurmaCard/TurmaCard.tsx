@@ -44,7 +44,7 @@ export default function TurmaCard({ turma, disciplinaCode, disciplinaName }: Tur
     try {
       const professorNome = turma.teachers && turma.teachers.length > 0 ? turma.teachers[0] : "";
       
-      const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
       let url = `${baseUrl}/api/ranking/${disciplinaCode}`;
       
       if (professorNome) {

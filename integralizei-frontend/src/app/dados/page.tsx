@@ -53,7 +53,7 @@ export default function DadosPage() {
   const [loadingRecomendacoes, setLoadingRecomendacoes] = useState(false);
 
   useEffect(() => {
-    // --- FUNÇÕES AUXILIARES DENTRO DO EFFECT (Evita erro de declaração) ---
+    // --- FUNÇÕES AUXILIARES ---
     const shuffleArray = (array: string[]) => {
       const newArray = [...array];
       for (let i = newArray.length - 1; i > 0; i--) {
@@ -63,19 +63,23 @@ export default function DadosPage() {
       return newArray;
     };
 
-    const fetchMateriaInfo = async (codigo: string, anoBase: string, periodoBase: string): Promise<string> => {
-      const tryFetch = async (a: string, p: string) => {
-        try {
-          const res = await fetch(`/api/courses?search=${codigo}&year=${a}&period=${p}`);
-          if (res.ok) {
-            const data = await res.json();
-            if (Array.isArray(data) && data.length > 0) {
-              return data[0].name;
+    const fetchMateriaInfo = async (codigo: string, anoBase: string, periodoBase: string): Promise<string | null> => {
+        const tryFetch = async (a: string, p: string) => {
+          const url = `/api/courses?search=${codigo}&year=${a}&period=${p}`;
+          try {
+            const res = await fetch(url);
+            if (res.ok) {
+              const data = await res.json();
+              if (Array.isArray(data) && data.length > 0) {
+                return data[0].name;
+              }
             }
+          } catch (error) {
+            console.error(`[REDE ERRO] Falha ao buscar ${codigo}`, error);
+            return null;
           }
-        } catch { return null; }
-        return null;
-      };
+          return null;
+        };
 
       let nome = await tryFetch(anoBase, periodoBase);
       if (nome) return nome;
@@ -105,7 +109,7 @@ export default function DadosPage() {
           lote.map(async (codigo) => {
               const nome = await fetchMateriaInfo(codigo, ano, periodo);
               const valido = nome && nome !== codigo && nome !== "Disciplina UnB";
-              return { codigo, nome, valido };
+              return { codigo, nome: nome || codigo, valido };
           })
       );
 
@@ -154,27 +158,45 @@ export default function DadosPage() {
       setLoadingRecomendacoes(false);
     };
 
-    // --- LÓGICA PRINCIPAL DO EFFECT ---
-    const init = async () => {
-      const dadosSalvos = localStorage.getItem("dadosAluno");
-      if (!dadosSalvos) {
-        setLoading(false);
-        return;
+    // --- LÓGICA PRINCIPAL DE CARREGAMENTO ---
+    const carregarDados = async () => {
+      let dadosFinal: DadosAluno | null = null;
+
+      // 1. Tenta pegar do LocalStorage
+      const dadosLocais = localStorage.getItem("dadosAluno");
+      if (dadosLocais) {
+        try {
+          dadosFinal = JSON.parse(dadosLocais);
+        } catch (e) {
+          console.error("Erro parse local:", e);
+        }
       }
 
-      let dadosParsed: DadosAluno | null = null;
-      try {
-        dadosParsed = JSON.parse(dadosSalvos) as DadosAluno;
-        setDados(dadosParsed);
-      } catch (e) {
-        console.error("Erro ao ler dados:", e);
-        setLoading(false);
-        return;
+      // 2. Se não tiver local, tenta buscar no servidor se estiver logado
+      if (!dadosFinal) {
+        const userSession = localStorage.getItem("user_session");
+        if (userSession) {
+          try {
+            const { email } = JSON.parse(userSession);
+            if (email) {
+              const res = await fetch(`http://localhost:5000/api/aluno?email=${email}`);
+              if (res.ok) {
+                dadosFinal = await res.json();
+                // Salva localmente para agilizar próximos loads
+                localStorage.setItem("dadosAluno", JSON.stringify(dadosFinal));
+              }
+            }
+          } catch (e) {
+            console.error("Erro ao buscar dados remotos:", e);
+          }
+        }
       }
 
+      setDados(dadosFinal);
       setLoading(false);
 
-      if (dadosParsed?.aluno?.curso && dadosParsed?.curriculo?.materias) {
+      // 3. Se carregou dados, inicia recomendações
+      if (dadosFinal?.aluno?.curso && dadosFinal?.curriculo?.materias) {
         setLoadingRecomendacoes(true);
         try {
           const resPeriod = await fetch("/api/year-period");
@@ -192,8 +214,8 @@ export default function DadosPage() {
           }
 
           await processarRecomendacoes(
-            dadosParsed.aluno.curso, 
-            dadosParsed.curriculo.materias,
+            dadosFinal.aluno.curso, 
+            dadosFinal.curriculo.materias,
             ano,
             periodo
           );
@@ -205,7 +227,7 @@ export default function DadosPage() {
       }
     };
 
-    init();
+    carregarDados();
   }, []);
 
   if (loading) return <div className="flex h-screen items-center justify-center font-[Inter]">Carregando...</div>;

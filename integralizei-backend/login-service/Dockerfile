@@ -5,15 +5,16 @@ FROM node:18-alpine
 WORKDIR /app
 
 # 3. Copia apenas os arquivos de dependência desse serviço
-COPY package.json package-lock.json ./
+COPY package.json ./
+# (Removemos o package-lock.json daqui por enquanto pois você o deletou)
 
-# 4. Instala
-RUN npm ci
+# 4. Instala (USANDO INSTALL AGORA)
+RUN npm install
 
 # 5. Copia o código do serviço de login
 COPY . .
 
-# 6. Expõe a porta 3001 (Padrão de microsserviços de auth)
+# 6. Expõe a porta 3001
 EXPOSE 3001
 
 # 7. Roda o serviço
