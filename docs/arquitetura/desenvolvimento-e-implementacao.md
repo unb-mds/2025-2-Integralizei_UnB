@@ -26,15 +26,15 @@ A solução segue uma arquitetura modular baseada em componentes, garantindo *fa
 
 1. *Diagrama 1 – Contexto do Sistema*  
 > Inserir diagrama aqui  
-> ![Diagrama de Contexto](caminho/para/diagrama1.png)
+> ![Diagrama de Contexto](../../doc/Fotos/Diagramas/Diagrama1.png)
 
 2. *Diagrama 2 – Containers*  
 > Inserir diagrama aqui  
-> ![Diagrama de Containers](caminho/para/diagrama2.png)
+> ![Diagrama de Containers](../../doc/Fotos/Diagramas/Diagrama2.png)
 
 3. *Diagrama 3 – Componentes / Nível 3 (C4)*  
 > Inserir diagrama aqui  
-> ![Diagrama de Componentes](caminho/para/diagrama3.png)
+> ![Diagrama de Componentes](../../doc/Fotos/Diagramas/Diagrama3.png)
 
 *Camadas implementadas*  
 
