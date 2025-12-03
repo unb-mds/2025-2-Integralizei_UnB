@@ -9,6 +9,34 @@ hide:
 Uma ferramenta pensada para acabar com o "achismo" no momento mais crucial do semestre: a matrícula.
 Utilizando uma base de dados com informações de alunos que já cursaram essa mesma disciplina, em vez de ansiedade, você terá o poder dos dados para planejar seu semestre com mais confiança e tranquilidade.
 
+## Contextualização do Problema
+
+A época de matrícula na Universidade de Brasília (UnB) é historicamente um momento de grande expectativa e, frequentemente, de angústia e decepção para os estudantes. A incerteza sobre conseguir vagas com professores específicos gera dúvidas constantes, como "Será que eu consigo com ele?" ou "E se eu não passar e ficar sem a vaga?". Esse cenário leva muitos alunos a tomarem decisões baseadas em "achismo" ou a escolherem professores "mais fáceis" apenas para garantir a matrícula.
+
+## Motivação
+
+A motivação para o desenvolvimento do **Integralizei UnB** nasceu da experiência pessoal dos membros da equipe, que conhecem de perto o nervosismo de atualizar a página do SIGAA torcendo por um resultado positivo. O objetivo é substituir a ansiedade pelo poder dos dados, permitindo que o aluno planeje seu semestre com confiança e tranquilidade.
+
+## Objetivos do Projeto
+
+### Objetivo Geral
+Criar uma ferramenta central para o planejamento de matrícula na UnB, reduzindo a incerteza dos estudantes através de análise de dados.
+
+### Objetivos Específicos
+* **Apoio à Decisão:** Fornecer análises que ajudem a tomar decisões estratégicas sobre quais turmas cursar.
+* **Previsibilidade:** Analisar e prever a chance aproximada de garantir uma vaga com determinado professor utilizando dados históricos.
+* **Qualidade de Produto:** Construir um produto de alta qualidade para a disciplina de Métodos de Desenvolvimento de Software (MDS).
+* **Engajamento:** Alcançar um alto número de usuários ativos a cada semestre.
+
+## Escopo Inicial Definido
+
+O escopo do projeto foi estruturado em torno de quatro pilares fundamentais no backend: Coleta, Extração, Armazenamento e Lógica de Análise. As principais funcionalidades definidas foram:
+
+1. **Análise de Histórico Pessoal:** Upload de PDF, extração via IA e geração de dashboard com IRA e progresso.
+2. **Calculadora de Simulação:** Ferramenta interativa para simular grades futuras e verificar o impacto na integralização em tempo real.
+3. **Pesquisa e Comparativo:** Mecanismo de busca para explorar dados históricos de turmas e comparar perfis de alunos (IRA, integralização).
+4. **UnBot:** Assistente virtual para tirar dúvidas sobre regras acadêmicas.
+
 <div class="grid cards" markdown>
 
 -   :material-clipboard-text-outline: **Ver Requisitos do Projeto**
@@ -125,7 +153,7 @@ Este projeto foi desenvolvido por estudantes da disciplina de Métodos de Desenv
     ---
     Desenvolvedor
 
--   **Ana Carolina Becker**
+-   **Carolina Becker**
 
     ---
     Desenvolvedor
