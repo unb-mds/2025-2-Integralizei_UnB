@@ -9,7 +9,7 @@ import { getDB } from "./db.js";
 import path from "path";
 import { fileURLToPath } from "url";
 import crypto from "crypto"; 
-import rateLimit from "express-rate-limit"; // NOVO IMPORT
+import rateLimit from "express-rate-limit"; 
 
 dotenv.config();
 
@@ -19,18 +19,26 @@ const PORT = process.env.PORT || 3001;
 
 const app = express();
 
-// --- CORREÇÃO 1: RATE LIMITING (Segurança contra força bruta) ---
-const limiter = rateLimit({
-	windowMs: 15 * 60 * 1000, // 15 minutos
-	max: 100, // Limite de 100 requisições por IP
-	standardHeaders: true, 
-	legacyHeaders: false,
-	message: "Muitas requisições deste IP, tente novamente mais tarde."
+
+app.set('trust proxy', 1);
+
+
+const resetPasswordLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutos
+  max: 5, // Bloqueia após 5 tentativas
+  standardHeaders: true, 
+  legacyHeaders: false,
+  message: { message: "Muitas tentativas. Tente novamente em 15 minutos." }
 });
 
-// Aplica o limitador em todas as rotas que começam com /api/
-app.use("/api/", limiter);
-// ----------------------------------------------------------------
+// Opcional: Limitador global para API
+const globalLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: "Muitas requisições."
+});
+app.use("/api/", globalLimiter);
+
 
 app.use(cors({
   origin: "http://localhost:3000",
@@ -123,66 +131,52 @@ app.get('/auth/google/callback',
 app.post("/api/register", async (req, res) => {
   try {
     const { name, email, password } = req.body;
-    if (!name || !email || !password) {
-      return res.status(400).json({ message: "Campos obrigatórios." });
+    if (
+        typeof name !== 'string' || 
+        typeof email !== 'string' || 
+        typeof password !== 'string' ||
+        !name || !email || !password
+    ) {
+      return res.status(400).json({ message: "Campos obrigatórios e devem ser texto." });
     }
-    if (password.length < 8) {
-      return res.status(400).json({ message: "Senha deve ter pelo menos 8 caracteres." });
-    }
+
+    if (password.length < 8) return res.status(400).json({ message: "Senha curta." });
 
     const db = await getDB();
     const resExist = await db.query("SELECT id FROM users WHERE email = $1", [email]);
-    if (resExist.rows.length > 0) {
-      return res.status(409).json({ message: "E-mail já cadastrado." });
-    }
+    if (resExist.rows.length > 0) return res.status(409).json({ message: "E-mail já cadastrado." });
 
     const hash = await bcrypt.hash(password, 10);
     const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
     
-    await db.query(
-      "INSERT INTO users (name, email, password_hash, created_at, updated_at) VALUES ($1, $2, $3, $4, $5)", 
-      [name, email, hash, now, now]
-    );
-    
-    return res.status(201).json({ message: "Cadastro realizado com sucesso." });
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ message: "Erro interno." });
-  }
+    await db.query("INSERT INTO users (name, email, password_hash, created_at, updated_at) VALUES ($1, $2, $3, $4, $5)", [name, email, hash, now, now]);
+    return res.status(201).json({ message: "Sucesso." });
+  } catch (err) { console.error(err); return res.status(500).json({ message: "Erro interno." }); }
 });
 
 app.post("/api/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    if (!email || !password) {
-      return res.status(400).json({ message: "Informe e-mail e senha." });
-    }
+    if (!email || !password) return res.status(400).json({ message: "Informe dados." });
     const db = await getDB();
     const result = await db.query("SELECT id, name, email, password_hash FROM users WHERE email = $1", [email]);
     const user = result.rows[0];
     
-    if (!user || !user.password_hash) {
-      return res.status(401).json({ message: "E-mail ou senha inválidos." });
-    }
+    if (!user || !user.password_hash) return res.status(401).json({ message: "Inválido." });
     const ok = await bcrypt.compare(password, user.password_hash);
-    if (!ok) return res.status(401).json({ message: "E-mail ou senha inválidos." });
+    if (!ok) return res.status(401).json({ message: "Inválido." });
 
     req.login(user, (err) => {
-      if (err) return res.status(500).json({ message: "Erro interno." });
+      if (err) return res.status(500).json({ message: "Erro." });
       return res.json({ message: "Login OK", name: user.name });
     });
 
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ message: "Erro interno." });
-  }
+  } catch (err) { console.error(err); return res.status(500).json({ message: "Erro." }); }
 });
 
 app.get("/api/logout", (req, res) => {
   req.logout((err) => {
-    if (err) {
-      return res.status(500).json({ message: "Erro ao sair." });
-    }
+    if (err) return res.status(500).json({ message: "Erro." });
     req.session.destroy(() => {
       res.clearCookie('connect.sid'); 
       res.json({ message: "Logout OK" });
@@ -191,16 +185,14 @@ app.get("/api/logout", (req, res) => {
 });
 
 app.get("/api/me", async (req, res) => {
-  if (!req.isAuthenticated() || !req.user) {
-    return res.status(401).json({ message: "Não autenticado" });
-  }
+  if (!req.isAuthenticated() || !req.user) return res.status(401).json({ message: "Não autenticado" });
   return res.json(req.user);
 });
 
 app.post("/api/forgot-password", async (req, res) => {
   try {
     const { email } = req.body;
-    if (!email) return res.status(400).json({ message: "E-mail é obrigatório." });
+    if (!email) return res.status(400).json({ message: "E-mail obrigatório." });
     const db = await getDB();
     const result = await db.query("SELECT id, name FROM users WHERE email = $1", [email]);
     const user = result.rows[0];
@@ -209,23 +201,16 @@ app.post("/api/forgot-password", async (req, res) => {
       const expires = Date.now() + 3600000; 
       await db.query("UPDATE users SET reset_token = $1, reset_token_expires = $2, updated_at = NOW() WHERE id = $3", [token, expires, user.id]);
       
-      // --- CORREÇÃO 2: LOG INJECTION ---
-      // Não logamos mais a variável 'email' diretamente para evitar injeção de logs.
-      // Apenas informamos que o link foi gerado.
       const resetLink = `http://localhost:${PORT}/redefinir-senha.html?token=${token}`;
-      console.log(`[SIMULAÇÃO] Link de redefinição gerado (Verifique o console seguro)`);
-      // ---------------------------------
-
-      return res.json({ 
-        message: "Se este e-mail estiver cadastrado, um link de redefinição foi gerado.",
-        simulatedResetLink: resetLink 
-      });
+      console.log(`[SIMULAÇÃO] Link gerado: ${resetLink}`); // Log seguro
+      return res.json({ message: "Link gerado (simulação).", simulatedResetLink: resetLink });
     }
-    return res.json({ message: "Se este e-mail estiver cadastrado, um link de redefinição será enviado." });
-  } catch (err) { console.error(err); return res.status(500).json({ message: "Erro interno." }); }
+    return res.json({ message: "Se existe, enviamos." });
+  } catch (err) { console.error(err); return res.status(500).json({ message: "Erro." }); }
 });
 
-app.post("/api/reset-password", async (req, res) => {
+
+app.post("/api/reset-password", resetPasswordLimiter, async (req, res) => {
   try {
     const { token, password } = req.body;
     if (!token || !password || password.length < 8) return res.status(400).json({ message: "Dados inválidos." });
