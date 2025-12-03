@@ -1,0 +1,79 @@
+site_name: Integralizei UnB
+site_url: https://unb-mds.github.io/2025-2-Integralizei_UnB/
+repo_url: https://github.com/unb-mds/2025-2-Integralizei_UnB
+repo_name: Integralizei UnB
+
+theme:
+  name: material
+  language: pt-BR
+  # logo: assets/logo.png # Descomente quando tiver a logo na pasta assets
+  favicon: assets/favicon.ico
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: Mudar para modo escuro
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Mudar para modo claro
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+
+# Estrutura de Navegação Atualizada
+nav:
+  - Home: index.md
+
+  - Planejamento e Gestão:
+      - Visão Geral: planejamento/index.md
+      - Roadmap e Story Map: planejamento/roadmap.md 
+      - Organização do Trabalho: planejamento/organizacao.md 
+      - Story Map Visual: story-map/index.md
+      - Protótipo: prototipo/index.md
+      - Atas de Reunião: ata-de-reunioes/index.md
+
+  - Requisitos:
+      - Visão Geral: requisitos/index.md
+      # - Casos de Uso: requisitos/casos-de-uso.md
+
+  - Arquitetura:
+      - Visão Geral: arquitetura/index.md
+      - Coleta de Dados: arquitetura/coleta-de-dados.md
+      - Armazenamento: arquitetura/armazenamento.md
+      - Lógica de Análise: arquitetura/logica-de-analise.md
+
+  - DevOps e Infra:
+      - Visão Geral: DevOps/index.md 
+
+  - Execução (Sprints):
+      - Visão Geral: sprints/index.md
+
+  
+  - Encerramento:
+      - Conclusões: conclusões/index.md 
