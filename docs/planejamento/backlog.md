@@ -1,8 +1,3 @@
-+++
-title = "Product Backlog 📋"
-toc = true
-+++
-
 O Product Backlog é a nossa fonte única da verdade: uma lista ordenada de tudo o que é conhecido ser necessário no produto. Ele é dinâmico e evolui à medida que o projeto avança.
 *Última atualização: 01 de Outubro de 2025*
 

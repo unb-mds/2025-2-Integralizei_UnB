@@ -1,9 +1,3 @@
----
-title = "Coleta de Dados"
-date = "2025-09-22T12:20:00-03:00"
-weight = 10 
----
-
 ### 1 - Coleta de dados
 
 O sucesso da nossa análise depende da qualidade e quantidade de dados. Nossa estratégia de coleta será dividida em duas fases:

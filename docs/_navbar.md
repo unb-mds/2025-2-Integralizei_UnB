@@ -1,0 +1,3 @@
+- [📖 Documentação](/)
+- [💻 Repositório](https://github.com/unb-mds/2025-2-Integralizei_UnB)
+- [🖱️ Protótipo Figma](https://www.figma.com/proto/aZz3Z42XS3ukfA1dmO4CSy/)
